@@ -5,16 +5,16 @@
 #include "derivative.h" /* include peripheral declarations */
 
 
-#define I2C_MASTER_WRITE        0x00
-#define I2C_MASTER_READ         0x01
+#define I2C_MASTER_WRITE            0x00
+#define I2C_MASTER_READ             0x01
 
-#define ADT7420_ADDRESS         0x4B
-#define ADT7420_TEMPERATURE_REG    0x00
-#define ADT7420_STATUS_REG        0x02
-#define ADT7420_CONFIG_REG      0x03 
-#define ADT7420_T_HIGH_REG      0x04
-#define ADT7420_T_LOW_REG       0x06
-#define ADT7420_T_CRIT_REG      0x08
+#define ADT7420_ADDRESS             0x4B
+#define ADT7420_TEMPERATURE_REG     0x00
+#define ADT7420_STATUS_REG          0x02
+#define ADT7420_CONFIG_REG          0x03 
+#define ADT7420_T_HIGH_REG          0x04
+#define ADT7420_T_LOW_REG           0x06
+#define ADT7420_T_CRIT_REG          0x08
 
 char high_temperature_flag = 0;
 char critical_temperature_flag = 0;
@@ -35,7 +35,7 @@ char system_error_flag = 0;
 /*Checked*/void i2c_Write_Multi(char device_address, char device_register, char* data_array, unsigned char length);
 /*Checked*/char i2c_Read(uint8_t device_address, char device_register);
 /*Checked*/void i2c_Read_Multi(char device_address, char device_register, char* data_array, unsigned char length);
-/**/char adt7420_Init();
+/*Checked*/char adt7420_Init();
 /**/void kbi_Init();
 /**/void enable_Interrupt(uint8_t vector_number);
 /**/int read_Temperature();
@@ -296,7 +296,7 @@ char adt7420_Init(){
     while(attempts < 2){
         i2c_Write_Multi(ADT7420_ADDRESS, ADT7420_T_HIGH_REG, set_values, 2);
         //Read and verify control register
-        i2c_Read_Multi(ADT7420_ADDRESS, ADT7420_CONFIG_REG, return_values, 2);
+        i2c_Read_Multi(ADT7420_ADDRESS, ADT7420_T_HIGH_REG, return_values, 2);
         if (return_values[0] == t_high0 && return_values[1] == t_high1){
             attempts = 0;
             break;                                                      //Carry on
@@ -463,35 +463,54 @@ int main(void)
 
 //     i2c_Write_Multi(0x4B, 0x04, i2cWriteArray, 4);
 //     i2c_Read_Multi(0x4B, 0x04, i2cReadArray, 4);
-    
-    
-    
+     
+    char return_values[] = {0, 0, 0, 0};
+    char set_values[] = {0, 0, 0, 0};
+
+    char t_high0 = 0x12;                           //TODO: Set temperature values
+    char t_high1 = 0x34;
+    char t_low0 = 0x56;
+    char t_low1 = 0x78;
+    char t_crit0 = 0x9A;
+    char t_crit1 = 0xBC;
+
+    int attempts = 0;
     
     while(1){
-        i2c_Write_Multi(0x4B, 0x04, i2cWriteArray, 2);
-        i2c_Read_Multi(0x4B, 0x04, i2cReadArray, 2);
-        
-        i2c_Write_Multi(0x4B, 0x04, i2cWriteArray, 4);
-        i2c_Read_Multi(0x4B, 0x04, i2cReadArray, 4);
 
-         temp = i2c_Read(0x4B, 0x0B);
-         temp = i2c_Read(0x4B, 0x0B);
-         i2c_Write(0x4B, 0x03, 0x12);
-         i2c_Write(0x4B, 0x03, 0x12);
-         temp = i2c_Read(0x4B, 0x0B);
-         temp = i2c_Read(0x4B, 0x0B);
-         temp = i2c_Read(0x4B, 0x01);
-         i2c_Write(0x4B, 0x03, 0x12);
-         temp = i2c_Read(0x4B, 0x01);
-		 i2c_Write(0x4B, 0x03, 0x12);
-         temp = i2c_Read(0x4B, 0x01);		 
-         i2c_Write(0x4B, 0x03, 0x12);
-         temp = i2c_Read(0x4B, 0x0B);
-         i2c_Write(0x4B, 0x03, 0x12);
-         i2c_Write(0x4B, 0x03, 0x12);
-         i2c_Write(0x4B, 0x03, 0x12);
-       open_Window(1);
-
+//        //Set control registers = 0x4F
+//        //[1:0]     Fault queue             - 0b11
+//        //[2]       CT pin Polarity         - 0b1
+//        //[3]       INT pin Polarity        - 0b1    
+//        //[4]       INT/CT mode             - 0b0
+//        //[6:5]     Operation mode          - 0b10
+//        //[7]       Resolution              - 0b0 
+//        i2c_Write(ADT7420_ADDRESS, ADT7420_CONFIG_REG, 0x4F);
+//        //Read and verify control register
+//        return_value = i2c_Read(ADT7420_ADDRESS, ADT7420_CONFIG_REG);
+//        
+//        //Set T High registers
+//        set_values[0] = t_high0;
+//        set_values[1] = t_high1;
+//        i2c_Write_Multi(ADT7420_ADDRESS, ADT7420_T_HIGH_REG, set_values, 2);
+//        //Read and verify control register
+//        i2c_Read_Multi(ADT7420_ADDRESS, ADT7420_T_HIGH_REG, return_values, 2);
+//
+//        //Set T Low registers
+//        set_values[0] = t_low0;
+//        set_values[1] = t_low1;
+//        i2c_Write_Multi(ADT7420_ADDRESS, ADT7420_T_LOW_REG, set_values, 2);
+//        //Read and verify control register
+//        i2c_Read_Multi(ADT7420_ADDRESS, ADT7420_T_LOW_REG, return_values, 2);
+//
+//        //Set T Critical registers
+//        set_values[0] = t_crit0;
+//        set_values[1] = t_crit1;
+//        i2c_Write_Multi(ADT7420_ADDRESS, ADT7420_T_CRIT_REG, set_values, 2);
+//        //Read and verify control register
+//        i2c_Read_Multi(ADT7420_ADDRESS, ADT7420_T_CRIT_REG, return_values, 2);
+        adt7420_Init();
+        open_Window(1);
 //      while(1) {       
 //          for (i = 0; string[i] != '\0'; i++){
 //              uart_Send_Char(string[i]);

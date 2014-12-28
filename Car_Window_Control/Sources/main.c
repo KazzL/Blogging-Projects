@@ -31,9 +31,9 @@ char system_error_flag = 0;
 /**/void uart_Init();
 /*Checked*/void i2c_Init();
 /*Checked*/void i2c_Data_Trasmit_Delay();
-/*--------Address Issue*/void i2c_Write(char device_address, char device_register, char data);
+/*Checked*/void i2c_Write(char device_address, char device_register, char data);
 /*Checked*/void i2c_Write_Multi(char device_address, char device_register, char* data_array, unsigned char length);
-/*--------Address Issue*/char i2c_Read(uint8_t device_address, char device_register);
+/*Checked*/char i2c_Read(uint8_t device_address, char device_register);
 /*Checked*/void i2c_Read_Multi(char device_address, char device_register, char* data_array, unsigned char length);
 /**/char adt7420_Init();
 /**/void kbi_Init();
@@ -73,13 +73,13 @@ void gpio_Init(){
     GPIOA_PDDR |= 0x80000;                                             //PTC3 set to output (GPIOA 19)
     GPIOA_PCOR |= 0x80000;                                             //Set output low, turn LED3 off
 
-    // //Inputs for child detection
-    // GPIOA_PDDR &= ~0x1000000;                                           //PTD0 set to input (GPIOA 24) //Bum Sesnor
-    // GPIOA_PIDR &= ~0x1000000;                                           //Enable input
-    // GPIOA_PDDR &= ~0x2000000;                                           //PTD1 set to input (GPIOA 25) //Back Sesnor
-    // GPIOA_PIDR &= ~0x2000000;                                           //Enable input
-    // GPIOA_PDDR &= ~0x4000000;                                           //PTD2 set to input (GPIOA 26) //Head Sesnor
-    // GPIOA_PIDR &= ~0x4000000;                                           //Enable input
+    //Inputs for child detection
+    GPIOA_PDDR &= ~0x1000000;                                           //PTD0 set to input (GPIOA 24) //Bum Sesnor
+    GPIOA_PIDR &= ~0x1000000;                                           //Enable input
+    GPIOA_PDDR &= ~0x2000000;                                           //PTD1 set to input (GPIOA 25) //Back Sesnor
+    GPIOA_PIDR &= ~0x2000000;                                           //Enable input
+    GPIOA_PDDR &= ~0x4000000;                                           //PTD2 set to input (GPIOA 26) //Head Sesnor
+    GPIOA_PIDR &= ~0x4000000;                                           //Enable input
 
     //Outputs to stepper motor
     GPIOB_PDDR |= 1 << 16;// 0x10000;                                             //PTG0 set to output (GPIOA 16)
@@ -142,25 +142,13 @@ void i2c_Write(char device_address, char device_register, char data){
     
 
     I2C0_D = (device_address << 1) | I2C_MASTER_WRITE;                  //Device address with write bit set
-    while ((I2C0_S & I2C_S_IICIF_MASK) == 0){
-    //Wait for data to transmit
-    }
-    I2C0_S |= I2C_S_IICIF_MASK;
-//    i2c_Data_Trasmit_Delay();
+    i2c_Data_Trasmit_Delay();
 
     I2C0_D = device_register;                                           //Device register to write to
-    while ((I2C0_S & I2C_S_IICIF_MASK) == 0){
-    //Wait for data to transmit
-    }
-    I2C0_S |= I2C_S_IICIF_MASK;
-//    i2c_Data_Trasmit_Delay();
+    i2c_Data_Trasmit_Delay();
 
     I2C0_D = data;                                                      //Write to register
-    while ((I2C0_S & I2C_S_IICIF_MASK) == 0){
-    //Wait for data to transmit
-    }
-    I2C0_S |= I2C_S_IICIF_MASK;
-//    i2c_Data_Trasmit_Delay();
+    i2c_Data_Trasmit_Delay();
 
     I2C0_S |= I2C_S_IICIF_MASK;
     I2C0_C1 &= ~I2C_C1_MST_MASK;
@@ -207,37 +195,21 @@ char i2c_Read(uint8_t device_address, char device_register){
     I2C0_C1 |= I2C_C1_MST_MASK | I2C_C1_TX_MASK;                        //Send start bit
 
     I2C0_D = (device_address << 1) | I2C_MASTER_WRITE;                  //Device address with write bit set
-    while ((I2C0_S & I2C_S_IICIF_MASK) == 0){
-    //Wait for data to transmit
-    }
-    I2C0_S |= I2C_S_IICIF_MASK;
-//    i2c_Data_Trasmit_Delay();
+    i2c_Data_Trasmit_Delay();
 
     I2C0_D = device_register;                                           //Device register to read from
-    while ((I2C0_S & I2C_S_IICIF_MASK) == 0){
-    //Wait for data to transmit
-    }
-    I2C0_S |= I2C_S_IICIF_MASK;
-//    i2c_Data_Trasmit_Delay();
+    i2c_Data_Trasmit_Delay();
 
     I2C0_C1 |= I2C_C1_RSTA_MASK;                                        //Send restart
     
     I2C0_D = (device_address << 1) | I2C_MASTER_READ;                   //Device address with read bit set
-    while ((I2C0_S & I2C_S_IICIF_MASK) == 0){
-    //Wait for data to transmit
-    }
-    I2C0_S |= I2C_S_IICIF_MASK;
-//    i2c_Data_Trasmit_Delay();
+    i2c_Data_Trasmit_Delay();
 
     I2C0_C1 &= ~I2C_C1_TX_MASK;                                         //Change to Rx mode
 
     I2C0_C1 |= I2C_C1_TXAK_MASK;                                        //Set NACK
     temp = I2C0_D;                                                      //Receive data byte
-    while ((I2C0_S & I2C_S_IICIF_MASK) == 0){
-    //Wait for data to transmit
-    }
-    I2C0_S |= I2C_S_IICIF_MASK;
-//    i2c_Data_Trasmit_Delay();
+    i2c_Data_Trasmit_Delay();
 
     I2C0_C1 &= ~I2C_C1_MST_MASK;                                        //Set stop bit
     I2C0_C1 |= I2C_C1_TX_MASK;                                          //Change to Tx mode
@@ -502,21 +474,22 @@ int main(void)
         i2c_Write_Multi(0x4B, 0x04, i2cWriteArray, 4);
         i2c_Read_Multi(0x4B, 0x04, i2cReadArray, 4);
 
-//         temp = i2c_Read(0x4B, 0x0B);
-//         temp = i2c_Read(0x4B, 0x0B);
-//         temp = i2c_Read(0x4B, 0x0B);
-//         temp = i2c_Read(0x4B, 0x0B);
-//         temp = i2c_Read(0x4B, 0x00);
-//         temp = i2c_Read(0x4B, 0x01);
-////         i2c_Write(0x4B, 0x03, 0x12);
-//        i2c_Write_Multi(0x4B, 0x04, i2cWriteArray, 4);
+         temp = i2c_Read(0x4B, 0x0B);
+         temp = i2c_Read(0x4B, 0x0B);
+         i2c_Write(0x4B, 0x03, 0x12);
+         i2c_Write(0x4B, 0x03, 0x12);
+         temp = i2c_Read(0x4B, 0x0B);
+         temp = i2c_Read(0x4B, 0x0B);
+         temp = i2c_Read(0x4B, 0x01);
+         i2c_Write(0x4B, 0x03, 0x12);
          temp = i2c_Read(0x4B, 0x01);
 		 i2c_Write(0x4B, 0x03, 0x12);
-//        i2c_Write_Multi(0x4B, 0x04, i2cWriteArray, 4);
-//         i2c_Write(0x4B, 0x03, 0x12);
-//         i2c_Write(0x4B, 0x03, 0x12);
-//         i2c_Write(0x4B, 0x03, 0x12);
-//         i2c_Write(0x4B, 0x03, 0x12);
+         temp = i2c_Read(0x4B, 0x01);		 
+         i2c_Write(0x4B, 0x03, 0x12);
+         temp = i2c_Read(0x4B, 0x0B);
+         i2c_Write(0x4B, 0x03, 0x12);
+         i2c_Write(0x4B, 0x03, 0x12);
+         i2c_Write(0x4B, 0x03, 0x12);
        open_Window(1);
 
 //      while(1) {       

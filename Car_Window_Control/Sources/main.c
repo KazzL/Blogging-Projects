@@ -137,8 +137,9 @@ void i2c_Write(char device_address, char device_register, char data){
     // device_register = 0x03;
     // data = 0x12;
 
-    I2C0_C1 |= I2C_C1_MST_MASK | I2C_C1_TX_MASK;                        //Send start bit
     I2C0_C1 &= ~I2C_C1_TXAK_MASK;
+    I2C0_C1 |= I2C_C1_MST_MASK | I2C_C1_TX_MASK;                        //Send start bit
+    
 
     I2C0_D = (device_address << 1) | I2C_MASTER_WRITE;                  //Device address with write bit set
     while ((I2C0_S & I2C_S_IICIF_MASK) == 0){
@@ -167,7 +168,7 @@ void i2c_Write(char device_address, char device_register, char data){
     while((I2C0_FLT & I2C_FLT_STOPF_MASK) == 0){                        //Delay for stop bit 
         //Wait for stop bit to transmit
     }
-    I2C0_FLT &= ~I2C_FLT_STOPF_MASK;
+    I2C0_FLT |= I2C_FLT_STOPF_MASK;
 }
 
 void i2c_Write_Multi(char device_address, char device_register, char* data_array, unsigned char length){
@@ -175,9 +176,9 @@ void i2c_Write_Multi(char device_address, char device_register, char* data_array
 
     I2C0_C1 |= I2C_C1_MST_MASK | I2C_C1_TX_MASK | I2C_C1_IICEN_MASK;
 
+    I2C0_C1 &= ~I2C_C1_TXAK_MASK;  
     I2C0_C1 |= I2C_C1_MST_MASK | I2C_C1_TX_MASK;                        //Send start bit
-    I2C0_C1 &= ~I2C_C1_TXAK_MASK;   
-
+   
     I2C0_D = (device_address << 1) | I2C_MASTER_WRITE;                  //Device address with write bit set
     i2c_Data_Trasmit_Delay();
 
@@ -195,16 +196,15 @@ void i2c_Write_Multi(char device_address, char device_register, char* data_array
     while((I2C0_FLT & I2C_FLT_STOPF_MASK) == 0){                        //Delay for stop bit 
         //Wait for stop bit to transmit
     }
-    I2C0_FLT &= ~I2C_FLT_STOPF_MASK;
+    I2C0_FLT |= I2C_FLT_STOPF_MASK;
 }
 
 char i2c_Read(uint8_t device_address, char device_register){
     char temp;
     // device_address = 0x4B;                                              //TODO: Fix addressing issue
     // device_register = 0x0B;
-
-    I2C0_C1 |= I2C_C1_MST_MASK | I2C_C1_TX_MASK;                        //Send start bit
     I2C0_C1 &= ~I2C_C1_TXAK_MASK;
+    I2C0_C1 |= I2C_C1_MST_MASK | I2C_C1_TX_MASK;                        //Send start bit
 
     I2C0_D = (device_address << 1) | I2C_MASTER_WRITE;                  //Device address with write bit set
     while ((I2C0_S & I2C_S_IICIF_MASK) == 0){
@@ -251,8 +251,8 @@ void i2c_Read_Multi(char device_address, char device_register, char* data_array,
 
     I2C0_C1 |= I2C_C1_MST_MASK | I2C_C1_TX_MASK | I2C_C1_IICEN_MASK;
 
+    I2C0_C1 &= ~I2C_C1_TXAK_MASK;
     I2C0_C1 |= I2C_C1_MST_MASK | I2C_C1_TX_MASK;                        //Send start bit
-    // I2C0_C1 &= ~I2C_C1_TXAK_MASK;
 
     I2C0_D = (device_address << 1) | I2C_MASTER_WRITE;                  //Device address with write bit set
     i2c_Data_Trasmit_Delay();
@@ -510,8 +510,8 @@ int main(void)
 //         temp = i2c_Read(0x4B, 0x01);
 ////         i2c_Write(0x4B, 0x03, 0x12);
 //        i2c_Write_Multi(0x4B, 0x04, i2cWriteArray, 4);
-//        // temp = i2c_Read(0x4B, 0x01);
-//        i2c_Write(0x4B, 0x03, 0x12);
+         temp = i2c_Read(0x4B, 0x01);
+		 i2c_Write(0x4B, 0x03, 0x12);
 //        i2c_Write_Multi(0x4B, 0x04, i2cWriteArray, 4);
 //         i2c_Write(0x4B, 0x03, 0x12);
 //         i2c_Write(0x4B, 0x03, 0x12);

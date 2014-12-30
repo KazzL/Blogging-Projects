@@ -4,6 +4,7 @@
  */
 #include "derivative.h" /* include peripheral declarations */
 
+typedef void(*pt2FuncU8)(uint8_t);    /* Pointer to Functions, UINT8 argument */
 
 #define I2C_MASTER_WRITE            0x00
 #define I2C_MASTER_READ             0x01
@@ -57,7 +58,7 @@ void gpio_Init(){
     GPIOA_PDDR &= ~0x2;                                                 //PTA1 set to input (GPIOA 1)
     GPIOA_PIDR &= ~0x2;                                                 //Enable input
         //Backdoor Interrupt
-    GPIOA_PDDR &= ~0x4;                                                 //PTA1 set to input (GPIOA 2)
+    GPIOA_PDDR &= ~0x4;                                                 //PTA2 set to input (GPIOA 2)
     GPIOA_PIDR &= ~0x4;                                                 //Enable input
 
     //I2C SDA & SCL lines
@@ -74,12 +75,17 @@ void gpio_Init(){
     GPIOA_PCOR |= 0x80000;                                             //Set output low, turn LED3 off
 
     //Inputs for child detection
-    GPIOA_PDDR &= ~0x1000000;                                           //PTD0 set to input (GPIOA 24) //Bum Sesnor
-    GPIOA_PIDR &= ~0x1000000;                                           //Enable input
-    GPIOA_PDDR &= ~0x2000000;                                           //PTD1 set to input (GPIOA 25) //Back Sesnor
-    GPIOA_PIDR &= ~0x2000000;                                           //Enable input
-    GPIOA_PDDR &= ~0x4000000;                                           //PTD2 set to input (GPIOA 26) //Head Sesnor
-    GPIOA_PIDR &= ~0x4000000;                                           //Enable input
+     GPIOA_PDDR &= ~0x1000000;                                           //PTD0 set to input (GPIOA 24) //Bum Sesnor
+     GPIOA_PIDR &= ~0x1000000;                                           //Enable input
+     GPIOA_PDDR &= ~0x2000000;                                           //PTD1 set to input (GPIOA 25) //Back Sesnor
+     GPIOA_PIDR &= ~0x2000000;                                           //Enable input
+     GPIOA_PDDR &= ~0x4000000;                                           //PTD2 set to input (GPIOA 26) //Head Sesnor
+     GPIOA_PIDR &= ~0x4000000;                                           //Enable input
+
+//    CONFIG_PIN_AS_GPIO(D,PTD0,INPUT); /* Configure BTN0 (PTD0) as an input */   
+//    CONFIG_PIN_AS_GPIO(D,PTD1,INPUT); /* Configure BTN1 (PTD1) as an input */
+//    ENABLE_INPUT(D,PTD0);            /* Enable input SW1*/  
+//    ENABLE_INPUT(D,PTD1);            /* Enable input SW2*/
 
     //Outputs to stepper motor
     GPIOB_PDDR |= 1 << 16;// 0x10000;                                             //PTG0 set to output (GPIOA 16)
@@ -261,19 +267,19 @@ char adt7420_Init(){
     char return_values[] = {0, 0, 0, 0};
     char set_values[] = {0, 0, 0, 0};
 
-    char t_high0 = 0x12;                           //TODO: Set temperature values
-    char t_high1 = 0x34;
-    char t_low0 = 0x56;
-    char t_low1 = 0x78;
-    char t_crit0 = 0x9A;
-    char t_crit1 = 0xBC;
+    char t_high0 = 0x11;                                                //30 Celsius
+    char t_high1 = 0x80;
+    char t_low0 = 0x05;                                                 //10 Celsius
+    char t_low1 = 0x00;
+    char t_crit0 = 0x14;                                                //40 Celsius
+    char t_crit1 = 0x00;
 
     int attempts = 0;
 
     while(attempts < 2){
         //Set control registers = 0x4F
         //[1:0]     Fault queue             - 0b11
-        //[2]       CT pin Polarity         - 0b1
+        //[2]       CT pin Polarity         - 0b1   0x43 if both polarities are 0
         //[3]       INT pin Polarity        - 0b1    
         //[4]       INT/CT mode             - 0b0
         //[6:5]     Operation mode          - 0b10
@@ -339,22 +345,24 @@ char adt7420_Init(){
     }
     return attempts;
 }
-
+/***************************************************************************************************************************/
 void kbi_Init(){                                
     SIM_SCGC |= SIM_SCGC_KBI1_MASK;                                     //Enable clock for KBI module 
-    KBI0_SC = 0;
+    KBI1_SC = 0;
     // Temperature Interrupt
-    KBI0_ES &= ~KBI_ES_KBEDG(1);                                        //Polarity setting, rising edge low level
-    KBI0_PE |= KBI_PE_KBIPE(1);                                         //Enable KBI0 channel 0
-    // Temperature Critical Interrupt
-    KBI0_ES &= ~KBI_ES_KBEDG(2);                                        //Polarity setting, rising edge low level
-    KBI0_PE |= KBI_PE_KBIPE(2);                                         //Enable KBI0 channel 0
-    // backdoor Open Interrupt
-    KBI0_ES &= ~KBI_ES_KBEDG(3);                                        //Polarity setting, rising edge low level
-    KBI0_PE |= KBI_PE_KBIPE(3);                                         //Enable KBI0 channel 0
+    KBI1_ES |= KBI_ES_KBEDG(1);              //TODO: Change back to KBI0                           //Polarity setting, rising edge low level
+    KBI1_PE |= KBI_PE_KBIPE(1);              //TODO: Change back to KBI0                           //Enable KBI0 channel 0
     
-    KBI0_SC = 0;                                                        //Clearing flags
-    KBI0_SC |= KBI_SC_KBIE_MASK;                                        //Enable  KBI0 Interrupts */ 
+    // Temperature Critical Interrupt
+    KBI1_ES |= KBI_ES_KBEDG(2);              //TODO: Change back to KBI0                           //Polarity setting, rising edge low level
+    KBI1_PE |= KBI_PE_KBIPE(2);              //TODO: Change back to KBI0                           //Enable KBI0 channel 0
+
+    // backdoor Open Interrupt
+    // KBI1_ES &= ~KBI_ES_KBEDG(3);             //TODO: Change back to KBI0                           //Polarity setting, rising edge low level
+    // KBI1_PE |= KBI_PE_KBIPE(3);              //TODO: Change back to KBI0                           //Enable KBI0 channel 0
+    
+    KBI1_SC = 0;                             //TODO: Change back to KBI0                           //Clearing flags
+    KBI1_SC |= KBI_SC_KBIE_MASK;             //TODO: Change back to KBI0                           //Enable  KBI0 Interrupts */ 
 }
 
 void enable_Interrupt(uint8_t vector_number){
@@ -364,9 +372,25 @@ void enable_Interrupt(uint8_t vector_number){
     NVIC_ISER |= 1 << (vector_number % 32);
 }
 
+// void KBI1_IRQHandler()
+// {
+//     KBI1_SC |= KBI_SC_KBACK_MASK;   /*Clear flag*/
+    
+//     if((GPIOA_PDIR & GPIO_PDIR_PDI(0x1000000))>> 24) /* If SW1 has been pressed */ 
+//     {
+//         GPIOA_PTOR |= 0x10000;
 
-int read_Temperature(){
-    int temperature = 0;
+//     }
+    
+//     if((GPIOA_PDIR & GPIO_PDIR_PDI(0x2000000))>> 25) /* If SW2 has been pressed */ 
+//     {
+//         GPIOA_PTOR |= 0x20000;
+//     }   
+// }
+/***************************************************************************************************************************/
+
+int read_Temperature(){                         //TODO: Consider negitive temps, convert from uint32_t to int16_t
+    uint32_t temperature = 0;
     char return_values[] = {0, 0, 0, 0};
 
     i2c_Write(ADT7420_ADDRESS, ADT7420_CONFIG_REG, 0x4F);                //Reset the data ready bit
@@ -374,7 +398,7 @@ int read_Temperature(){
         asm("nop");                                                     //Wait for data to be ready 
     }
 
-    i2c_Read_Multi(ADT7420_ADDRESS, ADT7420_T_CRIT_REG, return_values, 2);
+    i2c_Read_Multi(ADT7420_ADDRESS, ADT7420_TEMPERATURE_REG, return_values, 2);
     temperature = (return_values[0] << 8) | return_values[1];
     temperature = temperature >> 7;                                     //Remove flag bits and devide by 16 
     return temperature;
@@ -442,14 +466,17 @@ int main(void)
     uart_Init();
     i2c_Init();
 
+    kbi_Init();                     /* Initialize KBI module */
+    enable_Interrupt(INT_KBI1);     /* Enable KBI1 Interrupts */
+
     i2cWriteArray[0] = 0x12;
     i2cWriteArray[1] = 0x34;
     i2cWriteArray[2] = 0x56;
     i2cWriteArray[3] = 0x78;
 //
-     i2c_Write_Multi(0x4B, 0x04, i2cWriteArray, 2);
-     i2c_Read_Multi(0x4B, 0x04, i2cReadArray, 2);
-
+    i2c_Write_Multi(0x4B, 0x04, i2cWriteArray, 2);
+    i2c_Read_Multi(0x4B, 0x04, i2cReadArray, 2);
+    adt7420_Init();
     // return_value = adt7420_Init();
     // if (return_value == 0){
     //     //carry on
@@ -463,63 +490,20 @@ int main(void)
 
 //     i2c_Write_Multi(0x4B, 0x04, i2cWriteArray, 4);
 //     i2c_Read_Multi(0x4B, 0x04, i2cReadArray, 4);
-     
-    char return_values[] = {0, 0, 0, 0};
-    char set_values[] = {0, 0, 0, 0};
-
-    char t_high0 = 0x12;                           //TODO: Set temperature values
-    char t_high1 = 0x34;
-    char t_low0 = 0x56;
-    char t_low1 = 0x78;
-    char t_crit0 = 0x9A;
-    char t_crit1 = 0xBC;
-
-    int attempts = 0;
-    
+         
     while(1){
-
-//        //Set control registers = 0x4F
-//        //[1:0]     Fault queue             - 0b11
-//        //[2]       CT pin Polarity         - 0b1
-//        //[3]       INT pin Polarity        - 0b1    
-//        //[4]       INT/CT mode             - 0b0
-//        //[6:5]     Operation mode          - 0b10
-//        //[7]       Resolution              - 0b0 
-//        i2c_Write(ADT7420_ADDRESS, ADT7420_CONFIG_REG, 0x4F);
-//        //Read and verify control register
-//        return_value = i2c_Read(ADT7420_ADDRESS, ADT7420_CONFIG_REG);
-//        
-//        //Set T High registers
-//        set_values[0] = t_high0;
-//        set_values[1] = t_high1;
-//        i2c_Write_Multi(ADT7420_ADDRESS, ADT7420_T_HIGH_REG, set_values, 2);
-//        //Read and verify control register
-//        i2c_Read_Multi(ADT7420_ADDRESS, ADT7420_T_HIGH_REG, return_values, 2);
-//
-//        //Set T Low registers
-//        set_values[0] = t_low0;
-//        set_values[1] = t_low1;
-//        i2c_Write_Multi(ADT7420_ADDRESS, ADT7420_T_LOW_REG, set_values, 2);
-//        //Read and verify control register
-//        i2c_Read_Multi(ADT7420_ADDRESS, ADT7420_T_LOW_REG, return_values, 2);
-//
-//        //Set T Critical registers
-//        set_values[0] = t_crit0;
-//        set_values[1] = t_crit1;
-//        i2c_Write_Multi(ADT7420_ADDRESS, ADT7420_T_CRIT_REG, set_values, 2);
-//        //Read and verify control register
-//        i2c_Read_Multi(ADT7420_ADDRESS, ADT7420_T_CRIT_REG, return_values, 2);
-        adt7420_Init();
-        open_Window(1);
+        i2c_Read_Multi(0x4B, 0x00, i2cReadArray, 2);
+        // open_Window(1);
+        read_Temperature();
 //      while(1) {       
 //          for (i = 0; string[i] != '\0'; i++){
 //              uart_Send_Char(string[i]);
 //      }
 //           
 //           
-//        for(delay = 0; delay < 4999; delay++);
+       for(delay = 0; delay < 9999; delay++);
 ////  }
-//        delay = 0;
+       delay = 0;
     }
     
 
@@ -534,25 +518,26 @@ int main(void)
 
 
 //Interrupt Handlers
-void KBI1_IRQHandler(){
+void KBI1_IRQHandler()
+{
     KBI1_SC |= KBI_SC_KBACK_MASK;                                       //Clear interrupt flag
     
-    if((GPIOA_PDIR & GPIO_PDIR_PDI(0x1)))                               //Temperature interrupt
+    if((GPIOA_PDIR & GPIO_PDIR_PDI(0x1000000))>> 24)                    //Temperature interrupt 
     {
         //Deal with high temperature scenario
+        GPIOA_PTOR |= 0x10000;                                          //Set output low, turn LED0 off
 
     }
     
-    if((GPIOA_PDIR & GPIO_PDIR_PDI(0x2))>> 1)                           //Critical temperature interrupt
+    if((GPIOA_PDIR & GPIO_PDIR_PDI(0x2000000))>> 25)                    //Critical temperature interrupt
     {
         //Deal with critical temperature scenario
+        GPIOA_PTOR |= 0x20000;
+    }  
 
-    }
-
-    if((GPIOA_PDIR & GPIO_PDIR_PDI(0x4))>> 1)                           //Backdoor open interrupt
+    if((GPIOA_PDIR & GPIO_PDIR_PDI(0x4000000))>> 26)                    //Backdoor open interrupt
     {
         //Deal with backdoor open scenario
-
-    }
+        GPIOA_PTOR |= 0x80000;
+    }    
 }
-

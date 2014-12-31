@@ -48,7 +48,7 @@ char system_error_flag = 0;
 /*Checked*/char adt7420_Init();
 /*Checked*/void kbi_Init();
 /*Checked*/void enable_Interrupt(uint8_t vector_number);
-/**/int read_Temperature();
+/*Checked*/int read_Temperature();
 /**/char child_Present();
 /*Checked*/void open_Window(int number_of_rotations);
 /**/void temperature_Decreasing();
@@ -267,12 +267,12 @@ char adt7420_Init(){
     char return_values[] = {0, 0, 0, 0};
     char set_values[] = {0, 0, 0, 0};
 
-    char t_high0 = 0x11;                                                //35 Celsius
-    char t_high1 = 0x80;
+    char t_high0 = 0x19;                                                //35 Celsius
+    char t_high1 = 0x00;
     char t_low0 = 0x05;                                                 //10 Celsius
     char t_low1 = 0x00;
-    char t_crit0 = 0x14;                                                //40 Celsius
-    char t_crit1 = 0x00;
+    char t_crit0 = 0x20;                                                //65 Celsius
+    char t_crit1 = 0x80;
 
     int attempts = 0;
 
@@ -434,10 +434,9 @@ int main(void)
     int temperature;
     char i2cReadArray[] = {0,0,0,0,0,0,0,0,0};
     char i2cWriteArray[] = {0,0,0,0,0,0,0,0,0};
-    char string[] = "My name is Bob C. Marley \r\n\r\n\0";
-    
     char return_value;
 
+    //System Initilization
     clk_Init();
     gpio_Init();
     uart_Init();
@@ -447,44 +446,19 @@ int main(void)
     kbi_Init();                     /* Initialize KBI module */
     enable_Interrupt(INT_KBI0);     /* Enable KBI0 Interrupts */
 
-    i2cWriteArray[0] = 0x12;
-    i2cWriteArray[1] = 0x34;
-    i2cWriteArray[2] = 0x56;
-    i2cWriteArray[3] = 0x78;
-
-    
-    // return_value = adt7420_Init();
-    // if (return_value == 0){
-    //     //carry on
-    // }
-    // else{
-    //     while(1);
-    // }
+    for(delay = 0; delay < 9999; delay++);
     temperature = read_Temperature();
     for(delay = 0; delay < 9999; delay++);
     temperature = read_Temperature();
          
     while(1){
         __asm__("wfi");
-        // open_Window(1);
-        // temperature = read_Temperature();
+//      open_Window(1);
 //      while(1) {       
 //          for (i = 0; string[i] != '\0'; i++){
 //              uart_Send_Char(string[i]);
 //      }
-//           
-//           
-//        for(delay = 0; delay < 9999; delay++);
-// ////  }
-//        delay = 0;
     }
-    
-
-
-    
-//    Uart_SetCallback(Uart_Interrupt);    /* Set the callback function that the UART driver will call when receiving a char */
-//    Enable_Interrupt(INT_UART2);          /* Enable UART2 interrupt */
-    // return 0;
 }
 
 
@@ -496,8 +470,11 @@ void KBI0_IRQHandler()
     if((GPIOA_PDIR & GPIO_PDIR_PDI(0x1)) == 0)                    //Temperature interrupt 
     {
         //Deal with high temperature scenario
+        window_open_flag = ~window_open_flag;
+        if (!window_open_flag){
+          open_Window(1);  
+        }
         GPIOA_PTOR |= 0x10000;                                          //Set output low, toggle LED0
-
     }
     
     // if((GPIOA_PDIR & GPIO_PDIR_PDI(0x2000000))>> 25)                    //Critical temperature interrupt
@@ -511,8 +488,8 @@ void KBI0_IRQHandler()
     //     //Deal with backdoor open scenario
     //     GPIOA_PTOR |= 0x80000;
     // }    
-    GPIOA_PTOR |= 0x20000;                                          //Set output low, toggle LED1
+    GPIOA_PTOR |= 0x40000;                                          //Set output low, toggle LED1
     read_Temperature();//TODO: Should disable interrupts here read in mainand then renable interrupts
-    GPIOA_PTOR |= 0x40000;                                          //Set output low, toggle LED2
+    GPIOA_PTOR |= 0x80000;                                          //Set output low, toggle LED2
     KBI0_SC |= KBI_SC_KBACK_MASK;                                       //Clear interrupt flag
 }

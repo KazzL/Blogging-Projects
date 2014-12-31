@@ -267,7 +267,7 @@ char adt7420_Init(){
     char return_values[] = {0, 0, 0, 0};
     char set_values[] = {0, 0, 0, 0};
 
-    char t_high0 = 0x19;                                                //35 Celsius
+    char t_high0 = 0x19;                                                //50 Celsius
     char t_high1 = 0x00;
     char t_low0 = 0x05;                                                 //10 Celsius
     char t_low1 = 0x00;
@@ -418,7 +418,7 @@ void open_Window(int number_of_rotations){
             asm("nop");
         }
     }
-    window_open_flag = 1;
+    // window_open_flag = 1;
 }
 
 void temperature_Decreasing(){          //TODO: Fill in code
@@ -471,7 +471,7 @@ void KBI0_IRQHandler()
     {
         //Deal with high temperature scenario
         window_open_flag = ~window_open_flag;
-        if (!window_open_flag){
+        if (window_open_flag){
           open_Window(1);  
         }
         GPIOA_PTOR |= 0x10000;                                          //Set output low, toggle LED0

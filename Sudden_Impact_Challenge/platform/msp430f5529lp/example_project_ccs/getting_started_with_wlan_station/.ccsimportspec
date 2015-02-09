@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<importSpec>
+    <source root="..\..\..\..\examples\getting_started_with_wlan_station">
+        <file regex=".*\.c"/>
+		<file regex=".*\.h"/>
+    </source>
+</importSpec>

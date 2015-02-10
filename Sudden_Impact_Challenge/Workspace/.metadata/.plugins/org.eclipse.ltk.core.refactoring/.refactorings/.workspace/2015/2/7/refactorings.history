@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;tcp_socket&apos;" deleteContents="true" description="Delete resource &apos;tcp_socket&apos;" element1="/tcp_socket" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1423587070304"/>
+</session>

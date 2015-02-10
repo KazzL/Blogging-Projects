@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<!--[if lte IE 9 ]> <html class="ie"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html> <!--<![endif]-->
+
+<head>
+<link rel="stylesheet" type="text/css" href="simple_link.css">
+<script src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+	var _urn = "84dd20e0fe28-mysimplelink";            	// serves to identify the service name (Mac Name insert by yourself ...)
+	var _res = "logo.gif";  						  	// serves as a dummy resource to be checked on remote server
+	var _page = "test.html";
+	var _img = new Image();
+
+	var _tmr;                 // the timer handler
+	var _status = 0;          // the status of remote resource availability
+	var _count	= 0;
+	var _tmr_zero = 0;
+	var _flag = 0;
+_tmr = setInterval(get_status,5000);
+
+function get_status()
+{
+
+if(_flag == 1)
+{
+
+_flag = 0;
+
+	// helper function for getting token values
+	function getTokenValue(paramPage, tokenId, successFn, failFn) {
+		$.ajax({
+				"type": "GET",
+				"url": paramPage,
+				"cache": false,
+				"dataType": "html"
+			})
+			// define callback for get request success
+			.done(function(getdata, status, xhr) {
+				successFn($(getdata).filter('#'+tokenId).text());
+			})
+			.fail(function(jqxhr, settings, exception) {
+				failFn();
+			});
+			
+	}
+
+
+		getTokenValue('param_status.html', 'Device_Status', 
+					// successFn callback, val is the token value
+					function(val) {
+						if (val == "TRUE") {
+							_flag = 0;
+							alert ("Successfully Connected to AP");
+							
+						} else {
+							if (val == "FALSE") 
+							{
+								
+								//if(_flag == 1)
+								//{
+									alert ("Connection to AP Failed, Check AP/Security Key and Try Again ");
+								//}
+								_flag = 0;
+								
+							}
+							else
+							{
+								alert ("Rechecking Status..");
+								if(_count>2)
+								{
+									alert ("AP Connection Status Check Failed - Reconnect and Refresh the page");
+									_flag = 0;
+								}
+								else
+								{
+									_flag = 1;
+								}
+							}
+						}
+					},
+					// failFn callback
+					function() {
+					if(_count<3)
+					{
+						alert ("Oops..It Seems Connection to Device AP is lost, Reconnect and wait for Notification");
+						_flag = 1;
+						
+					}
+					else
+					{
+						//if(_flag == 1)
+						//{
+							alert ("AP Connection Status Check Failed - Reconnect and Refresh the page");
+						//}
+						
+					}
+					});
+	_count++;				
+}
+}
+
+function on_submit()
+{
+	alert ("Checking Status..");
+	_count=0;
+	_flag = 1;
+		
+}
+
+function SwitchAP()
+{
+	alert ("Switching to Station Mode..Connection to the Device AP will be Lost!!");		
+}
+
+function update_ap_list()
+{
+    var selectList = document.getElementById("list_ap");
+    var aplist = new Array();
+	aplist[0] = "__SL_G_U00";
+	aplist[1] = "__SL_G_U01";
+	aplist[2] = "__SL_G_U02";
+	aplist[3] = "__SL_G_U03";
+	aplist[4] = "__SL_G_U04";
+	aplist[5] = "__SL_G_U05";
+	aplist[6] = "__SL_G_U06";
+	aplist[7] = "__SL_G_U07";
+	aplist[8] = "__SL_G_U08";
+	aplist[9] = "__SL_G_U09";
+	aplist[10] = "__SL_G_U10";
+	aplist[11] = "__SL_G_U11";
+	aplist[12] = "__SL_G_U12";
+	aplist[13] = "__SL_G_U13";
+	aplist[14] = "__SL_G_U14";
+	aplist[15] = "__SL_G_U15";
+	aplist[16] = "__SL_G_U16";
+	aplist[17] = "__SL_G_U17";
+	aplist[18] = "__SL_G_U18";
+	aplist[19] = "__SL_G_U19";
+	
+    for (var i = 0; i < aplist.length; i++) 
+	{
+		if(aplist[i] != "__No_AP_Available__")
+		{
+			var option = document.createElement("option");
+			option.value = aplist[i];
+			option.text = aplist[i];
+			selectList.add(option);
+		}
+	}
+}
+
+</script>
+
+</head>
+
+<body class="in-frame" onload="update_ap_list()">
+
+<table border="0"  width="100%" cellpadding="3" cellspacing="0">
+
+<tr>  
+<td class="page-title" colspan=2 >
+	WiFi Connectivity Profiles Settings </td>
+</tr>
+
+<form method="POST" name="SimpleLink Configuration" action = "provisioning_ap.html">  
+<tr>
+  <td class = "empty-line" colspan=2></td>
+ </tr>
+ 
+<tr>
+  <td class="frame-title" colspan=2 > 
+     Add Profile </td>
+</tr>
+
+<tr>
+  <td class = "empty-line-in-box" colspan=2></td>
+</tr>
+
+<tr>
+	<td class="label" dir=LTR> SSID: </td>
+	<td class="user-input" dir=LTR><select id="list_ap" name="__SL_P_U.D" size="1" style="width:225px; height:27px; padding:4px;">
+	    <OPTION value="" selected>- Select AP -</OPTION>
+		</select></td>
+</tr>
+ 
+ <tr>
+  <td class="empty-line-in-box" colspan=2></td>
+ </tr>
+ 
+<tr>
+	<td class="label" dir=LTR> Security Type: </td>
+	<td class="user-input" dir=LTR><input type="radio" name="__SL_P_U.E" value="0" checked />Open
+								   <input type="radio" name="__SL_P_U.E" value="1" />WEP
+								   <input type="radio" name="__SL_P_U.E" value="2" />WPA1
+								   <input type="radio" name="__SL_P_U.E" value="3" />WPA2</td>
+</tr>
+<tr>
+	<td class="label" dir=LTR> Security Key: </td>
+	<td class="user-input" dir=LTR><input type="text" maxlength="64" name="__SL_P_U.F" />  Hexadecimal digits - any combination of 0-9, a-f and A-F</td>
+</tr>
+<tr>
+	<td class="in-a-box" colspan=2  align=center><input type="submit" value="Add"  /></td>
+</tr>
+
+
+<tr>
+  <td class = "empty-line-in-box" colspan=2></td>
+</tr>
+ 
+
+	 
+</form>
+
+<form method="POST" name="SimpleLink Configuration 0" id = "form_id1" action = "nothing" onsubmit="on_submit()">  
+<tr>
+
+     <td  class="in-a-box" colspan=2 align=center ><input type="submit" name="__SL_P_U.C" value="Connect" /> </td>
+</tr>
+ </form>
+
+<tr >
+  <td class = "border-line-top" colspan=2 >
+  </td>
+</tr>
+
+<form method="POST" name="SimpleLink Configuration 1" action = "nothing" onsubmit="SwitchAP()">  
+<tr>
+  <td class = "empty-line" colspan=2></td>
+ </tr>
+ 
+<tr>
+  <td class="frame-title" colspan=2 > 
+     Switch Mode </td>
+</tr>
+
+<tr>
+  <td class = "empty-line-in-box" colspan=2></td>
+</tr>
+
+
+
+<tr>    
+	<td class="in-a-box" colspan=2 align=center dir=LTR><input type="submit"  name="__SL_P_U.0" value ="Switch to Station Mode">   </input></td>
+</tr>
+
+<tr>
+  <td class = "empty-line-in-box" colspan=2></td>
+</tr>
+ 
+<tr >
+  <td class = "border-line-top" colspan=2 >
+  </td>
+</tr>				
+</table>
+
+
+
+	 
+</body>
+</html>

@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "transceiver_mode", "transceiver_mode.vcxproj", "{515BFC40-C9AD-4377-8BE7-5D97228823D8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{515BFC40-C9AD-4377-8BE7-5D97228823D8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{515BFC40-C9AD-4377-8BE7-5D97228823D8}.Debug|Win32.Build.0 = Debug|Win32
+		{515BFC40-C9AD-4377-8BE7-5D97228823D8}.Release|Win32.ActiveCfg = Release|Win32
+		{515BFC40-C9AD-4377-8BE7-5D97228823D8}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

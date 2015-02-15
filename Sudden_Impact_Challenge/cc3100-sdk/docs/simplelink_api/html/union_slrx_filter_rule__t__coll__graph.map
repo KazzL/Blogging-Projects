@@ -1,0 +1,8 @@
+<map id="SlrxFilterRule_t" name="SlrxFilterRule_t">
+<area shape="rect" id="node2" href="$struct_slrx_filter_combination_type__t.html" title="SlrxFilterCombinationType_t" alt="" coords="79,197,264,224"/>
+<area shape="rect" id="node5" href="$struct_slrx_filter_header_type__t.html" title="SlrxFilterHeaderType_t" alt="" coords="311,420,466,447"/>
+<area shape="rect" id="node6" href="$struct_slrx_filter_rule_header_args_and_mask__t.html" title="SlrxFilterRuleHeaderArgs\lAndMask_t" alt="" coords="390,316,558,357"/>
+<area shape="rect" id="node7" href="$union_slrx_filter_header_arg__t.html" title="SlrxFilterHeaderArg_t" alt="" coords="595,197,742,224"/>
+<area shape="rect" id="node9" href="$struct_slrx_filter_regx_pattern__t.html" title="SlrxFilterRegxPattern_t" alt="" coords="766,197,923,224"/>
+<area shape="rect" id="node8" href="$struct_slrx_filter_payload_type__t.html" title="SlrxFilterPayloadType_t" alt="" coords="765,323,925,350"/>
+</map>

@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\..\..\simplelink\include;$(SolutionDir)\..\..\..\..\simplelink\source;$(SolutionDir)\..\..</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>$(SolutionDir)\..\..\SimpleLinkStudio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\..\..\simplelink\include;$(SolutionDir)\..\..\..\..\simplelink\source;$(SolutionDir)\..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\examples\sls_getting_started_with_wlan_station\main.c" />
+    <ClCompile Include="..\..\..\..\simplelink\source\device.c" />
+    <ClCompile Include="..\..\..\..\simplelink\source\driver.c" />
+    <ClCompile Include="..\..\..\..\simplelink\source\flowcont.c" />
+    <ClCompile Include="..\..\..\..\simplelink\source\fs.c" />
+    <ClCompile Include="..\..\..\..\simplelink\source\netapp.c" />
+    <ClCompile Include="..\..\..\..\simplelink\source\netcfg.c" />
+    <ClCompile Include="..\..\..\..\simplelink\source\nonos.c" />
+    <ClCompile Include="..\..\..\..\simplelink\source\socket.c" />
+    <ClCompile Include="..\..\..\..\simplelink\source\spawn.c" />
+    <ClCompile Include="..\..\..\..\simplelink\source\wlan.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\simplelink\include\device.h" />
+    <ClInclude Include="..\..\..\..\simplelink\include\fs.h" />
+    <ClInclude Include="..\..\..\..\simplelink\include\netapp.h" />
+    <ClInclude Include="..\..\..\..\simplelink\include\netcfg.h" />
+    <ClInclude Include="..\..\..\..\simplelink\include\simplelink.h" />
+    <ClInclude Include="..\..\..\..\simplelink\include\socket.h" />
+    <ClInclude Include="..\..\..\..\simplelink\include\trace.h" />
+    <ClInclude Include="..\..\..\..\simplelink\include\wlan.h" />
+    <ClInclude Include="..\..\..\..\simplelink\include\wlan_rx_filters.h" />
+    <ClInclude Include="..\..\..\..\simplelink\source\datatypes.h" />
+    <ClInclude Include="..\..\..\..\simplelink\source\driver.h" />
+    <ClInclude Include="..\..\..\..\simplelink\source\flowcont.h" />
+    <ClInclude Include="..\..\..\..\simplelink\source\nonos.h" />
+    <ClInclude Include="..\..\..\..\simplelink\source\objInclusion.h" />
+    <ClInclude Include="..\..\..\..\simplelink\source\protocol.h" />
+    <ClInclude Include="..\..\..\..\simplelink\source\spawn.h" />
+    <ClInclude Include="..\..\user.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

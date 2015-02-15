@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="SimpleLink">
+      <UniqueIdentifier>{f20ac920-76bb-42b1-aff4-235c01301ecc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SimpleLink\Include">
+      <UniqueIdentifier>{63223816-38e0-4c92-99c6-4dd8bc76e7d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SimpleLink\Source">
+      <UniqueIdentifier>{d6c99409-644b-4b8f-96c1-47abac5272c6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\SimpleLink\Include\device.h">
+      <Filter>SimpleLink\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\SimpleLink\Include\netapp.h">
+      <Filter>SimpleLink\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\SimpleLink\Include\netcfg.h">
+      <Filter>SimpleLink\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\SimpleLink\Include\simplelink.h">
+      <Filter>SimpleLink\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\SimpleLink\Include\socket.h">
+      <Filter>SimpleLink\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\SimpleLink\Include\trace.h">
+      <Filter>SimpleLink\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\SimpleLink\Include\wlan.h">
+      <Filter>SimpleLink\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\SimpleLink\Include\wlan_rx_filters.h">
+      <Filter>SimpleLink\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\SimpleLink\Source\datatypes.h">
+      <Filter>SimpleLink\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\SimpleLink\Source\driver.h">
+      <Filter>SimpleLink\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\SimpleLink\Source\flowcont.h">
+      <Filter>SimpleLink\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\SimpleLink\Source\nonos.h">
+      <Filter>SimpleLink\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\SimpleLink\Source\objInclusion.h">
+      <Filter>SimpleLink\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\SimpleLink\Source\protocol.h">
+      <Filter>SimpleLink\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\SimpleLink\Source\spawn.h">
+      <Filter>SimpleLink\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\SimpleLink Porting\user.h">
+      <Filter>SimpleLink</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\simplelink\include\fs.h">
+      <Filter>SimpleLink\Include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\SimpleLink\Source\device.c">
+      <Filter>SimpleLink\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\SimpleLink\Source\driver.c">
+      <Filter>SimpleLink\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\SimpleLink\Source\flowcont.c">
+      <Filter>SimpleLink\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\SimpleLink\Source\netapp.c">
+      <Filter>SimpleLink\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\SimpleLink\Source\netcfg.c">
+      <Filter>SimpleLink\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\SimpleLink\Source\nonos.c">
+      <Filter>SimpleLink\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\SimpleLink\Source\socket.c">
+      <Filter>SimpleLink\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\SimpleLink\Source\spawn.c">
+      <Filter>SimpleLink\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\SimpleLink\Source\wlan.c">
+      <Filter>SimpleLink\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\examples\sls_sniffer_with_filters\main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\simplelink\source\fs.c">
+      <Filter>SimpleLink\Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

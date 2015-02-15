@@ -1,0 +1,670 @@
+******************************************************************************
+                  TI ARM Linker PC v5.1.5                      
+******************************************************************************
+>> Linked Fri Jul 11 16:02:50 2014
+
+OUTPUT FILE NAME:   <getting_started_with_wlan_station.out>
+ENTRY POINT SYMBOL: "_c_int00"  address: 00006301
+
+
+MEMORY CONFIGURATION
+
+         name            origin    length      used     unused   attr    fill
+----------------------  --------  ---------  --------  --------  ----  --------
+  FLASH                 00000000   00040000  000069ba  00039646  R  X
+  SRAM                  20000000   00008000  00000415  00007beb  RW X
+
+
+SEGMENT ALLOCATION MAP
+
+run origin  load origin   length   init length attrs members
+----------  ----------- ---------- ----------- ----- -------
+00000000    00000000    000069c0   000069c0    r-x
+  00000000    00000000    0000026c   0000026c    r-- .intvecs
+  0000026c    0000026c    00006346   00006346    r-x .text
+  000065b4    000065b4    000003d0   000003d0    r-- .const
+  00006988    00006988    00000038   00000038    r-- .cinit
+20000000    20000000    00000418   00000000    rw-
+  20000000    20000000    00000258   00000000    rw- .stack
+  20000258    20000258    00000191   00000000    rw- .bss
+  200003ec    200003ec    0000002c   00000000    rw- .data
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.intvecs   0    00000000    0000026c     
+                  00000000    0000026c     tm4c123gh6pm_startup_ccs.obj (.intvecs)
+
+.init_array 
+*          0    00000000    00000000     UNINITIALIZED
+
+.text      0    0000026c    00006346     
+                  0000026c    00001ff0     driver.obj (.text)
+                  0000225c    00000ed4     socket.obj (.text)
+                  00003130    00000b44     netapp.obj (.text)
+                  00003c74    00000ab8     wlan.obj (.text)
+                  0000472c    00000924     main.obj (.text)
+                  00005050    000005b4     device.obj (.text)
+                  00005604    000001e8     spi.obj (.text)
+                  000057ec    00000130     driverlib.lib : gpio.obj (.text:GPIOPadConfigSet)
+                  0000591c    00000130     nonos.obj (.text)
+                  00005a4c    00000118     driverlib.lib : sysctl.obj (.text:SysCtlClockGet)
+                  00005b64    00000118     cli_uart.obj (.text)
+                  00005c7c    00000110     netcfg.obj (.text)
+                  00005d8c    00000100     board.obj (.text)
+                  00005e8c    000000f0     driverlib.lib : sysctl.obj (.text:SysCtlClockSet)
+                  00005f7c    0000009c     rtsv7M4_T_le_v4SPD16_eabi.lib : memcpy_t2.obj (.text)
+                  00006018    00000094                                   : auto_init.obj (.text)
+                  000060ac    00000080     flowcont.obj (.text)
+                  0000612c    00000078     rtsv7M4_T_le_v4SPD16_eabi.lib : memset_t2.obj (.text)
+                  000061a4    00000060     driverlib.lib : interrupt.obj (.text:IntEnable)
+                  00006204    0000005e     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_decompress_rle.obj (.text)
+                  00006262    00000056     driverlib.lib : gpio.obj (.text:GPIOIntTypeSet)
+                  000062b8    00000048                   : gpio.obj (.text:GPIOPinConfigure)
+                  00006300    00000048     rtsv7M4_T_le_v4SPD16_eabi.lib : boot.obj (.text)
+                  00006348    00000044                                   : cpy_tbl.obj (.text)
+                  0000638c    00000044                                   : exit.obj (.text)
+                  000063d0    00000042     driverlib.lib : ssi.obj (.text:SSIConfigSetExpClk)
+                  00006412    00000002     --HOLE-- [fill = 0]
+                  00006414    00000034                   : sysctl.obj (.text:SysCtlPeripheralEnable)
+                  00006448    0000002a                   : gpio.obj (.text:GPIODirModeSet)
+                  00006472    00000002     --HOLE-- [fill = 0]
+                  00006474    00000018     rtsv7M4_T_le_v4SPD16_eabi.lib : args_main.obj (.text)
+                  0000648c    00000014                                   : _lock.obj (.text)
+                  000064a0    00000014                                   : strlen.obj (.text)
+                  000064b4    00000012     driverlib.lib : gpio.obj (.text:GPIOPinTypeGPIOInput)
+                  000064c6    00000012                   : gpio.obj (.text:GPIOPinTypeSSI)
+                  000064d8    00000012                   : ssi.obj (.text:SSIDataGetNonBlocking)
+                  000064ea    00000012     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_zero_init.obj (.text:decompress:ZI)
+                  000064fc    00000010     driverlib.lib : fpu.obj (.text:FPUEnable)
+                  0000650c    00000010                   : fpu.obj (.text:FPULazyStackingEnable)
+                  0000651c    0000000e                   : gpio.obj (.text:GPIOIntDisable)
+                  0000652a    0000000e                   : gpio.obj (.text:GPIOIntStatus)
+                  00006538    0000000e                   : ssi.obj (.text:SSIDataPutNonBlocking)
+                  00006546    0000000e     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_decompress_none.obj (.text:decompress:none)
+                  00006554    0000000c     driverlib.lib : cpu.obj (.text:CPUcpsie)
+                  00006560    0000000c                   : gpio.obj (.text:GPIOIntEnable)
+                  0000656c    0000000c     tm4c123gh6pm_startup_ccs.obj (.text)
+                  00006578    0000000a     driverlib.lib : interrupt.obj (.text:IntMasterEnable)
+                  00006582    0000000a                   : ssi.obj (.text:SSIEnable)
+                  0000658c    0000000a                   : uart.obj (.text:UARTIntStatus)
+                  00006596    00000006                   : gpio.obj (.text:GPIOIntClear)
+                  0000659c    00000006                   : gpio.obj (.text:GPIOPinWrite)
+                  000065a2    00000006                   : sysctl.obj (.text:SysCtlDelay)
+                  000065a8    00000006     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_decompress_rle.obj (.text:decompress:rle24)
+                  000065ae    00000004     driverlib.lib : uart.obj (.text:UARTIntClear)
+
+.const     0    000065b4    000003d0     
+                  000065b4    000000b0     wlan.obj (.const:$P$T0$1)
+                  00006664    00000090     driverlib.lib : gpio.obj (.const:g_pui32GPIOBaseAddrs)
+                  000066f4    00000088     main.obj (.const)
+                  0000677c    00000070     driverlib.lib : interrupt.obj (.const)
+                  000067ec    0000006c                   : sysctl.obj (.const:g_pui32Xtals)
+                  00006858    0000003c     wlan.obj (.const)
+                  00006894    00000038     driver.obj (.const:_SlActionLookupTable)
+                  000068cc    00000034     socket.obj (.const)
+                  00006900    0000002c     main.obj (.const:$P$T0$1)
+                  0000692c    00000028     netapp.obj (.const)
+                  00006954    00000014     device.obj (.const)
+                  00006968    00000014     driver.obj (.const)
+                  0000697c    00000008     netcfg.obj (.const)
+
+.cinit     0    00006988    00000038     
+                  00006988    00000012     (.cinit..data.load) [load image, compression = rle]
+                  0000699a    00000002     --HOLE-- [fill = 0]
+                  0000699c    0000000c     (__TI_handler_table)
+                  000069a8    00000008     (.cinit..bss.load) [load image, compression = zero_init]
+                  000069b0    00000010     (__TI_cinit_table)
+
+.stack     0    20000000    00000258     UNINITIALIZED
+                  20000000    00000258     --HOLE--
+
+.bss       0    20000258    00000191     UNINITIALIZED
+                  20000258    00000164     driver.obj (.bss:g_StatMem)
+                  200003bc    00000028     nonos.obj (.bss:g__SlNonOsCB)
+                  200003e4    00000004     (.common:g_ucUARTBuffer)
+                  200003e8    00000001     (.common:IntIsMasked)
+
+.data      0    200003ec    0000002c     UNINITIALIZED
+                  200003ec    0000000c     main.obj (.data)
+                  200003f8    00000008     driver.obj (.data)
+                  20000400    00000008     rtsv7M4_T_le_v4SPD16_eabi.lib : _lock.obj (.data)
+                  20000408    00000008                                   : exit.obj (.data)
+                  20000410    00000004     board.obj (.data)
+                  20000414    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : stkdepth_vars.obj (.data)
+
+
+LINKER GENERATED COPY TABLES
+
+__TI_cinit_table @ 000069b0 records: 2, size/record: 8, table size: 16
+	.data: load addr=00006988, load size=00000012 bytes, run addr=200003ec, run size=0000002c bytes, compression=rle
+	.bss: load addr=000069a8, load size=00000008 bytes, run addr=20000258, run size=00000191 bytes, compression=zero_init
+
+
+LINKER GENERATED HANDLER TABLE
+
+__TI_handler_table @ 0000699c records: 3, size/record: 4, table size: 12
+	index: 0, handler: __TI_decompress_rle24
+	index: 1, handler: __TI_decompress_none
+	index: 2, handler: __TI_zero_init
+
+
+GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
+
+address    name
+--------   ----
+0000638d   C$$EXIT
+00005de9   CC3100_InterruptDisable
+00005ddd   CC3100_InterruptEnable
+00005db5   CC3100_disable
+00005dc9   CC3100_enable
+00005c0b   CLI_Configure
+00005b65   CLI_Read
+00005bb1   CLI_Write
+00006555   CPUcpsie
+00003791   CopyPingResultsToReport
+00005e05   Delay
+000064fd   FPUEnable
+0000650d   FPULazyStackingEnable
+00005e2b   GPIOB_intHandler
+00006449   GPIODirModeSet
+00006597   GPIOIntClear
+0000651d   GPIOIntDisable
+00006561   GPIOIntEnable
+0000652b   GPIOIntStatus
+00006263   GPIOIntTypeSet
+000057ed   GPIOPadConfigSet
+000062b9   GPIOPinConfigure
+000064b5   GPIOPinTypeGPIOInput
+000064c7   GPIOPinTypeSSI
+0000659d   GPIOPinWrite
+000061a5   IntEnable
+200003e8   IntIsMasked
+00006579   IntMasterEnable
+00005df5   MaskIntHdlr
+0000656d   ResetISR
+UNDEFED    SHT$$INIT_ARRAY$$Base
+UNDEFED    SHT$$INIT_ARRAY$$Limit
+00003033   SL_FD_CLR
+00003059   SL_FD_ISSET
+00003011   SL_FD_SET
+00003081   SL_FD_ZERO
+000063d1   SSIConfigSetExpClk
+000064d9   SSIDataGetNonBlocking
+00006539   SSIDataPutNonBlocking
+00006583   SSIEnable
+000047f1   SimpleLinkGeneralEventHandler
+000047c7   SimpleLinkHttpServerCallback
+0000478f   SimpleLinkNetAppEventHandler
+000047fd   SimpleLinkSockEventHandler
+0000472d   SimpleLinkWlanEventHandler
+00005a4d   SysCtlClockGet
+00005e8d   SysCtlClockSet
+000065a3   SysCtlDelay
+00006415   SysCtlPeripheralEnable
+00005e57   UART1_intHandler
+000065af   UARTIntClear
+0000658d   UARTIntStatus
+00005dfd   UnMaskIntHdlr
+000068e0   _SlAcceptCmdCtrl
+00006894   _SlActionLookupTable
+00001105   _SlAsyncEventGenericHandler
+00006960   _SlDeviceGetCmdCtrl
+00006964   _SlDeviceSetCmdCtrl
+00001b1d   _SlDrvBasicCmd
+000017cb   _SlDrvClassifyRxMsg
+00000431   _SlDrvCmdOp
+000004b9   _SlDrvCmdSend
+00000505   _SlDrvDataReadOp
+0000070d   _SlDrvDataWriteOp
+00005585   _SlDrvDeviceEventHandler
+0000034b   _SlDrvDriverCBDeinit
+0000026d   _SlDrvDriverCBInit
+000060eb   _SlDrvFlowContDeinit
+000060ad   _SlDrvFlowContInit
+00000ad1   _SlDrvMsgRead
+000015e9   _SlDrvMsgReadCmdCtx
+000016e3   _SlDrvMsgReadSpawnCtx
+000008dd   _SlDrvMsgWrite
+00003b61   _SlDrvNetAppEventHandler
+0000200f   _SlDrvObjDeInit
+00001f93   _SlDrvObjInit
+00001d89   _SlDrvReleasePoolObj
+00001911   _SlDrvRxHdrRead
+000003ef   _SlDrvRxIrqHandler
+000018c9   _SlDrvShiftDWord
+00001b81   _SlDrvWaitForPoolObj
+0000695c   _SlEventMaskGetCmdCtrl
+00006958   _SlEventMaskSetCmdCtrl
+000020ed   _SlFindAndSetActiveObj
+00006940   _SlGetHostByNameCtrl
+0000693c   _SlGetHostByServiceCtrl
+00006934   _SlGetServiceListeCtrl
+000068ec   _SlGetSockOptCmdCtrl
+000068dc   _SlListenCmdCtrl
+0000694c   _SlNetAppGetCmdCtrl
+00006948   _SlNetAppSendTokenValueCmdCtrl
+00006944   _SlNetAppSetCmdCtrl
+0000692c   _SlNetAppStartCtrl
+00006930   _SlNetAppStopCtrl
+00006980   _SlNetCfgGetCmdCtrl
+0000697c   _SlNetCfgSetCmdCtrl
+000059e1   _SlNonOsMainLoopTask
+00005935   _SlNonOsSemGet
+0000591d   _SlNonOsSemSet
+00005991   _SlNonOsSpawn
+0000685c   _SlPolicyGetCmdCtrl
+00006858   _SlPolicySetCmdCtrl
+00006864   _SlProfileDelCmdCtrl
+00006860   _SlProfileGetCmdCtrl
+000068e4   _SlRecvCmdCtrl
+000068d4   _SlRecvfomCmdCtrl
+00006938   _SlRegisterServiceCtrl
+0000202f   _SlRemoveFromList
+0000686c   _SlRxFilterAddtCmdCtrl
+00006874   _SlRxFilterGetCmdCtrl
+00006870   _SlRxFilterSetCmdCtrl
+000068f0   _SlSelectCmdCtrl
+000068d8   _SlSendCmdCtrl
+000068e8   _SlSetSockOptCmdCtrl
+00006878   _SlSmartConfigStartCmdCtrl
+000068d0   _SlSockCloseCmdCtrl
+000068cc   _SlSockSocketCmdCtrl
+00006954   _SlStopCmdCtrl
+00006884   _SlWlanCfgGetCmdCtrl
+00006880   _SlWlanCfgSetCmdCtrl
+00006868   _SlWlanGetNetworkListCtrl
+0000687c   _SlWlanSetModeCmdCtrl
+20000258   __STACK_END
+00000258   __STACK_SIZE
+20000200   __STACK_TOP
+000069b0   __TI_CINIT_Base
+000069c0   __TI_CINIT_Limit
+0000699c   __TI_Handler_Table_Base
+000069a8   __TI_Handler_Table_Limit
+00000001   __TI_args_main
+00006019   __TI_auto_init
+20000408   __TI_cleanup_ptr
+00006547   __TI_decompress_none
+000065a9   __TI_decompress_rle24
+2000040c   __TI_dtors_ptr
+00000000   __TI_static_base__
+000064eb   __TI_zero_init
+0000612d   __aeabi_memclr
+0000612d   __aeabi_memclr4
+0000612d   __aeabi_memclr8
+00005f7d   __aeabi_memcpy
+00005f7d   __aeabi_memcpy4
+00005f7d   __aeabi_memcpy8
+0000612f   __aeabi_memset
+0000612f   __aeabi_memset4
+0000612f   __aeabi_memset8
+ffffffff   __binit__
+ffffffff   __c_args__
+20000000   __stack
+00006475   _args_main
+00006301   _c_int00
+20000400   _lock
+0000649b   _nop
+00006493   _register_lock
+0000648d   _register_unlock
+0000225d   _sl_BuildAddress
+00005051   _sl_GetStartResponseConvert
+00002c71   _sl_HandleAsync_Accept
+0000286b   _sl_HandleAsync_Connect
+00003579   _sl_HandleAsync_DnsGetHostByAddr
+000036cd   _sl_HandleAsync_DnsGetHostByName
+000034a9   _sl_HandleAsync_DnsGetHostByService
+000051b5   _sl_HandleAsync_InitComplete
+000037cd   _sl_HandleAsync_PingResponse
+00003099   _sl_HandleAsync_Select
+00005267   _sl_HandleAsync_Stop
+00002375   _sl_ParseAddress
+000022ad   _sl_TruncatePayloadByProtocol
+20000404   _unlock
+00006391   abort
+ffffffff   binit
+00006349   copy_in
+00006399   exit
+200003f4   g_GatewayIP
+00006970   g_H2NCnysPattern
+00006968   g_H2NSyncPattern
+200003f0   g_PingPacketsRecv
+20000258   g_StatMem
+200003ec   g_Status
+200003bc   g__SlNonOsCB
+200003f8   g_pCB
+00000000   g_pfnVectors
+200003e4   g_ucUARTBuffer
+00005d8d   initClk
+00004815   main
+20000414   main_func_sp
+00005f7d   memcpy
+00006135   memset
+20000410   pIrqEventHandler
+200003fc   pPingCallBackFunc
+00005da1   registerInterruptHandler
+00002a6d   sl_Accept
+0000244f   sl_Bind
+00002425   sl_Close
+00002715   sl_Connect
+00005481   sl_DevGet
+0000551f   sl_DevSet
+0000544d   sl_EventMaskGet
+00005413   sl_EventMaskSet
+00002df1   sl_GetSockOpt
+00002bef   sl_Htonl
+00002c31   sl_Htons
+00002a2d   sl_Listen
+00003589   sl_NetAppDnsGetHostByName
+00003379   sl_NetAppDnsGetHostByService
+00003ad1   sl_NetAppGet
+00003179   sl_NetAppGetServiceList
+000032fd   sl_NetAppMDNSRegisterService
+00003249   sl_NetAppMDNSRegisterUnregisterService
+00003339   sl_NetAppMDNSUnRegisterService
+00003891   sl_NetAppPingStart
+00003a6d   sl_NetAppSendTokenValue
+00003a03   sl_NetAppSet
+00003131   sl_NetAppStart
+00003155   sl_NetAppStop
+00005ce3   sl_NetCfgGet
+00005c7d   sl_NetCfgSet
+00002d09   sl_Recv
+000025f3   sl_RecvFrom
+00002e8b   sl_Select
+0000291d   sl_Send
+000024d7   sl_SendTo
+00002d85   sl_SetSockOpt
+000023cf   sl_Socket
+000050b1   sl_Start
+000052eb   sl_Stop
+000050a9   sl_Task
+00003c75   sl_WlanConnect
+00003ea7   sl_WlanDisconnect
+00004675   sl_WlanGet
+0000433d   sl_WlanGetNetworkList
+00003f1d   sl_WlanPolicyGet
+00003eb3   sl_WlanPolicySet
+00003fc1   sl_WlanProfileAdd
+0000430f   sl_WlanProfileDel
+0000422d   sl_WlanProfileGet
+000043af   sl_WlanRxFilterAdd
+00004471   sl_WlanRxFilterGet
+0000441d   sl_WlanRxFilterSet
+000044ff   sl_WlanRxStatGet
+000044e7   sl_WlanRxStatStart
+000044f3   sl_WlanRxStatStop
+00004601   sl_WlanSet
+000045d1   sl_WlanSetMode
+00004545   sl_WlanSmartConfigStart
+00004535   sl_WlanSmartConfigStop
+00005605   spi_Close
+00005611   spi_Open
+00005751   spi_Read
+000056f7   spi_Write
+00005d9f   stopWDT
+000064a1   strlen
+
+
+GLOBAL SYMBOLS: SORTED BY Symbol Address 
+
+address    name
+--------   ----
+00000000   __TI_static_base__
+00000000   g_pfnVectors
+00000001   __TI_args_main
+00000258   __STACK_SIZE
+0000026d   _SlDrvDriverCBInit
+0000034b   _SlDrvDriverCBDeinit
+000003ef   _SlDrvRxIrqHandler
+00000431   _SlDrvCmdOp
+000004b9   _SlDrvCmdSend
+00000505   _SlDrvDataReadOp
+0000070d   _SlDrvDataWriteOp
+000008dd   _SlDrvMsgWrite
+00000ad1   _SlDrvMsgRead
+00001105   _SlAsyncEventGenericHandler
+000015e9   _SlDrvMsgReadCmdCtx
+000016e3   _SlDrvMsgReadSpawnCtx
+000017cb   _SlDrvClassifyRxMsg
+000018c9   _SlDrvShiftDWord
+00001911   _SlDrvRxHdrRead
+00001b1d   _SlDrvBasicCmd
+00001b81   _SlDrvWaitForPoolObj
+00001d89   _SlDrvReleasePoolObj
+00001f93   _SlDrvObjInit
+0000200f   _SlDrvObjDeInit
+0000202f   _SlRemoveFromList
+000020ed   _SlFindAndSetActiveObj
+0000225d   _sl_BuildAddress
+000022ad   _sl_TruncatePayloadByProtocol
+00002375   _sl_ParseAddress
+000023cf   sl_Socket
+00002425   sl_Close
+0000244f   sl_Bind
+000024d7   sl_SendTo
+000025f3   sl_RecvFrom
+00002715   sl_Connect
+0000286b   _sl_HandleAsync_Connect
+0000291d   sl_Send
+00002a2d   sl_Listen
+00002a6d   sl_Accept
+00002bef   sl_Htonl
+00002c31   sl_Htons
+00002c71   _sl_HandleAsync_Accept
+00002d09   sl_Recv
+00002d85   sl_SetSockOpt
+00002df1   sl_GetSockOpt
+00002e8b   sl_Select
+00003011   SL_FD_SET
+00003033   SL_FD_CLR
+00003059   SL_FD_ISSET
+00003081   SL_FD_ZERO
+00003099   _sl_HandleAsync_Select
+00003131   sl_NetAppStart
+00003155   sl_NetAppStop
+00003179   sl_NetAppGetServiceList
+00003249   sl_NetAppMDNSRegisterUnregisterService
+000032fd   sl_NetAppMDNSRegisterService
+00003339   sl_NetAppMDNSUnRegisterService
+00003379   sl_NetAppDnsGetHostByService
+000034a9   _sl_HandleAsync_DnsGetHostByService
+00003579   _sl_HandleAsync_DnsGetHostByAddr
+00003589   sl_NetAppDnsGetHostByName
+000036cd   _sl_HandleAsync_DnsGetHostByName
+00003791   CopyPingResultsToReport
+000037cd   _sl_HandleAsync_PingResponse
+00003891   sl_NetAppPingStart
+00003a03   sl_NetAppSet
+00003a6d   sl_NetAppSendTokenValue
+00003ad1   sl_NetAppGet
+00003b61   _SlDrvNetAppEventHandler
+00003c75   sl_WlanConnect
+00003ea7   sl_WlanDisconnect
+00003eb3   sl_WlanPolicySet
+00003f1d   sl_WlanPolicyGet
+00003fc1   sl_WlanProfileAdd
+0000422d   sl_WlanProfileGet
+0000430f   sl_WlanProfileDel
+0000433d   sl_WlanGetNetworkList
+000043af   sl_WlanRxFilterAdd
+0000441d   sl_WlanRxFilterSet
+00004471   sl_WlanRxFilterGet
+000044e7   sl_WlanRxStatStart
+000044f3   sl_WlanRxStatStop
+000044ff   sl_WlanRxStatGet
+00004535   sl_WlanSmartConfigStop
+00004545   sl_WlanSmartConfigStart
+000045d1   sl_WlanSetMode
+00004601   sl_WlanSet
+00004675   sl_WlanGet
+0000472d   SimpleLinkWlanEventHandler
+0000478f   SimpleLinkNetAppEventHandler
+000047c7   SimpleLinkHttpServerCallback
+000047f1   SimpleLinkGeneralEventHandler
+000047fd   SimpleLinkSockEventHandler
+00004815   main
+00005051   _sl_GetStartResponseConvert
+000050a9   sl_Task
+000050b1   sl_Start
+000051b5   _sl_HandleAsync_InitComplete
+00005267   _sl_HandleAsync_Stop
+000052eb   sl_Stop
+00005413   sl_EventMaskSet
+0000544d   sl_EventMaskGet
+00005481   sl_DevGet
+0000551f   sl_DevSet
+00005585   _SlDrvDeviceEventHandler
+00005605   spi_Close
+00005611   spi_Open
+000056f7   spi_Write
+00005751   spi_Read
+000057ed   GPIOPadConfigSet
+0000591d   _SlNonOsSemSet
+00005935   _SlNonOsSemGet
+00005991   _SlNonOsSpawn
+000059e1   _SlNonOsMainLoopTask
+00005a4d   SysCtlClockGet
+00005b65   CLI_Read
+00005bb1   CLI_Write
+00005c0b   CLI_Configure
+00005c7d   sl_NetCfgSet
+00005ce3   sl_NetCfgGet
+00005d8d   initClk
+00005d9f   stopWDT
+00005da1   registerInterruptHandler
+00005db5   CC3100_disable
+00005dc9   CC3100_enable
+00005ddd   CC3100_InterruptEnable
+00005de9   CC3100_InterruptDisable
+00005df5   MaskIntHdlr
+00005dfd   UnMaskIntHdlr
+00005e05   Delay
+00005e2b   GPIOB_intHandler
+00005e57   UART1_intHandler
+00005e8d   SysCtlClockSet
+00005f7d   __aeabi_memcpy
+00005f7d   __aeabi_memcpy4
+00005f7d   __aeabi_memcpy8
+00005f7d   memcpy
+00006019   __TI_auto_init
+000060ad   _SlDrvFlowContInit
+000060eb   _SlDrvFlowContDeinit
+0000612d   __aeabi_memclr
+0000612d   __aeabi_memclr4
+0000612d   __aeabi_memclr8
+0000612f   __aeabi_memset
+0000612f   __aeabi_memset4
+0000612f   __aeabi_memset8
+00006135   memset
+000061a5   IntEnable
+00006263   GPIOIntTypeSet
+000062b9   GPIOPinConfigure
+00006301   _c_int00
+00006349   copy_in
+0000638d   C$$EXIT
+00006391   abort
+00006399   exit
+000063d1   SSIConfigSetExpClk
+00006415   SysCtlPeripheralEnable
+00006449   GPIODirModeSet
+00006475   _args_main
+0000648d   _register_unlock
+00006493   _register_lock
+0000649b   _nop
+000064a1   strlen
+000064b5   GPIOPinTypeGPIOInput
+000064c7   GPIOPinTypeSSI
+000064d9   SSIDataGetNonBlocking
+000064eb   __TI_zero_init
+000064fd   FPUEnable
+0000650d   FPULazyStackingEnable
+0000651d   GPIOIntDisable
+0000652b   GPIOIntStatus
+00006539   SSIDataPutNonBlocking
+00006547   __TI_decompress_none
+00006555   CPUcpsie
+00006561   GPIOIntEnable
+0000656d   ResetISR
+00006579   IntMasterEnable
+00006583   SSIEnable
+0000658d   UARTIntStatus
+00006597   GPIOIntClear
+0000659d   GPIOPinWrite
+000065a3   SysCtlDelay
+000065a9   __TI_decompress_rle24
+000065af   UARTIntClear
+00006858   _SlPolicySetCmdCtrl
+0000685c   _SlPolicyGetCmdCtrl
+00006860   _SlProfileGetCmdCtrl
+00006864   _SlProfileDelCmdCtrl
+00006868   _SlWlanGetNetworkListCtrl
+0000686c   _SlRxFilterAddtCmdCtrl
+00006870   _SlRxFilterSetCmdCtrl
+00006874   _SlRxFilterGetCmdCtrl
+00006878   _SlSmartConfigStartCmdCtrl
+0000687c   _SlWlanSetModeCmdCtrl
+00006880   _SlWlanCfgSetCmdCtrl
+00006884   _SlWlanCfgGetCmdCtrl
+00006894   _SlActionLookupTable
+000068cc   _SlSockSocketCmdCtrl
+000068d0   _SlSockCloseCmdCtrl
+000068d4   _SlRecvfomCmdCtrl
+000068d8   _SlSendCmdCtrl
+000068dc   _SlListenCmdCtrl
+000068e0   _SlAcceptCmdCtrl
+000068e4   _SlRecvCmdCtrl
+000068e8   _SlSetSockOptCmdCtrl
+000068ec   _SlGetSockOptCmdCtrl
+000068f0   _SlSelectCmdCtrl
+0000692c   _SlNetAppStartCtrl
+00006930   _SlNetAppStopCtrl
+00006934   _SlGetServiceListeCtrl
+00006938   _SlRegisterServiceCtrl
+0000693c   _SlGetHostByServiceCtrl
+00006940   _SlGetHostByNameCtrl
+00006944   _SlNetAppSetCmdCtrl
+00006948   _SlNetAppSendTokenValueCmdCtrl
+0000694c   _SlNetAppGetCmdCtrl
+00006954   _SlStopCmdCtrl
+00006958   _SlEventMaskSetCmdCtrl
+0000695c   _SlEventMaskGetCmdCtrl
+00006960   _SlDeviceGetCmdCtrl
+00006964   _SlDeviceSetCmdCtrl
+00006968   g_H2NSyncPattern
+00006970   g_H2NCnysPattern
+0000697c   _SlNetCfgSetCmdCtrl
+00006980   _SlNetCfgGetCmdCtrl
+0000699c   __TI_Handler_Table_Base
+000069a8   __TI_Handler_Table_Limit
+000069b0   __TI_CINIT_Base
+000069c0   __TI_CINIT_Limit
+20000000   __stack
+20000200   __STACK_TOP
+20000258   __STACK_END
+20000258   g_StatMem
+200003bc   g__SlNonOsCB
+200003e4   g_ucUARTBuffer
+200003e8   IntIsMasked
+200003ec   g_Status
+200003f0   g_PingPacketsRecv
+200003f4   g_GatewayIP
+200003f8   g_pCB
+200003fc   pPingCallBackFunc
+20000400   _lock
+20000404   _unlock
+20000408   __TI_cleanup_ptr
+2000040c   __TI_dtors_ptr
+20000410   pIrqEventHandler
+20000414   main_func_sp
+ffffffff   __binit__
+ffffffff   __c_args__
+ffffffff   binit
+UNDEFED    SHT$$INIT_ARRAY$$Base
+UNDEFED    SHT$$INIT_ARRAY$$Limit
+
+[252 symbols]

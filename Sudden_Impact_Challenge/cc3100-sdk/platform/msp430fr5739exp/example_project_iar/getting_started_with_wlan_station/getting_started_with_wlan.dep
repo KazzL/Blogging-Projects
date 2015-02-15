@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project>
+  <fileVersion>2</fileVersion>
+  <fileChecksum>2880947016</fileChecksum>
+  <configuration>
+    <name>Debug</name>
+    <outputs>
+      <file>$PROJ_DIR$\..\..\board.h</file>
+      <file>$PROJ_DIR$\..\..\board.c</file>
+      <file>$PROJ_DIR$\..\..\cli_uart.c</file>
+      <file>$PROJ_DIR$\..\..\cli_uart.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\include\device.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\include\fs.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\include\netapp.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\include\netcfg.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\include\simplelink.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\include\socket.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\include\trace.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\include\wlan.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\include\wlan_rx_filters.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\source\datatypes.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\source\device.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\source\driver.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\source\driver.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\source\flowcont.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\source\flowcont.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\source\fs.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\source\netapp.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\source\netcfg.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\source\nonos.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\source\nonos.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\source\objInclusion.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\source\protocol.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\source\socket.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\source\spawn.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\source\spawn.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\simplelink\source\wlan.c</file>
+      <file>$PROJ_DIR$\..\..\user.h</file>
+      <file>$PROJ_DIR$\..\..\spi.c</file>
+      <file>$PROJ_DIR$\..\..\spi.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\examples\getting_started_with_wlan_station\main.c</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\ysizet.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Threads.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\string.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\fs.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\spi.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\flowcont.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\board.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\spi.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\fs.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\socket.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\spawn.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\board.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\wlan.pbi</file>
+      <file>$PROJ_DIR$\Debug\Exe\getting_started_with_wlan.d43</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\yvals.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\nonos.r43</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\ycheck.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\getting_started_with_wlan.pbd</file>
+      <file>$TOOLKIT_DIR$\inc\msp430.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\spawn.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\in430.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\driver.r43</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\xencoding_limits.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\wlan.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\socket.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Product.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\netapp.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\cli_uart.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\driver.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\netcfg.pbi</file>
+      <file>$TOOLKIT_DIR$\lib\dlib\dl430xlsfn.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\nonos.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\netapp.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\flowcont.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\cli_uart.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\device.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\netcfg.r43</file>
+      <file>$TOOLKIT_DIR$\inc\msp430fr5739.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Defaults.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\device.r43</file>
+      <file>$PROJ_DIR$\Debug\Exe\getting_started_with_wlan.ulp</file>
+      <file>$PROJ_DIR$\Debug\List\main.s43</file>
+      <file>$PROJ_DIR$\Debug\List\board.lst</file>
+      <file>$PROJ_DIR$\Debug\List\socket.s43</file>
+      <file>$PROJ_DIR$\Debug\List\socket.lst</file>
+      <file>$PROJ_DIR$\Debug\List\device.lst</file>
+      <file>$PROJ_DIR$\Debug\List\nonos.s43</file>
+      <file>$PROJ_DIR$\Debug\List\netcfg.lst</file>
+      <file>$PROJ_DIR$\Debug\List\flowcont.lst</file>
+      <file>$PROJ_DIR$\Debug\List\main.lst</file>
+      <file>$PROJ_DIR$\Debug\List\board.s43</file>
+      <file>$PROJ_DIR$\Debug\List\flowcont.s43</file>
+      <file>$PROJ_DIR$\Debug\List\driver.lst</file>
+      <file>$PROJ_DIR$\Debug\List\driver.s43</file>
+      <file>$PROJ_DIR$\Debug\List\cli_uart.s43</file>
+      <file>$PROJ_DIR$\Debug\List\device.s43</file>
+      <file>$PROJ_DIR$\Debug\List\cli_uart.lst</file>
+      <file>$PROJ_DIR$\..\..\..\..\examples\common\sl_common.h</file>
+      <file>$PROJ_DIR$\Debug\List\netcfg.s43</file>
+      <file>$PROJ_DIR$\Debug\List\fs.lst</file>
+      <file>$PROJ_DIR$\Debug\List\nonos.lst</file>
+      <file>$PROJ_DIR$\Debug\List\netapp.s43</file>
+      <file>$PROJ_DIR$\Debug\List\netapp.lst</file>
+      <file>$PROJ_DIR$\Debug\List\fs.s43</file>
+      <file>$PROJ_DIR$\Debug\List\wlan.s43</file>
+      <file>$PROJ_DIR$\Debug\List\spawn.s43</file>
+      <file>$PROJ_DIR$\Debug\List\spi.lst</file>
+      <file>$PROJ_DIR$\Debug\List\spawn.lst</file>
+      <file>$TOOLKIT_DIR$\config\linker\multiplier32_loc2.xcl</file>
+      <file>$PROJ_DIR$\Debug\List\spi.s43</file>
+      <file>$PROJ_DIR$\lnk430fr5739.xcl</file>
+      <file>$PROJ_DIR$\Debug\List\wlan.lst</file>
+      <file>$TOOLKIT_DIR$\lib\dlib\dl430xlsfn.r43</file>
+      <file>$PROJ_DIR$\Debug\List\getting_started_with_wlan.map</file>
+    </outputs>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 50 110</file>
+        </tool>
+        <tool>
+          <name>ULP430</name>
+          <file> 77</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\board.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 48</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 87 79 40</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 0 55 74 57 43</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 0 55 74 57 43</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\cli_uart.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 71</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 91 93 64</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 3 36 53 51 75 67 62 59 35 34 55 74 57 43</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 3 36 53 51 75 67 62 59 35 34 55 74 57 43</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\simplelink\source\device.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 72</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 92 82 76</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 25 18 16</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 25 18 16</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\simplelink\source\driver.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 65</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 90 89 58</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 25 16 18</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 25 16 18</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\simplelink\source\flowcont.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 39</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 88 85 70</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 25 16 18</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 25 16 18</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\simplelink\source\fs.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 42</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 100 96 37</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 25 16</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 25 16</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\simplelink\source\netapp.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 63</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 98 99 69</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 25 16</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 25 16</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\simplelink\source\netcfg.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 66</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 95 84 73</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 25 16</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 25 16</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\simplelink\source\nonos.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 68</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 83 97 52</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 25 16</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 25 16</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\simplelink\source\socket.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 61</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 80 81 44</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 25 16</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 25 16</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\simplelink\source\spawn.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 56</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 102 104 45</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\simplelink\source\wlan.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 49</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 101 108 60</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 25 16</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 25 16</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\spi.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 38</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 106 103 41</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\examples\getting_started_with_wlan_station\main.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 46</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 78 86 47</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 94</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 8 30 36 53 51 75 67 62 59 35 34 55 74 57 43 0 32 3 23 24 10 5 9 6 11 4 7 12 94</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\getting_started_with_wlan.d43</name>
+      <outputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 110</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 107 105 40 64 76 58 70 37 47 69 73 52 44 45 41 60 109</file>
+        </tool>
+      </inputs>
+    </file>
+  </configuration>
+  <configuration>
+    <name>Release</name>
+    <outputs/>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>XLINK</tool>
+    </forcedrebuild>
+  </configuration>
+</project>
+
+

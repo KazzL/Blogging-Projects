@@ -5,26 +5,189 @@
 'Building file: ../main.c'
 'Invoking: MSP430 Compiler'
 "c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=coffabi -O4 --include_path="c:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/examples/common" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp" --include_path="c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -g --define=__CCS__ --define=_USE_CLI_ --define=__MSP430F5529__ --diag_warning=225 --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="main.pp"  "../main.c"
-"../main.c", line 147: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 179: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 185: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 196: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 202: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 161: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 193: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 199: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 210: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
 "../main.c", line 216: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 248: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 255: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 275: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 319: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 363: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 374: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 386: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 640: error #131: expected a "{"
-"../main.c", line 1144: warning #169-D: argument of type "char *" is incompatible with parameter of type "unsigned char *"
-"../main.c", line 1147: warning #169-D: argument of type "char *" is incompatible with parameter of type "unsigned char *"
-1 error detected in the compilation of "../main.c".
+"../main.c", line 230: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 262: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 269: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 289: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 332: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 371: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 382: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 394: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 1151: warning #169-D: argument of type "char *" is incompatible with parameter of type "unsigned char *"
+"../main.c", line 1154: warning #169-D: argument of type "char *" is incompatible with parameter of type "unsigned char *"
+'Finished building: ../main.c'
+' '
+'Building target: tcp_socket.out'
+'Invoking: MSP430 Linker'
+"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=coffabi -O4 -g --define=__CCS__ --define=_USE_CLI_ --define=__MSP430F5529__ --diag_warning=225 --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal -z -m"tcp_socket.map" --heap_size=0 --stack_size=400 --use_hw_mpy=F5 --cinit_hold_wdt=on -i"c:/ti/ccsv6/ccs_base/msp430/include" -i"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/lib" -i"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -i"c:/ti/ccsv6/ccs_base/msp430/lib" -i"c:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" --reread_libs --warn_sections --display_error_number --xml_link_info="tcp_socket_linkInfo.xml" --rom_model -o "tcp_socket.out"  "./main.obj" "./spi/spi.obj" "./simplelink/source/device.obj" "./simplelink/source/driver.obj" "./simplelink/source/flowcont.obj" "./simplelink/source/fs.obj" "./simplelink/source/netapp.obj" "./simplelink/source/netcfg.obj" "./simplelink/source/nonos.obj" "./simplelink/source/socket.obj" "./simplelink/source/spawn.obj" "./simplelink/source/wlan.obj" "./cli_uart/cli_uart.obj" "./board/board.obj" "../lnk_msp430f5529.cmd" -l"libc.a" 
+<Linking>
+"C:\Users\SAPL-025\AppData\Local\Temp\6819610", ERROR!   at line 20:
+ [E0300]
+         Symbol __TI_int45 has already been defined
+		.intvec	".int45",	Trap_ISR
+
+1 Assembly Error, No Assembly Warnings
+
+Errors in Source - Assembler Aborted
 
 >> Compilation failure
-gmake: *** [main.obj] Error 1
+
+fatal error #10192: Failed linktime optimization
+>> Compilation failure
+
+>> Compilation failure
+gmake: *** [tcp_socket.out] Error 1
+gmake: Target `all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Clean-only build of configuration Debug for project tcp_socket ****
+
+"c:\\ti\\ccsv6\\utils\\bin\\gmake" -k clean 
+DEL /F  "tcp_socket.out"  "tcp_socket.hex" 
+Could Not Find C:\Users\SAPL-025\Documents\element14-projects-software\Sudden_Impact_Challenge\Workspace\tcp_socket\Debug\tcp_socket.out
+DEL /F "main.pp" "spi\spi.pp" "simplelink\source\device.pp" "simplelink\source\driver.pp" "simplelink\source\flowcont.pp" "simplelink\source\fs.pp" "simplelink\source\netapp.pp" "simplelink\source\netcfg.pp" "simplelink\source\nonos.pp" "simplelink\source\socket.pp" "simplelink\source\spawn.pp" "simplelink\source\wlan.pp" "cli_uart\cli_uart.pp" "board\board.pp" 
+DEL /F "main.obj" "spi\spi.obj" "simplelink\source\device.obj" "simplelink\source\driver.obj" "simplelink\source\flowcont.obj" "simplelink\source\fs.obj" "simplelink\source\netapp.obj" "simplelink\source\netcfg.obj" "simplelink\source\nonos.obj" "simplelink\source\socket.obj" "simplelink\source\spawn.obj" "simplelink\source\wlan.obj" "cli_uart\cli_uart.obj" "board\board.obj" 
+'Finished clean'
+' '
+
+**** Build Finished ****
+
+**** Clean-only build of configuration Debug for project tcp_socket ****
+
+"c:\\ti\\ccsv6\\utils\\bin\\gmake" -k clean 
+DEL /F  "tcp_socket.out"  "tcp_socket.hex" 
+Could Not Find C:\Users\SAPL-025\Documents\element14-projects-software\Sudden_Impact_Challenge\Workspace\tcp_socket\Debug\tcp_socket.out
+DEL /F "main.pp" "spi\spi.pp" "simplelink\source\device.pp" "simplelink\source\driver.pp" "simplelink\source\flowcont.pp" "simplelink\source\fs.pp" "simplelink\source\netapp.pp" "simplelink\source\netcfg.pp" "simplelink\source\nonos.pp" "simplelink\source\socket.pp" "simplelink\source\spawn.pp" "simplelink\source\wlan.pp" "cli_uart\cli_uart.pp" "board\board.pp" 
+Could Not Find C:\Users\SAPL-025\Documents\element14-projects-software\Sudden_Impact_Challenge\Workspace\tcp_socket\Debug\main.pp
+Could Not Find C:\Users\SAPL-025\Documents\element14-projects-software\Sudden_Impact_Challenge\Workspace\tcp_socket\Debug\spi\spi.pp
+Could Not Find C:\Users\SAPL-025\Documents\element14-projects-software\Sudden_Impact_Challenge\Workspace\tcp_socket\Debug\simplelink\source\device.pp
+Could Not Find C:\Users\SAPL-025\Documents\element14-projects-software\Sudden_Impact_Challenge\Workspace\tcp_socket\Debug\cli_uart\cli_uart.pp
+Could Not Find C:\Users\SAPL-025\Documents\element14-projects-software\Sudden_Impact_Challenge\Workspace\tcp_socket\Debug\board\board.pp
+DEL /F "main.obj" "spi\spi.obj" "simplelink\source\device.obj" "simplelink\source\driver.obj" "simplelink\source\flowcont.obj" "simplelink\source\fs.obj" "simplelink\source\netapp.obj" "simplelink\source\netcfg.obj" "simplelink\source\nonos.obj" "simplelink\source\socket.obj" "simplelink\source\spawn.obj" "simplelink\source\wlan.obj" "cli_uart\cli_uart.obj" "board\board.obj" 
+Could Not Find C:\Users\SAPL-025\Documents\element14-projects-software\Sudden_Impact_Challenge\Workspace\tcp_socket\Debug\main.obj
+Could Not Find C:\Users\SAPL-025\Documents\element14-projects-software\Sudden_Impact_Challenge\Workspace\tcp_socket\Debug\spi\spi.obj
+Could Not Find C:\Users\SAPL-025\Documents\element14-projects-software\Sudden_Impact_Challenge\Workspace\tcp_socket\Debug\simplelink\source\device.obj
+Could Not Find C:\Users\SAPL-025\Documents\element14-projects-software\Sudden_Impact_Challenge\Workspace\tcp_socket\Debug\cli_uart\cli_uart.obj
+Could Not Find C:\Users\SAPL-025\Documents\element14-projects-software\Sudden_Impact_Challenge\Workspace\tcp_socket\Debug\board\board.obj
+'Finished clean'
+' '
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project tcp_socket ****
+
+"c:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
+'Building file: ../main.c'
+'Invoking: MSP430 Compiler'
+"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=coffabi -O4 --include_path="c:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/examples/common" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp" --include_path="c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -g --define=__CCS__ --define=_USE_CLI_ --define=__MSP430F5529__ --diag_warning=225 --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="main.pp"  "../main.c"
+"../main.c", line 161: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 193: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 199: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 210: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 216: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 230: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 262: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 269: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 289: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 332: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 371: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 382: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 394: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 1151: warning #169-D: argument of type "char *" is incompatible with parameter of type "unsigned char *"
+"../main.c", line 1154: warning #169-D: argument of type "char *" is incompatible with parameter of type "unsigned char *"
+'Finished building: ../main.c'
+' '
+'Building file: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp/spi.c'
+'Invoking: MSP430 Compiler'
+"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=coffabi -O4 --include_path="c:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/examples/common" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp" --include_path="c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -g --define=__CCS__ --define=_USE_CLI_ --define=__MSP430F5529__ --diag_warning=225 --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="spi/spi.pp" --obj_directory="spi"  "C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp/spi.c"
+'Finished building: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp/spi.c'
+' '
+'Building file: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/device.c'
+'Invoking: MSP430 Compiler'
+"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=coffabi -O4 --include_path="c:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/examples/common" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp" --include_path="c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -g --define=__CCS__ --define=_USE_CLI_ --define=__MSP430F5529__ --diag_warning=225 --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="simplelink/source/device.pp" --obj_directory="simplelink/source"  "C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/device.c"
+'Finished building: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/device.c'
+' '
+'Building file: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/driver.c'
+'Invoking: MSP430 Compiler'
+"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=coffabi -O4 --include_path="c:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/examples/common" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp" --include_path="c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -g --define=__CCS__ --define=_USE_CLI_ --define=__MSP430F5529__ --diag_warning=225 --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="simplelink/source/driver.pp" --obj_directory="simplelink/source"  "C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/driver.c"
+'Finished building: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/driver.c'
+' '
+'Building file: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/flowcont.c'
+'Invoking: MSP430 Compiler'
+"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=coffabi -O4 --include_path="c:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/examples/common" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp" --include_path="c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -g --define=__CCS__ --define=_USE_CLI_ --define=__MSP430F5529__ --diag_warning=225 --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="simplelink/source/flowcont.pp" --obj_directory="simplelink/source"  "C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/flowcont.c"
+'Finished building: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/flowcont.c'
+' '
+'Building file: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/fs.c'
+'Invoking: MSP430 Compiler'
+"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=coffabi -O4 --include_path="c:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/examples/common" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp" --include_path="c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -g --define=__CCS__ --define=_USE_CLI_ --define=__MSP430F5529__ --diag_warning=225 --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="simplelink/source/fs.pp" --obj_directory="simplelink/source"  "C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/fs.c"
+'Finished building: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/fs.c'
+' '
+'Building file: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/netapp.c'
+'Invoking: MSP430 Compiler'
+"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=coffabi -O4 --include_path="c:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/examples/common" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp" --include_path="c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -g --define=__CCS__ --define=_USE_CLI_ --define=__MSP430F5529__ --diag_warning=225 --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="simplelink/source/netapp.pp" --obj_directory="simplelink/source"  "C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/netapp.c"
+'Finished building: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/netapp.c'
+' '
+'Building file: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/netcfg.c'
+'Invoking: MSP430 Compiler'
+"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=coffabi -O4 --include_path="c:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/examples/common" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp" --include_path="c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -g --define=__CCS__ --define=_USE_CLI_ --define=__MSP430F5529__ --diag_warning=225 --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="simplelink/source/netcfg.pp" --obj_directory="simplelink/source"  "C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/netcfg.c"
+'Finished building: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/netcfg.c'
+' '
+'Building file: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/nonos.c'
+'Invoking: MSP430 Compiler'
+"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=coffabi -O4 --include_path="c:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/examples/common" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp" --include_path="c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -g --define=__CCS__ --define=_USE_CLI_ --define=__MSP430F5529__ --diag_warning=225 --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="simplelink/source/nonos.pp" --obj_directory="simplelink/source"  "C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/nonos.c"
+'Finished building: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/nonos.c'
+' '
+'Building file: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/socket.c'
+'Invoking: MSP430 Compiler'
+"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=coffabi -O4 --include_path="c:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/examples/common" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp" --include_path="c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -g --define=__CCS__ --define=_USE_CLI_ --define=__MSP430F5529__ --diag_warning=225 --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="simplelink/source/socket.pp" --obj_directory="simplelink/source"  "C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/socket.c"
+'Finished building: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/socket.c'
+' '
+'Building file: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/spawn.c'
+'Invoking: MSP430 Compiler'
+"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=coffabi -O4 --include_path="c:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/examples/common" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp" --include_path="c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -g --define=__CCS__ --define=_USE_CLI_ --define=__MSP430F5529__ --diag_warning=225 --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="simplelink/source/spawn.pp" --obj_directory="simplelink/source"  "C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/spawn.c"
+'Finished building: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/spawn.c'
+' '
+'Building file: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/wlan.c'
+'Invoking: MSP430 Compiler'
+"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=coffabi -O4 --include_path="c:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/examples/common" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp" --include_path="c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -g --define=__CCS__ --define=_USE_CLI_ --define=__MSP430F5529__ --diag_warning=225 --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="simplelink/source/wlan.pp" --obj_directory="simplelink/source"  "C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/wlan.c"
+'Finished building: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/wlan.c'
+' '
+'Building file: ../cli_uart/cli_uart.c'
+'Invoking: MSP430 Compiler'
+"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=coffabi -O4 --include_path="c:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/examples/common" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp" --include_path="c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -g --define=__CCS__ --define=_USE_CLI_ --define=__MSP430F5529__ --diag_warning=225 --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="cli_uart/cli_uart.pp" --obj_directory="cli_uart"  "../cli_uart/cli_uart.c"
+'Finished building: ../cli_uart/cli_uart.c'
+' '
+'Building file: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp/board.c'
+'Invoking: MSP430 Compiler'
+"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=coffabi -O4 --include_path="c:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/examples/common" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp" --include_path="c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -g --define=__CCS__ --define=_USE_CLI_ --define=__MSP430F5529__ --diag_warning=225 --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="board/board.pp" --obj_directory="board"  "C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp/board.c"
+'Finished building: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp/board.c'
+' '
+'Building target: tcp_socket.out'
+'Invoking: MSP430 Linker'
+"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=coffabi -O4 -g --define=__CCS__ --define=_USE_CLI_ --define=__MSP430F5529__ --diag_warning=225 --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal -z -m"tcp_socket.map" --heap_size=0 --stack_size=400 --use_hw_mpy=F5 --cinit_hold_wdt=on -i"c:/ti/ccsv6/ccs_base/msp430/include" -i"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/lib" -i"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -i"c:/ti/ccsv6/ccs_base/msp430/lib" -i"c:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" --reread_libs --warn_sections --display_error_number --xml_link_info="tcp_socket_linkInfo.xml" --rom_model -o "tcp_socket.out"  "./main.obj" "./spi/spi.obj" "./simplelink/source/device.obj" "./simplelink/source/driver.obj" "./simplelink/source/flowcont.obj" "./simplelink/source/fs.obj" "./simplelink/source/netapp.obj" "./simplelink/source/netcfg.obj" "./simplelink/source/nonos.obj" "./simplelink/source/socket.obj" "./simplelink/source/spawn.obj" "./simplelink/source/wlan.obj" "./cli_uart/cli_uart.obj" "./board/board.obj" "../lnk_msp430f5529.cmd" -l"libc.a" 
+<Linking>
+"C:\Users\SAPL-025\AppData\Local\Temp\1330010", ERROR!   at line 20:
+ [E0300]
+         Symbol __TI_int45 has already been defined
+		.intvec	".int45",	Trap_ISR
+
+1 Assembly Error, No Assembly Warnings
+
+Errors in Source - Assembler Aborted
+
+>> Compilation failure
+fatal error #10192: Failed linktime optimization
+
+>> Compilation failure
+
+>> Compilation failure
+gmake: *** [tcp_socket.out] Error 1
 gmake: Target `all' not remade because of errors.
 
 **** Build Finished ****

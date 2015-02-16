@@ -309,8 +309,7 @@ void SimpleLinkNetAppEventHandler(SlNetAppEvent_t *pNetAppEvent)
 
     \warning
 */
-void SimpleLinkHttpServerCallback(SlHttpServerEvent_t *pHttpEvent,
-                                  SlHttpServerResponse_t *pHttpResponse)
+void SimpleLinkHttpServerCallback(SlHttpServerEvent_t *pHttpEvent, SlHttpServerResponse_t *pHttpResponse)
 {
     /* Unused in this application */
     CLI_Write(" [HTTP EVENT] Unexpected event \n\r");
@@ -351,11 +350,6 @@ void SimpleLinkSockEventHandler(SlSockEvent_t *pSock)
 
     switch( pSock->Event )
     {
-//		case SL_NETAPP_IPV4_ACQUIRED:
-//			//TODO: Fill in needed code here (set flag)
-//		break;
-
-
         case SL_SOCKET_TX_FAILED_EVENT:
             /*
              * TX Failed
@@ -608,8 +602,7 @@ void configureCC3x00(){
 void startCC3x00(){
 	_i32 retVal = -1;
 	retVal = sl_Start(0, 0, 0);
-	if ((retVal < 0) ||
-		(ROLE_STA != retVal) )
+	if ((retVal < 0) ||	(ROLE_STA != retVal) )
 	{
 		CLI_Write(" Failed to start the device \n\r");
 		LOOP_FOREVER();
@@ -651,7 +644,7 @@ void connectCC3x00(){
                     right port number before calling this function.
                     Otherwise the socket creation will fail.
 */
-static _i32 BsdTcpClient(_u16 Port)<- Verify Return type is correct (SocketID)
+static _i32 BsdTcpClient(_u16 Port)//<- Verify Return type is correct (SocketID)
 {
     SlSockAddrIn_t  Addr;
 

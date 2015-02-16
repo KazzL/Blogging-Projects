@@ -36,16 +36,6 @@
 			<locationURI>CC3100_SDK_ROOT/platform/msp430f5529lp/board.h</locationURI>
 		</link>
 		<link>
-			<name>cli_uart/cli_uart.c</name>
-			<type>1</type>
-			<locationURI>CC3100_SDK_ROOT/platform/msp430f5529lp/cli_uart.c</locationURI>
-		</link>
-		<link>
-			<name>cli_uart/cli_uart.h</name>
-			<type>1</type>
-			<locationURI>CC3100_SDK_ROOT/platform/msp430f5529lp/cli_uart.h</locationURI>
-		</link>
-		<link>
 			<name>simplelink/user.h</name>
 			<type>1</type>
 			<locationURI>CC3100_SDK_ROOT/platform/msp430f5529lp/user.h</locationURI>
@@ -189,11 +179,11 @@
 	<variableList>
 		<variable>
 			<name>CC3100_SDK_ROOT</name>
-			<value>$%7BPARENT-4-ORIGINAL_PROJECT_ROOT%7D</value>
+			<value>file:/C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk</value>
 		</variable>
 		<variable>
 			<name>ORIGINAL_PROJECT_ROOT</name>
-			<value>file:/C:/Users/Kasriel/Documents/Element14%20Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp/example_project_ccs/tcp_socket/</value>
+			<value>file:/C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp/example_project_ccs/tcp_socket</value>
 		</variable>
 	</variableList>
 </projectDescription>

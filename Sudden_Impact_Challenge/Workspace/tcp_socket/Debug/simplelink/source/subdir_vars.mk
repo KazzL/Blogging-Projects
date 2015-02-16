@@ -4,16 +4,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-C:/Users/Kasriel/Documents/Element14\ Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/device.c \
-C:/Users/Kasriel/Documents/Element14\ Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/driver.c \
-C:/Users/Kasriel/Documents/Element14\ Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/flowcont.c \
-C:/Users/Kasriel/Documents/Element14\ Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/fs.c \
-C:/Users/Kasriel/Documents/Element14\ Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/netapp.c \
-C:/Users/Kasriel/Documents/Element14\ Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/netcfg.c \
-C:/Users/Kasriel/Documents/Element14\ Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/nonos.c \
-C:/Users/Kasriel/Documents/Element14\ Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/socket.c \
-C:/Users/Kasriel/Documents/Element14\ Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/spawn.c \
-C:/Users/Kasriel/Documents/Element14\ Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/wlan.c 
+C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/device.c \
+C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/driver.c \
+C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/flowcont.c \
+C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/fs.c \
+C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/netapp.c \
+C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/netcfg.c \
+C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/nonos.c \
+C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/socket.c \
+C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/spawn.c \
+C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/wlan.c 
 
 OBJS += \
 ./simplelink/source/device.obj \
@@ -64,15 +64,15 @@ OBJS__QUOTED += \
 "simplelink\source\wlan.obj" 
 
 C_SRCS__QUOTED += \
-"C:/Users/Kasriel/Documents/Element14 Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/device.c" \
-"C:/Users/Kasriel/Documents/Element14 Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/driver.c" \
-"C:/Users/Kasriel/Documents/Element14 Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/flowcont.c" \
-"C:/Users/Kasriel/Documents/Element14 Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/fs.c" \
-"C:/Users/Kasriel/Documents/Element14 Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/netapp.c" \
-"C:/Users/Kasriel/Documents/Element14 Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/netcfg.c" \
-"C:/Users/Kasriel/Documents/Element14 Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/nonos.c" \
-"C:/Users/Kasriel/Documents/Element14 Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/socket.c" \
-"C:/Users/Kasriel/Documents/Element14 Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/spawn.c" \
-"C:/Users/Kasriel/Documents/Element14 Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/wlan.c" 
+"C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/device.c" \
+"C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/driver.c" \
+"C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/flowcont.c" \
+"C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/fs.c" \
+"C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/netapp.c" \
+"C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/netcfg.c" \
+"C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/nonos.c" \
+"C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/socket.c" \
+"C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/spawn.c" \
+"C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source/wlan.c" 
 
 

@@ -56,7 +56,7 @@
 #define PORT_NUM        5001            /* Port number to be used */
 
 #define BUF_SIZE        1400
-#define NO_OF_PACKETS   1000
+#define NO_OF_PACKETS   10
 
 /* Application specific status/error codes */
 typedef enum{
@@ -77,6 +77,19 @@ union
 } uBuf;
 
 _u8 g_Status = 0;
+/****************************************CARRIED OVER START*/
+unsigned char *PTxData;                     // Pointer to TX data
+unsigned char TXByteCtr;
+unsigned char *PRxData;                     // Pointer to RX data
+unsigned char RXByteCtr;
+unsigned char RxBuffer[128];       			// Allocate 128 byte of RAM
+char multiple;
+char stopBit = FALSE;
+/****************************************CARRIED OVER END*/
+char xValue[] = "\0\0\0\0\0\0";
+unsigned char errorArray[] = "\0\0\0\0\0\0\0\0\0\0";
+int connectedToAP = 0;
+int connetcedToSocket = 0;
 /*
  * GLOBAL VARIABLES -- End
  */
@@ -84,12 +97,24 @@ _u8 g_Status = 0;
 /*
  * STATIC FUNCTION DEFINITIONS -- Start
  */
+void clearErrorArray();
 static _i32 configureSimpleLinkToDefaultState();
 static _i32 establishConnectionWithAP();
+void configureCC3x00();
+void startCC3x00();
+void connectCC3x00();
 static _i32 initializeAppVariables();
 static _i32 BsdTcpClient(_u16 Port);
-static _i32 BsdTcpServer(_u16 Port);
+static _i16 packetTx(_u16 socketID, unsigned char* message, int length, char closeSocket);
+
 static void displayBanner();
+int intToChars(int number, char* chars);
+int charToInt(signed char value);
+void hexByteToChar(char byteIn, char* nibbleA, char* nibbleB);
+int plotlyPlotString(int xVal, int yVal, char* dataStream);
+void I2CInit();
+void I2CTx(unsigned char* TxData, unsigned char numBytes, char stop);
+void I2CRx(unsigned char* RxBuffer, unsigned char numBytes);
 /*
  * STATIC FUNCTION DEFINITIONS -- End
  */
@@ -109,7 +134,7 @@ static void displayBanner();
 
     \warning
 */
-void SimpleLinkWlanEventHandler(SlWlanEvent_t *pWlanEvent)
+void SimpleLinkWlanEventHandler(SlWlanEvent_t *pWlanEvent)//TODO: Look at all the possible events that can occur and decide if other events need to be handled
 {
     if(pWlanEvent == NULL)
         CLI_Write(" [WLAN EVENT] NULL Pointer Error \n\r");
@@ -118,8 +143,12 @@ void SimpleLinkWlanEventHandler(SlWlanEvent_t *pWlanEvent)
     {
         case SL_WLAN_CONNECT_EVENT:
         {
-            SET_STATUS_BIT(g_Status, STATUS_BIT_CONNECTION);
-
+        	SET_STATUS_BIT(g_Status, STATUS_BIT_CONNECTION);
+            intToChars(pWlanEvent->Event, errorArray);
+        	CLI_Write(" STATUS_BIT_CONNECTION Value: ");
+        	CLI_Write(errorArray);
+        	CLI_Write("\r\n\r\n");
+        	clearErrorArray();
             /*
              * Information about the connected AP (like name, MAC etc) will be
              * available in 'slWlanConnectAsyncResponse_t' - Applications
@@ -143,13 +172,38 @@ void SimpleLinkWlanEventHandler(SlWlanEvent_t *pWlanEvent)
 
             /* If the user has initiated 'Disconnect' request, 'reason_code' is
              * SL_USER_INITIATED_DISCONNECTION */
-            if(SL_USER_INITIATED_DISCONNECTION == pEventData->reason_code)
+            if(SL_USER_INITIATED_DISCONNECTION == pEventData->reason_code)//TODO: Add connection flag here to be checked in main loop and reconnect should a connection error occur
             {
                 CLI_Write(" Device disconnected from the AP on application's request \n\r");
+
+            	intToChars(pWlanEvent->Event, errorArray);
+      				CLI_Write(" Error Code A.0: ");
+      				CLI_Write(errorArray);
+      				CLI_Write("\r\n\r\n");
+      				clearErrorArray();
+      				connectedToAP = 0;
+      				intToChars(pEventData->reason_code, errorArray);
+      				CLI_Write(" Error Code A.1: ");
+      				CLI_Write(errorArray);
+      				CLI_Write("\r\n\r\n");
+      				clearErrorArray();
             }
             else
             {
                 CLI_Write(" Device disconnected from the AP on an ERROR..!! \n\r");
+
+              	connectedToAP = 0;
+        				intToChars(pWlanEvent->Event, errorArray);
+        				CLI_Write(" Error Code A.2: ");
+        				CLI_Write(errorArray);
+        				CLI_Write("\r\n\r\n");
+        				clearErrorArray();
+        				connectedToAP = 0;
+        				intToChars(pEventData->reason_code, errorArray);
+        				CLI_Write(" Error Code A.3: ");
+        				CLI_Write(errorArray);
+        				CLI_Write("\r\n\r\n");
+        				clearErrorArray();
             }
         }
         break;
@@ -157,6 +211,13 @@ void SimpleLinkWlanEventHandler(SlWlanEvent_t *pWlanEvent)
         default:
         {
             CLI_Write(" [WLAN EVENT] Unexpected event \n\r");
+
+        	connectedToAP = 0;
+    			intToChars(pWlanEvent->Event, errorArray);
+    			CLI_Write(" Error Code B: ");
+    			CLI_Write(errorArray);
+    			CLI_Write("\r\n\r\n");
+    			clearErrorArray();
         }
         break;
     }
@@ -184,22 +245,38 @@ void SimpleLinkNetAppEventHandler(SlNetAppEvent_t *pNetAppEvent)
         case SL_NETAPP_IPV4_IPACQUIRED_EVENT:
         {
             SET_STATUS_BIT(g_Status, STATUS_BIT_IP_ACQUIRED);
+            intToChars(pNetAppEvent->Event, errorArray);
+          	CLI_Write(" Event Value: ");
+          	CLI_Write(errorArray);
+          	CLI_Write("\r\n\r\n");
+          	clearErrorArray();
 
+
+        	intToChars(STATUS_BIT_IP_ACQUIRED, errorArray);
+			CLI_Write(" STATUS_BIT_IP_AQUIRED Value: ");
+			CLI_Write(errorArray);
+			CLI_Write("\r\n\r\n");
+			clearErrorArray();
             /*
-             * Information about the connection (like IP, gateway address etc)
-             * will be available in 'SlIpV4AcquiredAsync_t'
-             * Applications can use it if required
-             *
-             * SlIpV4AcquiredAsync_t *pEventData = NULL;
-             * pEventData = &pNetAppEvent->EventData.ipAcquiredV4;
-             *
-             */
+			 * Information about the connection (like IP, gateway address etc)
+			 * will be available in 'SlIpV4AcquiredAsync_t'
+			 * Applications can use it if required
+			 *
+			 * SlIpV4AcquiredAsync_t *pEventData = NULL;
+			 * pEventData = &pNetAppEvent->EventData.ipAcquiredV4;
+			 *
+			 */
         }
         break;
 
         default:
         {
             CLI_Write(" [NETAPP EVENT] Unexpected event \n\r");
+            intToChars(pNetAppEvent->Event, errorArray);
+            CLI_Write(" Error Code C: ");
+            CLI_Write(errorArray);
+            CLI_Write("\r\n\r\n");
+            clearErrorArray();
         }
         break;
     }
@@ -239,6 +316,11 @@ void SimpleLinkGeneralEventHandler(SlDeviceEvent_t *pDevEvent)
      * appropriately by the application
      */
     CLI_Write(" [GENERAL EVENT] \n\r");
+  	intToChars(pDevEvent->Event, errorArray);
+  	CLI_Write(" Error Code D: ");
+  	CLI_Write(errorArray);
+  	CLI_Write("\r\n\r\n");
+  	clearErrorArray();
 }
 
 /*!
@@ -252,9 +334,14 @@ void SimpleLinkSockEventHandler(SlSockEvent_t *pSock)
 {
     if(pSock == NULL)
         CLI_Write(" [SOCK EVENT] NULL Pointer Error \n\r");
-    
+
     switch( pSock->Event )
     {
+//		case SL_NETAPP_IPV4_ACQUIRED:
+//			//TODO: Fill in needed code here (set flag)
+//		break;
+
+
         case SL_SOCKET_TX_FAILED_EVENT:
             /*
              * TX Failed
@@ -268,118 +355,50 @@ void SimpleLinkSockEventHandler(SlSockEvent_t *pSock)
              */
             switch( pSock->EventData.status )
             {
+
+
                 case SL_ECLOSE:
                     CLI_Write(" [SOCK EVENT] Close socket operation, failed to transmit all queued packets\n\r");
-                    break;
+                    connetcedToSocket = 0;
+          					intToChars(pSock->Event, errorArray);
+          					CLI_Write(" Error Code E: ");
+          					CLI_Write(errorArray);
+          					CLI_Write("\r\n\r\n");
+          					clearErrorArray();
+          					break;
+
+
                 default:
                     CLI_Write(" [SOCK EVENT] Unexpected event \n\r");
-                    break;
-            }
-            break;
+          					connetcedToSocket = 0;
+          					intToChars(pSock->Event, errorArray);
+          					CLI_Write(" Error Code F: ");
+          					CLI_Write(errorArray);
+          					CLI_Write("\r\n\r\n");
+          					clearErrorArray();
+          					break;
+          			}
+          			break;
 
-        default:
-            CLI_Write(" [SOCK EVENT] Unexpected event \n\r");
-            break;
-    }
+		default:
+			CLI_Write(" [SOCK EVENT] Unexpected event 2\n\r");
+			connetcedToSocket = 0;
+			intToChars(pSock->Event, errorArray);
+			CLI_Write(" Error Code G: ");
+			CLI_Write(errorArray);
+			CLI_Write("\r\n\r\n");
+			clearErrorArray();
+			break;
+	}
 }
 /*
  * ASYNCHRONOUS EVENT HANDLERS -- End
  */
-
-/*
- * Application's entry point
- */
-int main(int argc, char** argv)
-{
-    _i32 retVal = -1;
-
-    retVal = initializeAppVariables();
-    ASSERT_ON_ERROR(retVal);
-
-    /* Stop WDT and initialize the system-clock of the MCU
-       These functions needs to be implemented in PAL */
-    stopWDT();
-    initClk();
-
-    /* Configure command line interface */
-    CLI_Configure();
-
-    displayBanner();
-
-    /*
-     * Following function configures the device to default state by cleaning
-     * the persistent settings stored in NVMEM (viz. connection profiles &
-     * policies, power policy etc)
-     *
-     * Applications may choose to skip this step if the developer is sure
-     * that the device is in its default state at start of application
-     *
-     * Note that all profiles and persistent settings that were done on the
-     * device will be lost
-     */
-    retVal = configureSimpleLinkToDefaultState();
-    if(retVal < 0)
-    {
-        if (DEVICE_NOT_IN_STATION_MODE == retVal)
-        {
-            CLI_Write(" Failed to configure the device in its default state \n\r");
-        }
-
-        LOOP_FOREVER();
-    }
-
-    CLI_Write(" Device is configured in default state \n\r");
-
-    /*
-     * Assumption is that the device is configured in station mode already
-     * and it is in its default state
-     */
-    /* Initializing the CC3100 device */
-    retVal = sl_Start(0, 0, 0);
-    if ((retVal < 0) ||
-        (ROLE_STA != retVal) )
-    {
-        CLI_Write(" Failed to start the device \n\r");
-        LOOP_FOREVER();
-    }
-
-    CLI_Write(" Device started as STATION \n\r");
-
-    /* Connecting to WLAN AP - Set with static parameters defined at the top
-    After this call we will be connected and have IP address */
-    retVal = establishConnectionWithAP();
-    if(retVal < 0)
-       {
-        CLI_Write(" Failed to establish connection w/ an AP \n\r");
-           LOOP_FOREVER();
-       }
-
-    CLI_Write(" Connection established w/ AP and IP is acquired \n\r");
-
-    CLI_Write(" Establishing connection with TCP server \n\r");
-    /*Before proceeding, please make sure to have a server waiting on PORT_NUM*/
-    retVal = BsdTcpClient(PORT_NUM);
-    if(retVal < 0)
-        CLI_Write(" Failed to establishing connection with TCP server \n\r");
-    else
-        CLI_Write(" Connection with TCP server established successfully \n\r");
-
-    CLI_Write(" Starting TCP server\r\n");
-
-    /*After calling this function, you can start sending data to CC3100 IP
-    * address on PORT_NUM */
-    retVal = BsdTcpServer(PORT_NUM);
-    if(retVal < 0)
-           CLI_Write(" Failed to start TCP server \n\r");
-    else
-           CLI_Write(" TCP client connected successfully \n\r");
-
-    /* Stop the CC3100 device */
-    retVal = sl_Stop(SL_STOP_TIMEOUT);
-    if(retVal < 0)
-        LOOP_FOREVER();
-
-    return 0;
+void clearErrorArray(){
+	char i;
+	for(i = 0; i < 12; i++){
+		errorArray[i] = '\0';
+	}
 }
 
 /*!
@@ -535,8 +554,71 @@ static _i32 establishConnectionWithAP()
     /* Wait */
     while((!IS_CONNECTED(g_Status)) || (!IS_IP_ACQUIRED(g_Status))) { _SlNonOsMainLoopTask(); }
 
+    connectedToAP = 1;//TODO: remove flag
     return SUCCESS;
 }
+
+/****************************************************************************************************************************************/
+
+/*
+ * Following function configures the device to default state by cleaning
+ * the persistent settings stored in NVMEM (viz. connection profiles &
+ * policies, power policy etc)
+ *
+ * Applications may choose to skip this step if the developer is sure
+ * that the device is in its default state at start of application
+ *
+ * Note that all profiles and persistent settings that were done on the
+ * device will be lost
+ */
+void configureCC3x00(){
+	_i32 retVal = -1;
+	retVal = configureSimpleLinkToDefaultState();
+	if(retVal < 0)
+	{
+		if (DEVICE_NOT_IN_STATION_MODE == retVal)
+		{
+			CLI_Write(" Failed to configure the device in its default state \n\r");
+		}
+
+		LOOP_FOREVER();
+	}
+	CLI_Write(" Device is configured in default state \n\r");
+}
+
+/*
+ * Assumption is that the device is configured in station mode already
+ * and it is in its default state
+ */
+/* Initializing the CC3100 device */
+void startCC3x00(){
+	_i32 retVal = -1;
+	retVal = sl_Start(0, 0, 0);
+	if ((retVal < 0) ||
+		(ROLE_STA != retVal) )
+	{
+		CLI_Write(" Failed to start the device \n\r");
+		LOOP_FOREVER();
+	}
+	CLI_Write(" Device started as STATION \n\r");
+}
+
+
+/* Connecting to WLAN AP - Set with static parameters defined at the top
+	After this call we will be connected and have IP address */
+void connectCC3x00(){
+	_i32 retVal = -1;
+	retVal = establishConnectionWithAP();
+	if(retVal < 0)
+	{
+		CLI_Write(" Failed to establish connection w/ an AP \n\r");
+		LOOP_FOREVER();
+	}
+
+	CLI_Write(" Connection established w/ AP and IP is acquired \n\r");
+}
+
+/*******************************************************************************************************************************************/
 
 /*!
     \brief Opening a client side socket and sending data
@@ -555,7 +637,7 @@ static _i32 establishConnectionWithAP()
                     right port number before calling this function.
                     Otherwise the socket creation will fail.
 */
-static _i32 BsdTcpClient(_u16 Port)
+static _i32 BsdTcpClient(_u16 Port)<- Verify Return type is correct (SocketID)
 {
     SlSockAddrIn_t  Addr;
 
@@ -563,7 +645,7 @@ static _i32 BsdTcpClient(_u16 Port)
     _u16          AddrSize = 0;
     _i16          SockID = 0;
     _i16          Status = 0;
-    _u16          LoopCount = 0;
+
 
     for (idx=0 ; idx<BUF_SIZE ; idx++)
     {
@@ -572,7 +654,7 @@ static _i32 BsdTcpClient(_u16 Port)
 
     Addr.sin_family = SL_AF_INET;
     Addr.sin_port = sl_Htons((_u16)Port);
-    Addr.sin_addr.s_addr = sl_Htonl((_u32)IP_ADDR);
+    Addr.sin_addr.s_addr = sl_Htonl((_u32)IP_ADDR);//TODO: Change this as a passed in value(Keep as defined for current version)
     AddrSize = sizeof(SlSockAddrIn_t);
 
     SockID = sl_Socket(SL_AF_INET,SL_SOCK_STREAM, 0);
@@ -582,147 +664,48 @@ static _i32 BsdTcpClient(_u16 Port)
         ASSERT_ON_ERROR(SockID);
     }
 
+    CLI_Write(" Establishing connection with TCP server \n\r");
+
     Status = sl_Connect(SockID, ( SlSockAddr_t *)&Addr, AddrSize);
     if( Status < 0 )
     {
         sl_Close(SockID);
-        CLI_Write(" [TCP Client]  TCP connection Error \n\r");
+        CLI_Write(" [TCP Client]  TCP connection Error \n\r");//" Failed to establish connection with TCP server \n\r"
         ASSERT_ON_ERROR(Status);
     }
 
-    while (LoopCount < NO_OF_PACKETS)
-    {
-        Status = sl_Send(SockID, uBuf.BsdBuf, BUF_SIZE, 0 );
-        if( Status <= 0 )
-        {
-            CLI_Write(" [TCP Client] Data send Error \n\r");
-            Status = sl_Close(SockID);
-            ASSERT_ON_ERROR(TCP_SEND_ERROR);
-        }
-
-        LoopCount++;
-    }
-
-    Status = sl_Close(SockID);
-    ASSERT_ON_ERROR(Status);
-
-    return SUCCESS;
+    CLI_Write(" Connection with TCP server established successfully \n\r");
+    connetcedToSocket = 1;//TODO: remove flag
+    return  SockID;
 }
 
-/*!
-    \brief Opening a server side socket and receiving data
+static _i16 packetTx(_u16 socketID, unsigned char* message, int length, char closeSocket){
+    _i16           Status = 0;
+    _i8 			sent = -1;
+    _i8 			i = 0;
+    _i16 			j = 0;
 
-    This function opens a TCP socket in Listen mode and waits for an incoming
-    TCP connection. If a socket connection is established then the function
-    will try to read 1000 TCP packets from the connected client.
-
-    \param[in]      port number on which the server will be listening on
-
-    \return         0 on success, -1 on Error.
-
-    \note           This function will wait for an incoming connection till one
-                    is established
-
-    \warning
-*/
-static _i32 BsdTcpServer(_u16 Port)
-{
-    SlSockAddrIn_t  Addr;
-    SlSockAddrIn_t  LocalAddr;
-
-    _u16          idx = 0;
-    _u16          AddrSize = 0;
-    _i16          SockID = 0;
-    _i32          Status = 0;
-    _i16          newSockID = 0;
-    _u16          LoopCount = 0;
-    _i16          recvSize = 0;
-
-    for (idx=0 ; idx<BUF_SIZE ; idx++)
-    {
-        uBuf.BsdBuf[idx] = (_u8)(idx % 10);
-    }
-
-    LocalAddr.sin_family = SL_AF_INET;
-    LocalAddr.sin_port = sl_Htons((_u16)Port);
-    LocalAddr.sin_addr.s_addr = 0;
-
-    SockID = sl_Socket(SL_AF_INET,SL_SOCK_STREAM, 0);
-    if( SockID < 0 )
-    {
-        CLI_Write(" [TCP Server] Create socket Error \n\r");
-        ASSERT_ON_ERROR(SockID);
-    }
-
-    AddrSize = sizeof(SlSockAddrIn_t);
-    Status = sl_Bind(SockID, (SlSockAddr_t *)&LocalAddr, AddrSize);
+    CLI_Write(" - Initiating message transmit\n\r");
+	  while((sent == -1) && (i < 6)){
+		Status = sl_Send(socketID, message, length, 0 );
+		sent = Status;
+		i++;
+		if (sent != 0){
+			for (j = 0; j < 1000; j++);
+		}
+	}
     if( Status < 0 )
-    {
-        sl_Close(SockID);
-        CLI_Write(" [TCP Server] Socket address assignment Error \n\r");
-        ASSERT_ON_ERROR(Status);
-    }
+	{
+		CLI_Write(" Error while sending the data \n\r");
+		sl_Close(socketID);
+		return -1;
+	}
+	CLI_Write(" - Message transmitted\n\r");
 
-    Status = sl_Listen(SockID, 0);
-    if( Status < 0 )
-    {
-        sl_Close(SockID);
-        CLI_Write(" [TCP Server] Listen Error \n\r");
-        ASSERT_ON_ERROR(Status);
-    }
-
-    newSockID = sl_Accept(SockID, ( struct SlSockAddr_t *)&Addr,
-                              (SlSocklen_t*)&AddrSize);
-    if( newSockID < 0 )
-    {
-        sl_Close(SockID);
-        CLI_Write(" [TCP Server] Accept connection Error \n\r");
-        ASSERT_ON_ERROR(newSockID);
-    }
-
-    while (LoopCount < NO_OF_PACKETS)
-    {
-        recvSize = BUF_SIZE;
-        do
-        {
-            Status = sl_Recv(newSockID, &(uBuf.BsdBuf[BUF_SIZE - recvSize]), recvSize, 0);
-            if( Status <= 0 )
-            {
-                sl_Close(newSockID);
-                sl_Close(SockID);
-                CLI_Write(" [TCP Server] Data recv Error \n\r");
-                ASSERT_ON_ERROR(TCP_RECV_ERROR);
-            }
-
-            recvSize -= Status;
-        }
-        while(recvSize > 0);
-
-        LoopCount++;
-    }
-
-    Status = sl_Close(newSockID);
-    ASSERT_ON_ERROR(Status);
-
-    Status = sl_Close(SockID);
-    ASSERT_ON_ERROR(Status);
-
-    return SUCCESS;
-}
-
-/*!
-    \brief This function initializes the application variables
-
-    \param[in]  None
-
-    \return     0 on success, negative error-code on error
-*/
-static _i32 initializeAppVariables()
-{
-    g_Status = 0;
-    pal_Memset(uBuf.BsdBuf, 0, sizeof(uBuf));
-
-    return SUCCESS;
+////    if (closeSocket == 1){
+//    	sl_Close(socketID);//TODO: Remove close socket
+////    }
+    return 0;
 }
 
 /*!
@@ -738,4 +721,492 @@ static void displayBanner()
     CLI_Write(" TCP socket application - Version ");
     CLI_Write(APPLICATION_VERSION);
     CLI_Write("\n\r*******************************************************************************\n\r");
+}
+
+int intToChars(int number, char* chars){
+	int val = number;
+	int i = 0;
+	int j = 0;
+	int num;
+	int neg = 0;
+	char temp;
+	if (val < 0){
+		val = 0 - val;
+		neg = 1;
+	}
+
+	if (val == 0){
+		chars[0] = '0';
+		i = 1;
+	}
+
+	while(val != 0){
+		num = val/10;
+		chars[i] = (char)(val - (num * 10) + 0x30);
+		val = num;
+		i++;
+	}
+	i--;//Remove extra count
+	int f;
+	if (i % 2 != 0){
+		f = i / 2 + 1;
+	}
+	else {
+		f = i / 2;
+	}
+	for (j = 0; j < f; j++){
+		temp = chars[j];
+		chars[j] = chars[i - j];
+		chars[i - j] = temp;
+	}
+	if (neg){
+		for (j = i; j >= 0; j--){
+			chars[j + 1] = chars[j];
+		}
+		chars[0] = '-';
+		i++;//increase count to account for negitive sign
+	}
+	return i + 1; //Counting from zero so add one for true length
+}
+
+//Converts Hex representation to characters
+int charToInt(signed char value){
+	int mambo = 0;
+	if (value < 0){
+		value = 0 - value;
+		mambo = 0 - (int)value;
+	}
+	else{
+		mambo = (int)value;
+	}
+	return mambo;
+}
+
+void hexByteToChar(char byteIn, char* nibbleA, char* nibbleB)
+{
+	switch(byteIn & 0xF0){
+		case 0x0:
+			*nibbleA = '0';
+			break;
+		case 0x10:
+			*nibbleA = '1';
+			break;
+		case 0x20:
+			*nibbleA = '2';
+			break;
+		case 0x30:
+			*nibbleA = '3';
+			break;
+		case 0x40:
+			*nibbleA = '4';
+			break;
+		case 0x50:
+			*nibbleA = '5';
+			break;
+		case 0x60:
+			*nibbleA = '6';
+			break;
+		case 0x70:
+			*nibbleA = '7';
+			break;
+		case 0x80:
+			*nibbleA = '8';
+			break;
+		case 0x90:
+			*nibbleA = '9';
+			break;
+		case 0xA0:
+			*nibbleA = 'A';
+			break;
+		case 0xB0:
+			*nibbleA = 'B';
+			break;
+		case 0xC0:
+			*nibbleA = 'C';
+			break;
+		case 0xD0:
+			*nibbleA = 'D';
+			break;
+		case 0xE0:
+			*nibbleA = 'E';
+			break;
+		case 0xF0:
+			*nibbleA = 'F';
+			break;
+	}
+	switch (byteIn & 0x0F){
+		case 0x00:
+			*nibbleB = '0';
+			break;
+		case 0x01:
+			*nibbleB = '1';
+			break;
+		case 0x02:
+			*nibbleB = '2';
+			break;
+		case 0x03:
+			*nibbleB = '3';
+			break;
+		case 0x04:
+			*nibbleB = '4';
+			break;
+		case 0x05:
+			*nibbleB = '5';
+			break;
+		case 0x06:
+			*nibbleB = '6';
+			break;
+		case 0x07:
+			*nibbleB = '7';
+			break;
+		case 0x08:
+			*nibbleB = '8';
+			break;
+		case 0x09:
+			*nibbleB = '9';
+			break;
+		case 0x0A:
+			*nibbleB = 'A';
+			break;
+		case 0x0B:
+			*nibbleB = 'B';
+			break;
+		case 0x0C:
+			*nibbleB = 'C';
+			break;
+		case 0x0D:
+			*nibbleB = 'D';
+			break;
+		case 0x0E:
+			*nibbleB = 'E';
+			break;
+		case 0x0F:
+			*nibbleB = 'F';
+			break;
+	}
+}
+
+
+int plotlyPlotString(int xVal, int yVal, char* dataStream){
+	const char start[] = "\r\n{\"x\":";
+	const char middle[] = ",\"y\":";
+	const char end[] = "}\r\n";
+
+//	char xValue[] = "\0\0\0\0\0\0";
+	char yValue[] = "\0\0\0\0\0\0";
+
+	intToChars(xVal, xValue);
+	intToChars(yVal, yValue);
+
+	int offset = 4;
+	strncpy(dataStream + offset, start, sizeof(start) - 1);
+	offset = offset + sizeof(start) - 1;
+	strncpy(dataStream + offset, xValue, strlen(xValue));
+	offset = offset + strlen(xValue);
+	strncpy(dataStream + offset, middle, sizeof(middle) - 1);
+	offset = offset + sizeof(middle) - 1;
+	strncpy(dataStream + offset, yValue, strlen(yValue));
+	offset = offset + strlen(yValue);
+	strncpy(dataStream + offset, end, sizeof(end)); //Leave out the -1 inorder to include the null terminator
+
+	int streamLength;
+	char streamDataLen[] = "\0\0\0\0\0";
+
+	streamLength = sizeof(start) - 2 + strlen(xValue) + sizeof(middle) + strlen(yValue) + sizeof(end) - 3;
+	intToChars(streamLength, streamDataLen);
+	char happyDay[4];
+	hexByteToChar(streamDataLen[0], happyDay, happyDay + 1);
+	hexByteToChar(streamDataLen[1], happyDay + 2, happyDay + 3);
+	strncpy(dataStream, happyDay, 4);
+
+	return streamLength;
+}
+/*!
+    \brief This function initializes the application variables
+
+    \param[in]  None
+
+    \return     0 on success, negative error-code on error
+*/
+static _i32 initializeAppVariables()
+{
+    g_Status = 0;
+    pal_Memset(uBuf.BsdBuf, 0, sizeof(uBuf));
+
+    return SUCCESS;
+}
+
+
+void I2CInit(){
+  WDTCTL = WDTPW + WDTHOLD;                 // Stop WDT
+  P4SEL |= 0x06;                            // Assign I2C pins to USCI_B0
+  UCB1CTL1 |= UCSWRST;                      // Enable SW reset
+  UCB1CTL0 = UCMST + UCMODE_3 + UCSYNC;     // I2C Master, synchronous mode
+  UCB1CTL1 = UCSSEL_2 + UCSWRST;            // Use SMCLK, keep SW reset
+  UCB1BR0 = 10;                             // fSCL = SMCLK/12 = ~100kHz
+  UCB1BR1 = 0;
+  UCB1I2CSA = 0x60;                         // Slave Address is 048h
+  UCB1CTL1 &= ~UCSWRST;                     // Clear SW reset, resume operation
+  UCB1IE |= UCTXIE;                         // Enable TX interrupt
+  UCB1IE |= UCRXIE;                         // Enable RX interrupt
+}
+
+void I2CTx(unsigned char* TxData, unsigned char numBytes, char stop){
+    unsigned int i;
+    stopBit = stop;
+	for(i=0;i<10;i++);                      // Delay required between transaction
+    PTxData = (unsigned char *)TxData;      // TX array start address
+                                            // Place breakpoint here to see each
+                                            // transmit operation.
+    TXByteCtr = numBytes;              // Load TX byte counter
+
+    UCB1CTL1 |= UCTR + UCTXSTT;             // I2C TX, start condition
+
+    __bis_SR_register(LPM0_bits + GIE);     // Enter LPM0, enable interrupts
+    __no_operation();                       // Remain in LPM0 until all data
+
+    if(stop){
+    	UCB1CTL1 |= UCTXSTP;
+    }
+                                            // is TX'd
+    while (UCB1CTL1 & UCTXSTP);             // Ensure stop condition got sent
+}
+
+void I2CRx(unsigned char* RxBuffer, unsigned char numBytes){
+	PRxData = (unsigned char *)RxBuffer;    // Start of RX buffer
+    RXByteCtr = numBytes;                   // Load RX byte counter
+    if (numBytes > 1){
+    	multiple = 1;
+    }
+    else {
+    	multiple = 0;
+    }
+    while (UCB1CTL1 & UCTXSTP);           // Ensure stop condition got sent
+
+    UCB1CTL1 &= ~UCTR;
+    UCB1CTL1 |= UCTXSTT;                    // I2C start condition
+
+    if (multiple == 0){
+		while(UCB1CTL1 & UCTXSTT);          // Start condition sent?
+		UCB1CTL1 |= UCTXSTP;
+    }
+    __bis_SR_register(LPM0_bits + GIE);     // Enter LPM0, enable interrupts
+                                            // Remain in LPM0 until all data is RX'd
+    __no_operation();
+}
+
+
+
+int mpl3115aRead(){
+	unsigned char OUT_P_MSB[] = {0x01};
+	unsigned char DR_STATUS[] = {0x06};
+
+	char readPresTemp = 0;
+
+	I2CTx(DR_STATUS, sizeof(DR_STATUS), FALSE);
+	I2CRx(RxBuffer, 1);
+	if ((RxBuffer[0] == 0x0E) || (RxBuffer[0] == 0xEE)){
+		P4OUT |= 0x80;
+		P1OUT &= 0xFE;
+		readPresTemp = 1;
+	}
+	else {
+		P1OUT |= 0x01;
+		P4OUT &= 0x7F;
+		readPresTemp = 0;
+	}
+
+	if (readPresTemp){
+		I2CTx(OUT_P_MSB, sizeof(OUT_P_MSB), FALSE);
+		I2CRx(RxBuffer, 5);
+		Delay(50);
+	}
+	return readPresTemp;
+}
+
+
+/*
+ * Application's entry point
+ */
+int main(int argc, char** argv)
+{
+    _i32 retVal = -1;
+
+  	int temperatureInt;
+  	int streamLength;
+  	int packetLength;
+  	char dataStream[30];
+  	int xVal = 0;
+
+  	P1OUT &= 0xFE;
+   	P1DIR |= 0x01;
+  	P4OUT &= 0x7F;
+  	P4DIR |= 0x80;
+
+    retVal = initializeAppVariables();
+    ASSERT_ON_ERROR(retVal);
+
+    /* Stop WDT and initialize the system-clock of the MCU
+       These functions needs to be implemented in PAL */
+    stopWDT();
+    initClk();
+
+    /* Configure command line interface */
+    CLI_Configure();
+    CLI_Write(" \f\r\n");
+    displayBanner();
+/***********************************************Replaced by configureCC3x00();	startCC3x00(); connectCC3x00(); I think*********/
+    /*
+     * Following function configures the device to default state by cleaning
+     * the persistent settings stored in NVMEM (viz. connection profiles &
+     * policies, power policy etc)
+     *
+     * Applications may choose to skip this step if the developer is sure
+     * that the device is in its default state at start of application
+     *
+     * Note that all profiles and persistent settings that were done on the
+     * device will be lost
+     */
+    retVal = configureSimpleLinkToDefaultState();
+    if(retVal < 0)
+    {
+        if (DEVICE_NOT_IN_STATION_MODE == retVal)
+        {
+            CLI_Write(" Failed to configure the device in its default state \n\r");
+        }
+
+        LOOP_FOREVER();
+    }
+
+    CLI_Write(" Device is configured in default state \n\r");
+
+    /*
+     * Assumption is that the device is configured in station mode already
+     * and it is in its default state
+     */
+    /* Initializing the CC3100 device */
+    retVal = sl_Start(0, 0, 0);
+    if ((retVal < 0) ||
+        (ROLE_STA != retVal) )
+    {
+        CLI_Write(" Failed to start the device \n\r");
+        LOOP_FOREVER();
+    }
+
+    CLI_Write(" Device started as STATION \n\r");
+
+    /* Connecting to WLAN AP - Set with static parameters defined at the top
+    After this call we will be connected and have IP address */
+    retVal = establishConnectionWithAP();
+    if(retVal < 0)
+       {
+        CLI_Write(" Failed to establish connection w/ an AP \n\r");
+           LOOP_FOREVER();
+       }
+
+    CLI_Write(" Connection established w/ AP and IP is acquired \n\r");
+
+
+/*****************************************************TEST FUNCTIONS START*******************************/
+	configureCC3x00();
+	startCC3x00();
+	connectCC3x00();
+/*****************************************************TEST FUNCTIONS END*******************************/
+
+ 	_i16 socketIDD;
+ 	socketIDD = BsdTcpClient(PORT_NUM);
+
+//	unsigned char PLOTLY[] = 	 "POST /clientresp HTTP/1.1\r\nHost: 107.21.214.199\r\nUser-Agent: MSP430F5529/0.5.1\r\nContent-Length: 261\r\n\r\nversion=2.2&origin=plot&platform=Stellaris&un=Kas&key=123456789k&args=[{\"y\": [], \"x\": [], \"type\": \"scatter\", \"stream\": {\"token\": \"ABCDEFGHI\", \"maxpoints\": 7200}}]&kwargs={\"fileopt\": \"overwrite\", \"filename\": \"Element14 Temperature Plot\", \"world_readable\": true}\r\n";
+// 	unsigned char initPlotly[] = "POST /clientresp HTTP/1.1\r\nHost: 107.21.214.199\r\nUser-Agent: MSP430F5529/0.5.1\r\nContent-Length: 243\r\n\r\n";
+//  unsigned char initStream[] = "version=2.2&origin=plot&platform=Stellaris&un=Kas&key=123456789&args=[{\"y\": [], \"x\": [], \"type\": \"scatter\", \"stream\": {\"token\": \"ABCDEFGHI\", \"maxpoints\": 500}}]&kwargs={\"fileopt\": \"overwrite\", \"filename\": \"test plot\", \"world_readable\": true}\r\n\r\n\r\n\r\n\r\n";
+    unsigned char openStream[] = "POST / HTTP/1.1\r\nHost: stream.plot.ly\r\nUser-Agent: Python\r\nTransfer-Encoding: chunked\r\nConnection: keep-alive\r\nplotly-streamtoken: ABCDEFGHI\r\n\r\n";
+
+ 	packetTx(socketIDD, openStream, (sizeof(openStream) - 1), 0);
+
+ 	int dataAvilable;
+
+ 	CLI_Write(" Initilizing I2C");
+ 	I2CInit();
+ 	Delay(700);
+ 	CLI_Write(" Complete \r\n");
+ 	Delay(500);
+ 	CLI_Write(" Initilizing MPL3115A");
+ 	Delay(700);
+ 	CLI_Write(" Complete\r\n");
+	while (1)
+  {
+		dataAvilable = mpl3115aRead();
+		if (dataAvilable == 1){
+
+			temperatureInt = charToInt((signed char)RxBuffer[3]);
+			streamLength = plotlyPlotString(xVal, temperatureInt, dataStream);
+			packetLength = streamLength + 6;
+			packetTx(socketIDD, dataStream, packetLength, 0);
+
+			CLI_Write("\r\n");
+			CLI_Write(dataStream);
+			CLI_Write("\r\n");
+
+			xVal++;
+		}
+		Delay(20);
+  }
+}
+
+
+
+
+
+
+//-------------------------------------------------------------------------------
+// The USCI_B0 data ISR is used to move received data from the I2C slave
+// to the MSP430 memory. It is structured such that it can be used to receive
+// any 2+ number of bytes by pre-loading RXByteCtr with the byte count.
+//-------------------------------------------------------------------------------
+#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
+#pragma vector = USCI_B1_VECTOR
+__interrupt void USCI_B1_ISR(void)
+#elif defined(__GNUC__)
+void __attribute__ ((interrupt(USCI_B0_VECTOR))) USCI_B0_ISR (void)
+#else
+#error Compiler not supported!
+#endif
+{
+  switch(__even_in_range(UCB1IV,12))
+  {
+  case  0: break;                           // Vector  0: No interrupts
+  case  2: break;                           // Vector  2: ALIFG
+  case  4: break;                           // Vector  4: NACKIFG
+  case  6: break;                           // Vector  6: STTIFG
+  case  8: break;                           // Vector  8: STPIFG
+  case 10:                                  // Vector 10: RXIFG
+    RXByteCtr--;                            // Decrement RX byte counter
+    if (RXByteCtr)
+    {
+      *PRxData++ = UCB1RXBUF;               // Move RX data to address PRxData
+      if (RXByteCtr == 1 && multiple == 1)                   // Only one byte left?
+        UCB1CTL1 |= UCTXSTP;                // Generate I2C stop condition
+    }
+    else
+    {
+      *PRxData = UCB1RXBUF;                 // Move final RX data to PRxData
+      __bic_SR_register_on_exit(LPM0_bits); // Exit active CPU
+    }
+    break;
+  case 12:                                  // Vector 12: TXIFG
+    if (TXByteCtr)                          // Check TX byte counter
+    {
+      UCB1TXBUF = *PTxData++;               // Load TX buffer
+      TXByteCtr--;                          // Decrement TX byte counter
+    }
+    else
+    {
+    if (stopBit){
+      UCB1CTL1 |= UCTXSTP;                  // I2C stop condition						//Set a stop flag if this should be sent out or not
+    }
+      UCB1IFG &= ~UCTXIFG;                  // Clear USCI_B0 TX int flag
+      __bic_SR_register_on_exit(LPM0_bits); // Exit LPM0
+    }
+  default: break;
+  }
 }

@@ -1,4 +1,18 @@
 /*
+Lenovo Laptop
+	CC3100_SDK_ROOT
+	C:\Users\SAPL-025\Documents\element14-projects-software\Sudden_Impact_Challenge\cc3100-sdk
+	ORIGINAL_PROJECT_ROOT
+	C:\Users\SAPL-025\Documents\element14-projects-software\Sudden_Impact_Challenge\cc3100-sdk\platform\msp430f5529lp\example_project_ccs\tcp_socket
+
+AlienWare Laptop
+	CC3100_SDK_ROOT
+	C:/Users/Kasriel/Documents/Element14 Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk
+	ORIGINAL_PROJECT_ROOT
+	C:/Users/Kasriel/Documents/Element14 Projects/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp/example_project_ccs/tcp_socket/
+
+*/
+/*
  * main.c - TCP socket sample application
  *
  * Copyright (C) 2014 Texas Instruments Incorporated - http://www.ti.com/

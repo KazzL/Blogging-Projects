@@ -1166,55 +1166,55 @@ int main(int argc, char** argv)
 
 
 
-////-------------------------------------------------------------------------------
-//// The USCI_B0 data ISR is used to move received data from the I2C slave
-//// to the MSP430 memory. It is structured such that it can be used to receive
-//// any 2+ number of bytes by pre-loading RXByteCtr with the byte count.
-////-------------------------------------------------------------------------------
-//#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
-//#pragma vector = USCI_B1_VECTOR
-//__interrupt void USCI_B1_ISR(void)
-//#elif defined(__GNUC__)
-//void __attribute__ ((interrupt(USCI_B0_VECTOR))) USCI_B0_ISR (void)
-//#else
-//#error Compiler not supported!
-//#endif
-//{
-//  switch(__even_in_range(UCB1IV,12))
-//  {
-//  case  0: break;                           // Vector  0: No interrupts
-//  case  2: break;                           // Vector  2: ALIFG
-//  case  4: break;                           // Vector  4: NACKIFG
-//  case  6: break;                           // Vector  6: STTIFG
-//  case  8: break;                           // Vector  8: STPIFG
-//  case 10:                                  // Vector 10: RXIFG
-//    RXByteCtr--;                            // Decrement RX byte counter
-//    if (RXByteCtr)
-//    {
-//      *PRxData++ = UCB1RXBUF;               // Move RX data to address PRxData
-//      if (RXByteCtr == 1 && multiple == 1)                   // Only one byte left?
-//        UCB1CTL1 |= UCTXSTP;                // Generate I2C stop condition
-//    }
-//    else
-//    {
-//      *PRxData = UCB1RXBUF;                 // Move final RX data to PRxData
-//      __bic_SR_register_on_exit(LPM0_bits); // Exit active CPU
-//    }
-//    break;
-//  case 12:                                  // Vector 12: TXIFG
-//    if (TXByteCtr)                          // Check TX byte counter
-//    {
-//      UCB1TXBUF = *PTxData++;               // Load TX buffer
-//      TXByteCtr--;                          // Decrement TX byte counter
-//    }
-//    else
-//    {
-//    if (stopBit){
-//      UCB1CTL1 |= UCTXSTP;                  // I2C stop condition						//Set a stop flag if this should be sent out or not
-//    }
-//      UCB1IFG &= ~UCTXIFG;                  // Clear USCI_B0 TX int flag
-//      __bic_SR_register_on_exit(LPM0_bits); // Exit LPM0
-//    }
-//  default: break;
-//  }
-//}
+//-------------------------------------------------------------------------------
+// The USCI_B0 data ISR is used to move received data from the I2C slave
+// to the MSP430 memory. It is structured such that it can be used to receive
+// any 2+ number of bytes by pre-loading RXByteCtr with the byte count.
+//-------------------------------------------------------------------------------
+#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
+#pragma vector = USCI_B1_VECTOR
+__interrupt void USCI_B1_ISR(void)
+#elif defined(__GNUC__)
+void __attribute__ ((interrupt(USCI_B0_VECTOR))) USCI_B0_ISR (void)
+#else
+#error Compiler not supported!
+#endif
+{
+  switch(__even_in_range(UCB1IV,12))
+  {
+  case  0: break;                           // Vector  0: No interrupts
+  case  2: break;                           // Vector  2: ALIFG
+  case  4: break;                           // Vector  4: NACKIFG
+  case  6: break;                           // Vector  6: STTIFG
+  case  8: break;                           // Vector  8: STPIFG
+  case 10:                                  // Vector 10: RXIFG
+    RXByteCtr--;                            // Decrement RX byte counter
+    if (RXByteCtr)
+    {
+      *PRxData++ = UCB1RXBUF;               // Move RX data to address PRxData
+      if (RXByteCtr == 1 && multiple == 1)                   // Only one byte left?
+        UCB1CTL1 |= UCTXSTP;                // Generate I2C stop condition
+    }
+    else
+    {
+      *PRxData = UCB1RXBUF;                 // Move final RX data to PRxData
+      __bic_SR_register_on_exit(LPM0_bits); // Exit active CPU
+    }
+    break;
+  case 12:                                  // Vector 12: TXIFG
+    if (TXByteCtr)                          // Check TX byte counter
+    {
+      UCB1TXBUF = *PTxData++;               // Load TX buffer
+      TXByteCtr--;                          // Decrement TX byte counter
+    }
+    else
+    {
+    if (stopBit){
+      UCB1CTL1 |= UCTXSTP;                  // I2C stop condition						//Set a stop flag if this should be sent out or not
+    }
+      UCB1IFG &= ~UCTXIFG;                  // Clear USCI_B0 TX int flag
+      __bic_SR_register_on_exit(LPM0_bits); // Exit LPM0
+    }
+  default: break;
+  }
+}

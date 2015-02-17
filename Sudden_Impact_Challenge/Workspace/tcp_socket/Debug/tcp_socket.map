@@ -1,10 +1,10 @@
 ******************************************************************************
                   MSP430 Linker PC v4.3.3                      
 ******************************************************************************
->> Linked Mon Feb 16 22:42:37 2015
+>> Linked Mon Feb 16 23:01:14 2015
 
 OUTPUT FILE NAME:   <tcp_socket.out>
-ENTRY POINT SYMBOL: "_c_int00"  address: 00004cd2
+ENTRY POINT SYMBOL: "_c_int00"  address: 00004d48
 
 
 MEMORY CONFIGURATION
@@ -20,7 +20,7 @@ MEMORY CONFIGURATION
   INFOA                 00001980   00000080  00000000  00000080  RWIX
   USBRAM                00001c00   00000800  00000000  00000800  RWIX
   RAM                   00002400   00002000  00000918  000016e8  RWIX
-  FLASH                 00004400   0000bb80  00003ac9  000080b7  RWIX
+  FLASH                 00004400   0000bb80  00003b3f  00008041  RWIX
   INT00                 0000ff80   00000002  00000000  00000002  RWIX
   INT01                 0000ff82   00000002  00000000  00000002  RWIX
   INT02                 0000ff84   00000002  00000000  00000002  RWIX
@@ -133,97 +133,98 @@ section   page    origin      length       input sections
                   00004c9a    00000001     main.obj (.const:.string:$P$T7$8$0)
 
 .text:_isr 
-*          0    00004c9c    00000092     
-                  00004c9c    00000036     cli_uart.obj (.text:_isr:UART_ISR)
-                  00004cd2    0000002a     rts430x.lib : boot.obj (.text:_isr:_c_int00_noexit)
-                  00004cfc    0000001a     board.obj (.text:_isr:IntSpiGPIOHandler)
-                  00004d16    0000000a     board.obj (.text:_isr:CC3100_UART_ISR)
-                  00004d20    0000000a     board.obj (.text:_isr:Port1_ISR)
-                  00004d2a    00000004     board.obj (.text:_isr:Trap_ISR)
+*          0    00004c9c    00000108     
+                  00004c9c    00000076     main.obj (.text:_isr:USCI_B1_ISR)
+                  00004d12    00000036     cli_uart.obj (.text:_isr:UART_ISR)
+                  00004d48    0000002a     rts430x.lib : boot.obj (.text:_isr:_c_int00_noexit)
+                  00004d72    0000001a     board.obj (.text:_isr:IntSpiGPIOHandler)
+                  00004d8c    0000000a     board.obj (.text:_isr:CC3100_UART_ISR)
+                  00004d96    0000000a     board.obj (.text:_isr:Port1_ISR)
+                  00004da0    00000004     board.obj (.text:_isr:Trap_ISR)
 
-.cinit     0    00004d2e    00000058     
-                  00004d2e    00000056     <whole-program> (.cinit)
-                  00004d84    00000002     --HOLE-- [fill = 0]
+.cinit     0    00004da4    00000058     
+                  00004da4    00000056     <whole-program> (.cinit)
+                  00004dfa    00000002     --HOLE-- [fill = 0]
 
-.text      0    00004d86    00003144     
-                  00004d86    0000040c     driver.obj (.text:_SlDrvMsgRead)
-                  00005192    000003b0     driver.obj (.text:_SlAsyncEventGenericHandler)
-                  00005542    00000332     main.obj (.text:main)
-                  00005874    000001ee     main.obj (.text:configureSimpleLinkToDefaultState$0)
-                  00005a62    000001b8     main.obj (.text:hexByteToChar)
-                  00005c1a    00000184     driver.obj (.text:_SlDrvRxHdrRead)
-                  00005d9e    00000176     main.obj (.text:plotlyPlotString)
-                  00005f14    0000016a     driver.obj (.text:_SlDrvWaitForPoolObj)
-                  0000607e    00000142     driver.obj (.text:_SlDrvDataWriteOp)
-                  000061c0    00000134     driver.obj (.text:_SlDrvReleasePoolObj)
-                  000062f4    00000130     driver.obj (.text:_SlDrvMsgWrite)
-                  00006424    00000120     main.obj (.text:SimpleLinkWlanEventHandler)
-                  00006544    0000011a     main.obj (.text:BsdTcpClient$0)
-                  0000665e    000000fa     socket.obj (.text:sl_Connect)
-                  00006758    000000f0     driver.obj (.text:_SlDrvDriverCBInit)
-                  00006848    000000ea     device.obj (.text:_SlDrvDeviceEventHandler)
-                  00006932    000000c2     device.obj (.text:sl_Stop)
-                  000069f4    000000c0     board.obj (.text:SetVCoreUp$13)
-                  00006ab4    000000be     device.obj (.text:sl_Start)
-                  00006b72    000000be     wlan.obj (.text:sl_WlanConnect)
-                  00006c30    000000b2     main.obj (.text:intToChars)
-                  00006ce2    000000aa     driver.obj (.text:_SlDrvMsgReadCmdCtx)
-                  00006d8c    000000aa     netapp.obj (.text:_sl_HandleAsync_PingResponse)
-                  00006e36    000000a8     main.obj (.text:SimpleLinkSockEventHandler)
-                  00006ede    000000a4     driver.obj (.text:_SlFindAndSetActiveObj)
-                  00006f82    000000a4     socket.obj (.text:sl_Send)
-                  00007026    0000009a     main.obj (.text:SimpleLinkNetAppEventHandler)
-                  000070c0    0000009a     driver.obj (.text:_SlDrvCmdOp)
-                  0000715a    0000008e     driver.obj (.text:_SlDrvMsgReadSpawnCtx)
-                  000071e8    0000008c     board.obj (.text:SetVCoreDown$13)
-                  00007274    0000008a     netapp.obj (.text:_SlDrvNetAppEventHandler)
-                  000072fe    0000008a     device.obj (.text:sl_DevGet)
-                  00007388    00000084     socket.obj (.text:_sl_TruncatePayloadByProtocol)
-                  0000740c    0000007a     socket.obj (.text:_sl_HandleAsync_Connect)
-                  00007486    00000078     netapp.obj (.text:_sl_HandleAsync_DnsGetHostByService)
-                  000074fe    00000078     spi.obj (.text:spi_Open)
-                  00007576    00000076     netapp.obj (.text:sl_NetAppSendTokenValue)
-                  000075ec    00000074     netapp.obj (.text:_sl_HandleAsync_DnsGetHostByName)
-                  00007660    00000072     socket.obj (.text:_sl_HandleAsync_Accept)
-                  000076d2    00000070     driver.obj (.text:_SlDrvDriverCBDeinit)
-                  00007742    00000068     device.obj (.text:_sl_GetStartResponseConvert)
-                  000077aa    00000064     netapp.obj (.text:sl_NetAppMDNSRegisterUnregisterService)
-                  0000780e    00000062     main.obj (.text:packetTx$0)
-                  00007870    00000060     socket.obj (.text:_sl_HandleAsync_Select)
-                  000078d0    00000060     device.obj (.text:_sl_HandleAsync_Stop)
-                  00007930    0000005c     rts430x.lib : autoinit.obj (.text:_auto_init_hold_wdt)
-                  0000798c    00000058                 : div32u.obj (.text)
-                  000079e4    00000056     main.obj (.text:establishConnectionWithAP$0)
-                  00007a3a    00000050     driver.obj (.text:_SlRemoveFromList)
-                  00007a8a    0000004a     board.obj (.text:Init_FLL)
-                  00007ad4    00000046     netcfg.obj (.text:sl_NetCfgSet)
-                  00007b1a    00000042     main.obj (.text:I2CRx)
-                  00007b5c    00000040     wlan.obj (.text:sl_WlanSet)
-                  00007b9c    0000003e     socket.obj (.text:_sl_BuildAddress)
-                  00007bda    0000003e     wlan.obj (.text:sl_WlanPolicySet)
-                  00007c18    00000036     nonos.obj (.text:_SlNonOsMainLoopTask)
-                  00007c4e    00000034     driver.obj (.text:_SlDrvBasicCmd)
-                  00007c82    00000030     nonos.obj (.text:_SlNonOsSemGet)
-                  00007cb2    0000002e     board.obj (.text:Init_FLL_Settle)
-                  00007ce0    0000002e     spi.obj (.text:spi_Read)
-                  00007d0e    0000002c     rts430x.lib : div16s.obj (.text)
-                  00007d3a    0000002c     spi.obj (.text:spi_Write)
-                  00007d66    0000002a     rts430x.lib : strncpy.obj (.text:strncpy)
-                  00007d90    00000028     nonos.obj (.text:_SlNonOsSpawn)
-                  00007db8    00000024     cli_uart.obj (.text:CLI_Write)
-                  00007ddc    00000024     main.obj (.text:I2CTx)
-                  00007e00    00000022     rts430x.lib : mult32_f5hw.obj (.text)
-                  00007e22    0000001e     driver.obj (.text:_SlDrvRxIrqHandler)
-                  00007e40    0000001c     socket.obj (.text:sl_Close)
-                  00007e5c    00000016     rts430x.lib : div16u.obj (.text)
-                  00007e72    00000016                 : mult16_f5hw.obj (.text)
-                  00007e88    00000012                 : memcpy.obj (.text:memcpy)
-                  00007e9a    00000012                 : memset.obj (.text:memset)
-                  00007eac    0000000a                 : lsl16.obj (.text)
-                  00007eb6    0000000a                 : lsr16.obj (.text)
-                  00007ec0    00000004                 : pre_init.obj (.text:_system_pre_init)
-                  00007ec4    00000004                 : exit.obj (.text:abort)
-                  00007ec8    00000002                 : _lock.obj (.text:_nop)
+.text      0    00004dfc    00003144     
+                  00004dfc    0000040c     driver.obj (.text:_SlDrvMsgRead)
+                  00005208    000003b0     driver.obj (.text:_SlAsyncEventGenericHandler)
+                  000055b8    00000332     main.obj (.text:main)
+                  000058ea    000001ee     main.obj (.text:configureSimpleLinkToDefaultState$0)
+                  00005ad8    000001b8     main.obj (.text:hexByteToChar)
+                  00005c90    00000184     driver.obj (.text:_SlDrvRxHdrRead)
+                  00005e14    00000176     main.obj (.text:plotlyPlotString)
+                  00005f8a    0000016a     driver.obj (.text:_SlDrvWaitForPoolObj)
+                  000060f4    00000142     driver.obj (.text:_SlDrvDataWriteOp)
+                  00006236    00000134     driver.obj (.text:_SlDrvReleasePoolObj)
+                  0000636a    00000130     driver.obj (.text:_SlDrvMsgWrite)
+                  0000649a    00000120     main.obj (.text:SimpleLinkWlanEventHandler)
+                  000065ba    0000011a     main.obj (.text:BsdTcpClient$0)
+                  000066d4    000000fa     socket.obj (.text:sl_Connect)
+                  000067ce    000000f0     driver.obj (.text:_SlDrvDriverCBInit)
+                  000068be    000000ea     device.obj (.text:_SlDrvDeviceEventHandler)
+                  000069a8    000000c2     device.obj (.text:sl_Stop)
+                  00006a6a    000000c0     board.obj (.text:SetVCoreUp$13)
+                  00006b2a    000000be     device.obj (.text:sl_Start)
+                  00006be8    000000be     wlan.obj (.text:sl_WlanConnect)
+                  00006ca6    000000b2     main.obj (.text:intToChars)
+                  00006d58    000000aa     driver.obj (.text:_SlDrvMsgReadCmdCtx)
+                  00006e02    000000aa     netapp.obj (.text:_sl_HandleAsync_PingResponse)
+                  00006eac    000000a8     main.obj (.text:SimpleLinkSockEventHandler)
+                  00006f54    000000a4     driver.obj (.text:_SlFindAndSetActiveObj)
+                  00006ff8    000000a4     socket.obj (.text:sl_Send)
+                  0000709c    0000009a     main.obj (.text:SimpleLinkNetAppEventHandler)
+                  00007136    0000009a     driver.obj (.text:_SlDrvCmdOp)
+                  000071d0    0000008e     driver.obj (.text:_SlDrvMsgReadSpawnCtx)
+                  0000725e    0000008c     board.obj (.text:SetVCoreDown$13)
+                  000072ea    0000008a     netapp.obj (.text:_SlDrvNetAppEventHandler)
+                  00007374    0000008a     device.obj (.text:sl_DevGet)
+                  000073fe    00000084     socket.obj (.text:_sl_TruncatePayloadByProtocol)
+                  00007482    0000007a     socket.obj (.text:_sl_HandleAsync_Connect)
+                  000074fc    00000078     netapp.obj (.text:_sl_HandleAsync_DnsGetHostByService)
+                  00007574    00000078     spi.obj (.text:spi_Open)
+                  000075ec    00000076     netapp.obj (.text:sl_NetAppSendTokenValue)
+                  00007662    00000074     netapp.obj (.text:_sl_HandleAsync_DnsGetHostByName)
+                  000076d6    00000072     socket.obj (.text:_sl_HandleAsync_Accept)
+                  00007748    00000070     driver.obj (.text:_SlDrvDriverCBDeinit)
+                  000077b8    00000068     device.obj (.text:_sl_GetStartResponseConvert)
+                  00007820    00000064     netapp.obj (.text:sl_NetAppMDNSRegisterUnregisterService)
+                  00007884    00000062     main.obj (.text:packetTx$0)
+                  000078e6    00000060     socket.obj (.text:_sl_HandleAsync_Select)
+                  00007946    00000060     device.obj (.text:_sl_HandleAsync_Stop)
+                  000079a6    0000005c     rts430x.lib : autoinit.obj (.text:_auto_init_hold_wdt)
+                  00007a02    00000058                 : div32u.obj (.text)
+                  00007a5a    00000056     main.obj (.text:establishConnectionWithAP$0)
+                  00007ab0    00000050     driver.obj (.text:_SlRemoveFromList)
+                  00007b00    0000004a     board.obj (.text:Init_FLL)
+                  00007b4a    00000046     netcfg.obj (.text:sl_NetCfgSet)
+                  00007b90    00000042     main.obj (.text:I2CRx)
+                  00007bd2    00000040     wlan.obj (.text:sl_WlanSet)
+                  00007c12    0000003e     socket.obj (.text:_sl_BuildAddress)
+                  00007c50    0000003e     wlan.obj (.text:sl_WlanPolicySet)
+                  00007c8e    00000036     nonos.obj (.text:_SlNonOsMainLoopTask)
+                  00007cc4    00000034     driver.obj (.text:_SlDrvBasicCmd)
+                  00007cf8    00000030     nonos.obj (.text:_SlNonOsSemGet)
+                  00007d28    0000002e     board.obj (.text:Init_FLL_Settle)
+                  00007d56    0000002e     spi.obj (.text:spi_Read)
+                  00007d84    0000002c     rts430x.lib : div16s.obj (.text)
+                  00007db0    0000002c     spi.obj (.text:spi_Write)
+                  00007ddc    0000002a     rts430x.lib : strncpy.obj (.text:strncpy)
+                  00007e06    00000028     nonos.obj (.text:_SlNonOsSpawn)
+                  00007e2e    00000024     cli_uart.obj (.text:CLI_Write)
+                  00007e52    00000024     main.obj (.text:I2CTx)
+                  00007e76    00000022     rts430x.lib : mult32_f5hw.obj (.text)
+                  00007e98    0000001e     driver.obj (.text:_SlDrvRxIrqHandler)
+                  00007eb6    0000001c     socket.obj (.text:sl_Close)
+                  00007ed2    00000016     rts430x.lib : div16u.obj (.text)
+                  00007ee8    00000016                 : mult16_f5hw.obj (.text)
+                  00007efe    00000012                 : memcpy.obj (.text:memcpy)
+                  00007f10    00000012                 : memset.obj (.text:memset)
+                  00007f22    0000000a                 : lsl16.obj (.text)
+                  00007f2c    0000000a                 : lsr16.obj (.text)
+                  00007f36    00000004                 : pre_init.obj (.text:_system_pre_init)
+                  00007f3a    00000004                 : exit.obj (.text:abort)
+                  00007f3e    00000002                 : _lock.obj (.text:_nop)
 
 RTC        0    0000ffd2    00000002     
                   0000ffd2    00000002     <whole-program> (.int41)
@@ -392,7 +393,7 @@ ffffffff   .text
 00000732   ADC12MEM9
 00000733   ADC12MEM9_H
 00000732   ADC12MEM9_L
-00007ec4   C$$EXIT
+00007f3a   C$$EXIT
 000008c0   CBCTL0
 000008c1   CBCTL0_H
 000008c0   CBCTL0_L
@@ -409,8 +410,8 @@ ffffffff   .text
 000008cd   CBINT_H
 000008cc   CBINT_L
 000008ce   CBIV
-00004d16   CC3100_UART_ISR
-00007db8   CLI_Write
+00004d8c   CC3100_UART_ISR
+00007e2e   CLI_Write
 00000150   CRCDI
 00000152   CRCDIRB
 00000153   CRCDIRB_H
@@ -480,14 +481,14 @@ ffffffff   .text
 00000146   FCTL4
 00000147   FCTL4_H
 00000146   FCTL4_L
-00007b1a   I2CRx
-00007ddc   I2CTx
-00007eac   I_LSL
-00007eb6   I_LSR
-00007a8a   Init_FLL
-00007cb2   Init_FLL_Settle
+00007b90   I2CRx
+00007e52   I2CTx
+00007f22   I_LSL
+00007f2c   I_LSR
+00007b00   Init_FLL
+00007d28   Init_FLL_Settle
 00002b82   IntIsMasked
-00004cfc   IntSpiGPIOHandler
+00004d72   IntSpiGPIOHandler
 000004c4   MAC
 000004da   MAC32H
 000004db   MAC32H_H
@@ -669,7 +670,7 @@ ffffffff   .text
 0000012e   PMMRIE_L
 0000297e   PRxData
 0000297a   PTxData
-00004d20   Port1_ISR
+00004d96   Port1_ISR
 00000158   RCCTL0
 00000159   RCCTL0_H
 00000158   RCCTL0_L
@@ -784,9 +785,9 @@ ffffffff   .text
 0000019a   SYSUNIV
 0000019b   SYSUNIV_H
 0000019a   SYSUNIV_L
-00007026   SimpleLinkNetAppEventHandler
-00006e36   SimpleLinkSockEventHandler
-00006424   SimpleLinkWlanEventHandler
+0000709c   SimpleLinkNetAppEventHandler
+00006eac   SimpleLinkSockEventHandler
+0000649a   SimpleLinkWlanEventHandler
 00000352   TA0CCR0
 00000354   TA0CCR1
 00000356   TA0CCR2
@@ -840,8 +841,8 @@ ffffffff   .text
 000003ee   TB0IV
 000003d0   TB0R
 0000297c   TXByteCtr
-00004d2a   Trap_ISR
-00004c9c   UART_ISR
+00004da0   Trap_ISR
+00004d12   UART_ISR
 000005d0   UCA0ABCTL
 000005c6   UCA0BRW
 000005c7   UCA0BRW_H
@@ -1077,32 +1078,33 @@ ffffffff   .text
 00000932   USBVECINT
 00000933   USBVECINT_H
 00000932   USBVECINT_L
+00004c9c   USCI_B1_ISR
 0000015c   WDTCTL
 0000015d   WDTCTL_H
 0000015c   WDTCTL_L
 00004bea   _SlAcceptCmdCtrl
 00004b9e   _SlActionLookupTable
-00005192   _SlAsyncEventGenericHandler
+00005208   _SlAsyncEventGenericHandler
 00004c62   _SlDeviceGetCmdCtrl
 00004c66   _SlDeviceSetCmdCtrl
-00007c4e   _SlDrvBasicCmd
-000070c0   _SlDrvCmdOp
-0000607e   _SlDrvDataWriteOp
-00006848   _SlDrvDeviceEventHandler
-000076d2   _SlDrvDriverCBDeinit
-00006758   _SlDrvDriverCBInit
-00004d86   _SlDrvMsgRead
-00006ce2   _SlDrvMsgReadCmdCtx
-0000715a   _SlDrvMsgReadSpawnCtx
-000062f4   _SlDrvMsgWrite
-00007274   _SlDrvNetAppEventHandler
-000061c0   _SlDrvReleasePoolObj
-00005c1a   _SlDrvRxHdrRead
-00007e22   _SlDrvRxIrqHandler
-00005f14   _SlDrvWaitForPoolObj
+00007cc4   _SlDrvBasicCmd
+00007136   _SlDrvCmdOp
+000060f4   _SlDrvDataWriteOp
+000068be   _SlDrvDeviceEventHandler
+00007748   _SlDrvDriverCBDeinit
+000067ce   _SlDrvDriverCBInit
+00004dfc   _SlDrvMsgRead
+00006d58   _SlDrvMsgReadCmdCtx
+000071d0   _SlDrvMsgReadSpawnCtx
+0000636a   _SlDrvMsgWrite
+000072ea   _SlDrvNetAppEventHandler
+00006236   _SlDrvReleasePoolObj
+00005c90   _SlDrvRxHdrRead
+00007e98   _SlDrvRxIrqHandler
+00005f8a   _SlDrvWaitForPoolObj
 00004c5e   _SlEventMaskGetCmdCtrl
 00004c5a   _SlEventMaskSetCmdCtrl
-00006ede   _SlFindAndSetActiveObj
+00006f54   _SlFindAndSetActiveObj
 00004c36   _SlFsCloseCmdCtrl
 00004c46   _SlFsDeleteCmdCtrl
 00004c42   _SlFsGetInfoCmdCtrl
@@ -1121,9 +1123,9 @@ ffffffff   .text
 00004c0e   _SlNetAppStopCtrl
 00004c8a   _SlNetCfgGetCmdCtrl
 00004c86   _SlNetCfgSetCmdCtrl
-00007c18   _SlNonOsMainLoopTask
-00007c82   _SlNonOsSemGet
-00007d90   _SlNonOsSpawn
+00007c8e   _SlNonOsMainLoopTask
+00007cf8   _SlNonOsSemGet
+00007e06   _SlNonOsSpawn
 000049de   _SlPolicyGetCmdCtrl
 000049da   _SlPolicySetCmdCtrl
 000049e6   _SlProfileDelCmdCtrl
@@ -1131,7 +1133,7 @@ ffffffff   .text
 00004bee   _SlRecvCmdCtrl
 00004bde   _SlRecvfomCmdCtrl
 00004c16   _SlRegisterServiceCtrl
-00007a3a   _SlRemoveFromList
+00007ab0   _SlRemoveFromList
 000049ee   _SlRxFilterAddtCmdCtrl
 000049f6   _SlRxFilterGetCmdCtrl
 000049f2   _SlRxFilterSetCmdCtrl
@@ -1178,43 +1180,43 @@ ffffffff   .text
 ffffffff   __binit__
 00002400   __bss__
 ffffffff   __c_args__
-00004d2e   __cinit__
+00004da4   __cinit__
 00002400   __data__
-00007d0e   __divi
-00007e5c   __divu
-0000798c   __divul
+00007d84   __divi
+00007ed2   __divu
+00007a02   __divul
 00002400   __edata__
 00002b88   __end__
 ffffffff   __etext__
-00007e72   __mpyi_f5hw
-00007e00   __mpyl_f5hw
+00007ee8   __mpyi_f5hw
+00007e76   __mpyl_f5hw
 ffffffff   __pinit__
-00007d0e   __remi
-00007e5c   __remu
-0000798c   __remul
+00007d84   __remi
+00007ed2   __remu
+00007a02   __remul
 ffffffff   __text__
-00007930   _auto_init_hold_wdt
-00004cd2   _c_int00
-00004cd2   _c_int00_noexit
+000079a6   _auto_init_hold_wdt
+00004d48   _c_int00
+00004d48   _c_int00_noexit
 00002b6e   _lock
-00007ec8   _nop
+00007f3e   _nop
 0000fffe   _reset_vector
-00007b9c   _sl_BuildAddress
-00007742   _sl_GetStartResponseConvert
-00007660   _sl_HandleAsync_Accept
-0000740c   _sl_HandleAsync_Connect
-000075ec   _sl_HandleAsync_DnsGetHostByName
-00007486   _sl_HandleAsync_DnsGetHostByService
-00006d8c   _sl_HandleAsync_PingResponse
-00007870   _sl_HandleAsync_Select
-000078d0   _sl_HandleAsync_Stop
-00007388   _sl_TruncatePayloadByProtocol
+00007c12   _sl_BuildAddress
+000077b8   _sl_GetStartResponseConvert
+000076d6   _sl_HandleAsync_Accept
+00007482   _sl_HandleAsync_Connect
+00007662   _sl_HandleAsync_DnsGetHostByName
+000074fc   _sl_HandleAsync_DnsGetHostByService
+00006e02   _sl_HandleAsync_PingResponse
+000078e6   _sl_HandleAsync_Select
+00007946   _sl_HandleAsync_Stop
+000073fe   _sl_TruncatePayloadByProtocol
 00004270   _stack
-00007ec0   _system_pre_init
+00007f36   _system_pre_init
 00002b72   _unlock
-00007ec4   abort
+00007f3a   abort
 ffffffff   binit
-00004d2e   cinit
+00004da4   cinit
 00002b86   cli_have_cmd
 00002a18   connectedToAP
 00002a1a   connetcedToSocket
@@ -1230,33 +1232,33 @@ ffffffff   etext
 00002b50   g__SlNonOsCB
 00002a1c   g_pCB
 00002b84   g_ucUARTBuffer
-00005a62   hexByteToChar
-00006c30   intToChars
-00005542   main
-00007e88   memcpy
-00007e9a   memset
+00005ad8   hexByteToChar
+00006ca6   intToChars
+000055b8   main
+00007efe   memcpy
+00007f10   memset
 00002a02   multiple
 00002b7e   pIraEventHandler
 00002b4a   pPingCallBackFunc
 ffffffff   pinit
-00005d9e   plotlyPlotString
-00007e40   sl_Close
-0000665e   sl_Connect
-000072fe   sl_DevGet
-000077aa   sl_NetAppMDNSRegisterUnregisterService
-00007576   sl_NetAppSendTokenValue
-00007ad4   sl_NetCfgSet
-00006f82   sl_Send
-00006ab4   sl_Start
-00006932   sl_Stop
-00006b72   sl_WlanConnect
-00007bda   sl_WlanPolicySet
-00007b5c   sl_WlanSet
-000074fe   spi_Open
-00007ce0   spi_Read
-00007d3a   spi_Write
+00005e14   plotlyPlotString
+00007eb6   sl_Close
+000066d4   sl_Connect
+00007374   sl_DevGet
+00007820   sl_NetAppMDNSRegisterUnregisterService
+000075ec   sl_NetAppSendTokenValue
+00007b4a   sl_NetCfgSet
+00006ff8   sl_Send
+00006b2a   sl_Start
+000069a8   sl_Stop
+00006be8   sl_WlanConnect
+00007c50   sl_WlanPolicySet
+00007bd2   sl_WlanSet
+00007574   spi_Open
+00007d56   spi_Read
+00007db0   spi_Write
 00002a03   stopBit
-00007d66   strncpy
+00007ddc   strncpy
 00002400   uBuf
 00002a04   xValue
 
@@ -2100,91 +2102,92 @@ address    name
 00004c72   g_H2NCnysPattern
 00004c86   _SlNetCfgSetCmdCtrl
 00004c8a   _SlNetCfgGetCmdCtrl
-00004c9c   UART_ISR
-00004cd2   _c_int00
-00004cd2   _c_int00_noexit
-00004cfc   IntSpiGPIOHandler
-00004d16   CC3100_UART_ISR
-00004d20   Port1_ISR
-00004d2a   Trap_ISR
-00004d2e   __cinit__
-00004d2e   cinit
-00004d86   _SlDrvMsgRead
-00005192   _SlAsyncEventGenericHandler
-00005542   main
-00005a62   hexByteToChar
-00005c1a   _SlDrvRxHdrRead
-00005d9e   plotlyPlotString
-00005f14   _SlDrvWaitForPoolObj
-0000607e   _SlDrvDataWriteOp
-000061c0   _SlDrvReleasePoolObj
-000062f4   _SlDrvMsgWrite
-00006424   SimpleLinkWlanEventHandler
-0000665e   sl_Connect
-00006758   _SlDrvDriverCBInit
-00006848   _SlDrvDeviceEventHandler
-00006932   sl_Stop
-00006ab4   sl_Start
-00006b72   sl_WlanConnect
-00006c30   intToChars
-00006ce2   _SlDrvMsgReadCmdCtx
-00006d8c   _sl_HandleAsync_PingResponse
-00006e36   SimpleLinkSockEventHandler
-00006ede   _SlFindAndSetActiveObj
-00006f82   sl_Send
-00007026   SimpleLinkNetAppEventHandler
-000070c0   _SlDrvCmdOp
-0000715a   _SlDrvMsgReadSpawnCtx
-00007274   _SlDrvNetAppEventHandler
-000072fe   sl_DevGet
-00007388   _sl_TruncatePayloadByProtocol
-0000740c   _sl_HandleAsync_Connect
-00007486   _sl_HandleAsync_DnsGetHostByService
-000074fe   spi_Open
-00007576   sl_NetAppSendTokenValue
-000075ec   _sl_HandleAsync_DnsGetHostByName
-00007660   _sl_HandleAsync_Accept
-000076d2   _SlDrvDriverCBDeinit
-00007742   _sl_GetStartResponseConvert
-000077aa   sl_NetAppMDNSRegisterUnregisterService
-00007870   _sl_HandleAsync_Select
-000078d0   _sl_HandleAsync_Stop
-00007930   _auto_init_hold_wdt
-0000798c   __divul
-0000798c   __remul
-00007a3a   _SlRemoveFromList
-00007a8a   Init_FLL
-00007ad4   sl_NetCfgSet
-00007b1a   I2CRx
-00007b5c   sl_WlanSet
-00007b9c   _sl_BuildAddress
-00007bda   sl_WlanPolicySet
-00007c18   _SlNonOsMainLoopTask
-00007c4e   _SlDrvBasicCmd
-00007c82   _SlNonOsSemGet
-00007cb2   Init_FLL_Settle
-00007ce0   spi_Read
-00007d0e   __divi
-00007d0e   __remi
-00007d3a   spi_Write
-00007d66   strncpy
-00007d90   _SlNonOsSpawn
-00007db8   CLI_Write
-00007ddc   I2CTx
-00007e00   __mpyl_f5hw
-00007e22   _SlDrvRxIrqHandler
-00007e40   sl_Close
-00007e5c   __divu
-00007e5c   __remu
-00007e72   __mpyi_f5hw
-00007e88   memcpy
-00007e9a   memset
-00007eac   I_LSL
-00007eb6   I_LSR
-00007ec0   _system_pre_init
-00007ec4   C$$EXIT
-00007ec4   abort
-00007ec8   _nop
+00004c9c   USCI_B1_ISR
+00004d12   UART_ISR
+00004d48   _c_int00
+00004d48   _c_int00_noexit
+00004d72   IntSpiGPIOHandler
+00004d8c   CC3100_UART_ISR
+00004d96   Port1_ISR
+00004da0   Trap_ISR
+00004da4   __cinit__
+00004da4   cinit
+00004dfc   _SlDrvMsgRead
+00005208   _SlAsyncEventGenericHandler
+000055b8   main
+00005ad8   hexByteToChar
+00005c90   _SlDrvRxHdrRead
+00005e14   plotlyPlotString
+00005f8a   _SlDrvWaitForPoolObj
+000060f4   _SlDrvDataWriteOp
+00006236   _SlDrvReleasePoolObj
+0000636a   _SlDrvMsgWrite
+0000649a   SimpleLinkWlanEventHandler
+000066d4   sl_Connect
+000067ce   _SlDrvDriverCBInit
+000068be   _SlDrvDeviceEventHandler
+000069a8   sl_Stop
+00006b2a   sl_Start
+00006be8   sl_WlanConnect
+00006ca6   intToChars
+00006d58   _SlDrvMsgReadCmdCtx
+00006e02   _sl_HandleAsync_PingResponse
+00006eac   SimpleLinkSockEventHandler
+00006f54   _SlFindAndSetActiveObj
+00006ff8   sl_Send
+0000709c   SimpleLinkNetAppEventHandler
+00007136   _SlDrvCmdOp
+000071d0   _SlDrvMsgReadSpawnCtx
+000072ea   _SlDrvNetAppEventHandler
+00007374   sl_DevGet
+000073fe   _sl_TruncatePayloadByProtocol
+00007482   _sl_HandleAsync_Connect
+000074fc   _sl_HandleAsync_DnsGetHostByService
+00007574   spi_Open
+000075ec   sl_NetAppSendTokenValue
+00007662   _sl_HandleAsync_DnsGetHostByName
+000076d6   _sl_HandleAsync_Accept
+00007748   _SlDrvDriverCBDeinit
+000077b8   _sl_GetStartResponseConvert
+00007820   sl_NetAppMDNSRegisterUnregisterService
+000078e6   _sl_HandleAsync_Select
+00007946   _sl_HandleAsync_Stop
+000079a6   _auto_init_hold_wdt
+00007a02   __divul
+00007a02   __remul
+00007ab0   _SlRemoveFromList
+00007b00   Init_FLL
+00007b4a   sl_NetCfgSet
+00007b90   I2CRx
+00007bd2   sl_WlanSet
+00007c12   _sl_BuildAddress
+00007c50   sl_WlanPolicySet
+00007c8e   _SlNonOsMainLoopTask
+00007cc4   _SlDrvBasicCmd
+00007cf8   _SlNonOsSemGet
+00007d28   Init_FLL_Settle
+00007d56   spi_Read
+00007d84   __divi
+00007d84   __remi
+00007db0   spi_Write
+00007ddc   strncpy
+00007e06   _SlNonOsSpawn
+00007e2e   CLI_Write
+00007e52   I2CTx
+00007e76   __mpyl_f5hw
+00007e98   _SlDrvRxIrqHandler
+00007eb6   sl_Close
+00007ed2   __divu
+00007ed2   __remu
+00007ee8   __mpyi_f5hw
+00007efe   memcpy
+00007f10   memset
+00007f22   I_LSL
+00007f2c   I_LSR
+00007f36   _system_pre_init
+00007f3a   C$$EXIT
+00007f3a   abort
+00007f3e   _nop
 0000ffd2   __TI_int41
 0000ffd4   __TI_int42
 0000ffd6   __TI_int43
@@ -2218,4 +2221,4 @@ ffffffff   binit
 ffffffff   etext
 ffffffff   pinit
 
-[952 symbols]
+[953 symbols]

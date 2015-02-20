@@ -2,26 +2,6 @@
 **** Build of configuration Debug for project tcp_socket ****
 
 "c:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../main.c'
-'Invoking: MSP430 Compiler'
-"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=coffabi -O4 --include_path="c:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/examples/common" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp" --include_path="c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -g --define=__CCS__ --define=_USE_CLI_ --define=__MSP430F5529__ --diag_warning=225 --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="main.pp"  "../main.c"
-"../main.c", line 167: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 199: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 205: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 216: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 222: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 236: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 268: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 275: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 295: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 338: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 377: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 388: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 400: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
-"../main.c", line 1152: warning #169-D: argument of type "char *" is incompatible with parameter of type "unsigned char *"
-"../main.c", line 1155: warning #169-D: argument of type "char *" is incompatible with parameter of type "unsigned char *"
-'Finished building: ../main.c'
-' '
 'Building file: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp/board.c'
 'Invoking: MSP430 Compiler'
 "c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=coffabi -O4 --include_path="c:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/examples/common" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/source" --include_path="C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp" --include_path="c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -g --define=__CCS__ --define=_USE_CLI_ --define=__MSP430F5529__ --diag_warning=225 --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="board/board.pp" --obj_directory="board"  "C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp/board.c"

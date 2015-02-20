@@ -406,19 +406,11 @@ void CC3100_InterruptEnable(void)
 {
     P2IES &= ~BIT0;
     P2IE |= BIT0;
-
-#ifdef SL_IF_TYPE_UART
-    UCA0IE |= UCRXIE;
-#endif
-
 }
 
 void CC3100_InterruptDisable()
 {
     P2IE &= ~BIT0;
-#ifdef SL_IF_TYPE_UART
-    UCA0IE &= ~UCRXIE;
-#endif
 }
 
 void MaskIntHdlr()
@@ -429,16 +421,6 @@ void MaskIntHdlr()
 void UnMaskIntHdlr()
 {
     IntIsMasked = FALSE;
-}
-
-void set_rts()
-{
-    P1OUT |= BIT4;
-}
-
-void clear_rts()
-{
-    P1OUT &= ~BIT4;
 }
 
 void initClk()
@@ -528,29 +510,6 @@ unsigned char GetLEDStatus()
   return status;
 }
 
-void initAntSelGPIO()
-{
-    P2OUT &= ~BIT5;
-    P2OUT |=  BIT4; /* Select Antenna 1 */
-    P2SEL &= ~(BIT4 + BIT5);
-    P2DIR |= (BIT4 + BIT5);
-}
-
-void SelAntenna(int antenna)
-{
-    switch(antenna)
-   {
-        case ANT1:
-            P2OUT &= ~BIT5;
-            P2OUT |=  BIT4;
-            break;
-        case ANT2:
-            P2OUT &= ~BIT4;
-            P2OUT |=  BIT5;
-            break;
-   }
-}
-
 #pragma vector=PORT1_VECTOR
 __interrupt void Port1_ISR(void)
 {
@@ -628,18 +587,10 @@ __interrupt void IntSpiGPIOHandler(void)
     switch(__even_in_range(P2IV, P2IV_P2IFG7))
     {
       case P2IV_P2IFG0:
-#ifndef SL_IF_TYPE_UART
         if (pIraEventHandler)
         {
             pIraEventHandler(0);
         }
-#else
-        if(puartFlowctrl->bRtsSetByFlowControl == FALSE)
-        {
-            clear_rts();
-        }
-
-#endif
         break;
     default:
         break;
@@ -664,61 +615,6 @@ __interrupt void CC3100_UART_ISR(void)
     {
         case 0:break;                             /* Vector 0 - no interrupt */
         case 2:                                   /* Vector 2 - RXIF */
-#ifdef SL_IF_TYPE_UART
-        {
-            unsigned char ByteRead;
-
-            while((UCA0IFG & UCRXIFG) != 0);
-
-            if(UCRXERR & UCA1STAT)
-            {
-                if(UCOE & UCA1STAT)
-                {
-                    error_overrun = TRUE;
-                }
-                ASSERT_UART(0);
-            }
-
-            ByteRead = UCA0RXBUF;
-
-            if(puartFlowctrl->bActiveBufferIsJitterOne == TRUE)
-            {
-                if(puartFlowctrl->JitterBufferFreeBytes > 0)
-                {
-                    puartFlowctrl->JitterBuffer[puartFlowctrl->JitterBufferWriteIdx] = ByteRead;
-                    puartFlowctrl->JitterBufferFreeBytes--;
-                    puartFlowctrl->JitterBufferWriteIdx++;
-
-                    if((FALSE == IntIsMasked) && (NULL != pIraEventHandler))
-                    {
-                        pIraEventHandler(0);
-                    }
-                }
-                else
-                {
-                    if(P1OUT & BIT3)
-                    {
-                        ASSERT_UART(0);
-                    }
-                }
-
-                if(puartFlowctrl->JitterBufferFreeBytes <= UART_READ_JITTER_RTS_GUARD)
-                {
-                    set_rts();
-                    puartFlowctrl->bRtsSetByFlowControl = TRUE;
-                }
-
-                if(puartFlowctrl->JitterBufferWriteIdx > (UART_READ_JITTER_BUFFER_SIZE - 1))
-                {
-                    puartFlowctrl->JitterBufferWriteIdx = 0;
-                }
-            }
-            else
-            {
-                puartFlowctrl->pActiveBuffer[puartFlowctrl->ActiveBufferWriteCounter++] = ByteRead;
-            }
-        }
-#endif
             break;
         case 4:break;                             /* Vector 4 - TXIFG */
         default: break;

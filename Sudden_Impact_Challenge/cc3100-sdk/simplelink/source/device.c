@@ -509,10 +509,10 @@ _i16 sl_UartSetMode(const SlUartIfParams_t* pUartParams)
         sl_IfUnMaskIntHdlr();
 
         /* send the magic code and wait for the response */
-        sl_IfWrite(g_pCB->FD, (_u8* )&magicCode, 4);
+        sl_IfWrite(g_pCB->FD, (_u8* )&magicCode, 4, 0);
 
         magicCode = UART_SET_MODE_MAGIC_CODE;
-        sl_IfWrite(g_pCB->FD, (_u8* )&magicCode, 4);
+        sl_IfWrite(g_pCB->FD, (_u8* )&magicCode, 4, 0);
 
         /* clear magic code */
         magicCode = 0;

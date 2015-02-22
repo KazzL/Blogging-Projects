@@ -112,7 +112,7 @@ int spi_Close(Fd_t fd);
     \note
     \warning
 */
-int spi_Read(Fd_t fd, unsigned char *pBuff, int len);
+int spi_Read(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber);
 
 /*!
     \brief attempts to write up to len bytes to the SPI channel
@@ -137,7 +137,7 @@ int spi_Read(Fd_t fd, unsigned char *pBuff, int len);
                     the entire buffer write would be completed
     \warning
 */
-int spi_Write(Fd_t fd, unsigned char *pBuff, int len);
+int spi_Write(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber);
 
 #ifdef  __cplusplus
 }

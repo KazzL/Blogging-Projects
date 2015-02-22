@@ -41,8 +41,8 @@
 #include "spi.h"
 #include "board.h"
 
-#define ASSERT_CS()          (P2OUT &= ~BIT2)
-#define DEASSERT_CS()        (P2OUT |= BIT2)
+#define ASSERT_CS_0()          (P2OUT &= ~BIT2)
+#define DEASSERT_CS_0()        (P2OUT |= BIT2)
 
 int spi_Close(Fd_t fd)
 {
@@ -100,11 +100,17 @@ Fd_t spi_Open(char *ifName, unsigned long flags)
 }
 
 
-int spi_Write(Fd_t fd, unsigned char *pBuff, int len)
+int spi_Write(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber)
 {
-        int len_to_return = len;
+	int len_to_return = len;
+    switch(deviceNumber){
+		case 0:
+			ASSERT_CS_0();
+			break;
+		case 1:
+			break;
+    }
 
-    ASSERT_CS();
     while (len)
     {
         while (!(UCB0IFG&UCTXIFG));
@@ -115,17 +121,28 @@ int spi_Write(Fd_t fd, unsigned char *pBuff, int len)
         pBuff++;
     }
 
-    DEASSERT_CS();
+    switch(deviceNumber){
+		case 0:
+			DEASSERT_CS_0();
+			break;
+		case 1:
+			break;
+    }
 
     return len_to_return;
 }
 
 
-int spi_Read(Fd_t fd, unsigned char *pBuff, int len)
+int spi_Read(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber)
 {
     int i = 0;
-
-    ASSERT_CS();
+    switch(deviceNumber){
+		case 0:
+			ASSERT_CS_0();
+			break;
+		case 1:
+			break;
+    }
 
     for (i = 0; i < len; i ++)
     {
@@ -135,7 +152,13 @@ int spi_Read(Fd_t fd, unsigned char *pBuff, int len)
         pBuff[i] = UCB0RXBUF;
     }
 
-    DEASSERT_CS();
+    switch(deviceNumber){
+		case 0:
+			DEASSERT_CS_0();
+			break;
+		case 1:
+			break;
+    }
 
     return len;
 }

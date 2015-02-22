@@ -48,16 +48,6 @@ P_EVENT_HANDLER                pIraEventHandler = 0;
 
 unsigned char IntIsMasked;
 
-
-#ifdef SL_IF_TYPE_UART
-#define ASSERT_UART(expr) {  if (!(expr)) { while(1) ;}}
-
-unsigned char error_overrun = FALSE;
-_uartFlowctrl uartFlowctrl;
-_uartFlowctrl *puartFlowctrl = &uartFlowctrl;
-#endif
-
-
 /*!
     \brief          Increase Vcore by one level
 

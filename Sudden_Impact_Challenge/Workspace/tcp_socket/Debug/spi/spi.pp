@@ -24,7 +24,6 @@ spi/spi.obj: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impa
 spi/spi.obj: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include/device.h
 spi/spi.obj: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include/netcfg.h
 spi/spi.obj: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include/wlan_rx_filters.h
-spi/spi.obj: C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp/spi.h
 
 C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp/spi.c: 
 c:/ti/ccsv6/ccs_base/msp430/include/msp430.h: 
@@ -50,4 +49,3 @@ C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/
 C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include/device.h: 
 C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include/netcfg.h: 
 C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/simplelink/include/wlan_rx_filters.h: 
-C:/Users/SAPL-025/Documents/element14-projects-software/Sudden_Impact_Challenge/cc3100-sdk/platform/msp430f5529lp/spi.h: 

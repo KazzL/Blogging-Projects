@@ -34,7 +34,6 @@
  *
 */
 
-#ifndef SL_IF_TYPE_UART
 #ifndef __SPI_H__
 #define __SPI_H__
 
@@ -146,4 +145,3 @@ int spi_Write(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber);
 
 
 #endif
-#endif /* SL_IF_TYPE_UART */

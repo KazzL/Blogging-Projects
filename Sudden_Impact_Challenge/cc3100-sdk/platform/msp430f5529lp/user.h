@@ -71,11 +71,7 @@ extern "C" {
 #include "board.h"
 #include "cli_uart.h"
 
-#ifndef SL_IF_TYPE_UART
 #include "spi.h"
-#else
-#include "uart.h"
-#endif
 
 typedef P_EVENT_HANDLER                         SL_P_EVENT_HANDLER;
 
@@ -446,11 +442,7 @@ typedef P_EVENT_HANDLER                         SL_P_EVENT_HANDLER;
 
     \warning        
 */
-#ifndef SL_IF_TYPE_UART
 #define sl_IfOpen                           spi_Open
-#else
-#define sl_IfOpen                           uart_Open
-#endif
 /*!
     \brief      Closes an opened interface communication port
 	
@@ -468,11 +460,7 @@ typedef P_EVENT_HANDLER                         SL_P_EVENT_HANDLER;
 
     \warning        
 */
-#ifndef SL_IF_TYPE_UART
 #define sl_IfClose                          spi_Close
-#else
-#define sl_IfClose                          uart_Close
-#endif
 
 /*!
     \brief      Attempts to read up to len bytes from an opened communication channel 
@@ -498,11 +486,7 @@ typedef P_EVENT_HANDLER                         SL_P_EVENT_HANDLER;
 
     \warning        
 */
-#ifndef SL_IF_TYPE_UART
 #define sl_IfRead                           spi_Read
-#else
-#define sl_IfRead                           uart_Read
-#endif
 
 /*!
     \brief attempts to write up to len bytes to the SPI channel
@@ -532,11 +516,7 @@ typedef P_EVENT_HANDLER                         SL_P_EVENT_HANDLER;
 
     \warning        
 */
-#ifndef SL_IF_TYPE_UART
 #define sl_IfWrite                          spi_Write
-#else
-#define sl_IfWrite                          uart_Write
-#endif
 
 /*!
     \brief 		register an interrupt handler routine for the host IRQ
@@ -574,11 +554,7 @@ typedef P_EVENT_HANDLER                         SL_P_EVENT_HANDLER;
 
     \warning
 */
-#ifndef SL_IF_TYPE_UART
 #define sl_IfMaskIntHdlr()
-#else
-#define sl_IfMaskIntHdlr        MaskIntHdlr
-#endif
 
 /*!
     \brief 		Unmasks the Host IRQ
@@ -591,11 +567,7 @@ typedef P_EVENT_HANDLER                         SL_P_EVENT_HANDLER;
 
     \warning
 */
-#ifndef SL_IF_TYPE_UART
 #define sl_IfUnMaskIntHdlr()
-#else
-#define sl_IfUnMaskIntHdlr     UnMaskIntHdlr
-#endif
     
 /*!
     \brief 		Write Handers for statistics debug on write 

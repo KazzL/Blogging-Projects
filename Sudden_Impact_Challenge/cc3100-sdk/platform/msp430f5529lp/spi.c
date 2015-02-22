@@ -34,7 +34,6 @@
  *
 */
 
-#ifndef SL_IF_TYPE_UART
 #include <msp430.h>
 
 #include "simplelink.h"
@@ -162,4 +161,3 @@ int spi_Read(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber)
 
     return len;
 }
-#endif /* SL_IF_TYPE_UART */

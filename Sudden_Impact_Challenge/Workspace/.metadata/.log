@@ -3322,3 +3322,13 @@ Command-line arguments:  -os win32 -ws win32 -arch x86 -product com.ti.ccstudio.
 
 !ENTRY org.eclipse.ui 4 4 2015-02-19 22:56:50.656
 !MESSAGE Unable to find Action Set: org.eclipse.rtsc.xdaistools.ui.actionSet
+!SESSION 2015-02-21 23:11:11.545 -----------------------------------------------
+eclipse.buildId=4.3.0.M20130911-1000
+java.version=1.6.0_13
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Framework arguments:  -product com.ti.ccstudio.branding.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product com.ti.ccstudio.branding.product
+
+!ENTRY org.eclipse.ui 4 4 2015-02-21 23:11:20.747
+!MESSAGE Unable to find Action Set: org.eclipse.rtsc.xdaistools.ui.actionSet

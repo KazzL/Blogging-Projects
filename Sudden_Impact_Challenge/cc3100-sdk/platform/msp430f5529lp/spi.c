@@ -40,11 +40,86 @@
 #include "spi.h"
 #include "board.h"
 
+//CC3100
 #define ASSERT_CS_0()          (P2OUT &= ~BIT2)
 #define DEASSERT_CS_0()        (P2OUT |= BIT2)
 
+//Other SPI Devices (1 - 3)
+#define ASSERT_CS_1()          (P2OUT &= ~BIT3)
+#define DEASSERT_CS_1()        (P2OUT |= BIT3)
+#define ASSERT_CS_2()          (P2OUT &= ~BIT4)
+#define DEASSERT_CS_2()        (P2OUT |= BIT4)
+#define ASSERT_CS_3()          (P2OUT &= ~BIT5)
+#define DEASSERT_CS_3()        (P2OUT |= BIT5)
+
+char SPI_Init_Flag = 0;
+
+int spi_Init()
+{
+	if (SPI_Init_Flag == 0)
+	{
+		/* Select the SPI lines: MOSI/MISO on P3.0,1 CLK on P3.2 */
+		P3SEL |= (BIT0 + BIT1);
+
+		P3REN |= BIT1;
+		P3OUT |= BIT1;
+
+		P3SEL |= BIT2;
+
+		UCB0CTL1 |= UCSWRST; /* Put state machine in reset */
+		UCB0CTL0 = UCMSB + UCMST + UCSYNC + UCCKPH; /* 3-pin, 8-bit SPI master */
+
+		UCB0CTL1 = UCSWRST + UCSSEL_2; /* Use SMCLK, keep RESET */
+
+		/* Set SPI clock */
+		UCB0BR0 = 0x02; /* f_UCxCLK = 25MHz/2 */
+		UCB0BR1 = 0;
+		UCB0CTL1 &= ~UCSWRST;
+
+
+		/* P1.6 - WLAN enable full DS */
+		P1SEL &= ~BIT6;
+		P1OUT &= ~BIT6;
+		P1DIR |= BIT6;
+
+
+		/* Configure SPI IRQ line on P2.0 */
+		P2DIR &= ~BIT0;
+		P2SEL &= ~BIT0;
+
+		P2REN |= BIT0;
+
+		/* Configure SPI Device 0 (CC3100)CS to be on P2.2 */
+		P2OUT |= BIT2;
+		P2SEL &= ~BIT2;
+		P2DIR |= BIT2;
+		/* Configure SPI Device 1 CS to be on P2.3 */
+		P2OUT |= BIT3;
+		P2SEL &= ~BIT3;
+		P2DIR |= BIT3;
+		/* Configure SPI Device 2 CS to be on P2.4 */
+		P2OUT |= BIT4;
+		P2SEL &= ~BIT4;
+		P2DIR |= BIT4;
+		/* Configure SPI Device 3 CS to be on P2.5 */
+		P2OUT |= BIT5;
+		P2SEL &= ~BIT5;
+		P2DIR |= BIT5;
+
+
+
+		/* 50 ms delay */
+		Delay(50);
+
+		SPI_Init_Flag = 1;
+	}
+	return 1;
+}
+
 int spi_Close(Fd_t fd)
 {
+	spi_Init();
+
     /* Disable WLAN Interrupt ... */
     CC3100_InterruptDisable();
 
@@ -53,44 +128,6 @@ int spi_Close(Fd_t fd)
 
 Fd_t spi_Open(char *ifName, unsigned long flags)
 {
-    /* Select the SPI lines: MOSI/MISO on P3.0,1 CLK on P3.2 */
-    P3SEL |= (BIT0 + BIT1);
-
-    P3REN |= BIT1;
-    P3OUT |= BIT1;
-
-    P3SEL |= BIT2;
-
-    UCB0CTL1 |= UCSWRST; /* Put state machine in reset */
-    UCB0CTL0 = UCMSB + UCMST + UCSYNC + UCCKPH; /* 3-pin, 8-bit SPI master */
-
-    UCB0CTL1 = UCSWRST + UCSSEL_2; /* Use SMCLK, keep RESET */
-
-    /* Set SPI clock */
-    UCB0BR0 = 0x02; /* f_UCxCLK = 25MHz/2 */
-    UCB0BR1 = 0;
-    UCB0CTL1 &= ~UCSWRST;
-
-
-    /* P1.6 - WLAN enable full DS */
-    P1SEL &= ~BIT6;
-    P1OUT &= ~BIT6;
-    P1DIR |= BIT6;
-
-
-    /* Configure SPI IRQ line on P2.0 */
-    P2DIR &= ~BIT0;
-    P2SEL &= ~BIT0;
-
-    P2REN |= BIT0;
-
-    /* Configure the SPI CS to be on P2.2 */
-    P2OUT |= BIT2;
-    P2SEL &= ~BIT2;
-    P2DIR |= BIT2;
-
-    /* 50 ms delay */
-    Delay(50);
 
     /* Enable WLAN interrupt */
     CC3100_InterruptEnable();
@@ -102,12 +139,59 @@ Fd_t spi_Open(char *ifName, unsigned long flags)
 int spi_Write(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber)
 {
 	int len_to_return = len;
+
+    while (len)
+    {
+        while (!(UCB0IFG&UCTXIFG));
+        UCB0TXBUF = *pBuff;
+        while (!(UCB0IFG&UCRXIFG));
+        UCB0RXBUF;
+        len --;
+        pBuff++;
+    }
+
+    return len_to_return;
+}
+
+
+int spi_Read(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber)
+{
+    int i = 0;
+
+    for (i = 0; i < len; i ++)
+    {
+        while (!(UCB0IFG&UCTXIFG));
+        UCB0TXBUF = 0xFF;
+        while (!(UCB0IFG&UCRXIFG));
+        pBuff[i] = UCB0RXBUF;
+    }
+
+    return len;
+}
+
+
+
+
+
+
+
+
+
+int spi_Device_Write(unsigned char *pBuff, int len, int deviceNumber)
+{
+	//int len_to_return = len;
     switch(deviceNumber){
-		case 0:
-			ASSERT_CS_0();
-			break;
 		case 1:
+			ASSERT_CS_1();
 			break;
+		case 2:
+			ASSERT_CS_2();
+			break;
+		case 3:
+			ASSERT_CS_3();
+			break;
+		default:
+			len = -1;
     }
 
     while (len)
@@ -121,18 +205,23 @@ int spi_Write(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber)
     }
 
     switch(deviceNumber){
-		case 0:
-			DEASSERT_CS_0();
-			break;
-		case 1:
-			break;
+	case 1:
+		DEASSERT_CS_1();
+		break;
+	case 2:
+		DEASSERT_CS_2();
+		break;
+	case 3:
+		DEASSERT_CS_3();
+		break;
+	default:
+		len = -1;
     }
 
-    return len_to_return;
+    return len;//len_to_return; TODO: Verify change has not caused any issues.
 }
 
-
-int spi_Read(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber)
+int spi_Device_Read(unsigned char *pBuff, int len, int deviceNumber)
 {
     int i = 0;
     switch(deviceNumber){
@@ -140,7 +229,16 @@ int spi_Read(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber)
 			ASSERT_CS_0();
 			break;
 		case 1:
+			ASSERT_CS_1();
 			break;
+		case 2:
+			ASSERT_CS_2();
+			break;
+		case 3:
+			ASSERT_CS_3();
+			break;
+		default:
+			len = -1;
     }
 
     for (i = 0; i < len; i ++)
@@ -152,11 +250,20 @@ int spi_Read(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber)
     }
 
     switch(deviceNumber){
-		case 0:
-			DEASSERT_CS_0();
-			break;
-		case 1:
-			break;
+	case 0:
+		DEASSERT_CS_0();
+		break;
+	case 1:
+		DEASSERT_CS_1();
+		break;
+	case 2:
+		DEASSERT_CS_2();
+		break;
+	case 3:
+		DEASSERT_CS_3();
+		break;
+	default:
+		len = -1;
     }
 
     return len;

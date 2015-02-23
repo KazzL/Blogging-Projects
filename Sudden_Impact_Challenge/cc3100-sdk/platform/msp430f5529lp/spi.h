@@ -49,6 +49,33 @@ extern "C" {
 */
 typedef unsigned int Fd_t;
 
+/*!
+    \brief open spi communication port to be used for communicating with all
+           spi devices
+
+    Given an interface name and option flags, this function opens the spi
+    communication port and creates a file descriptor. This file descriptor can
+    be used afterwards to read and write data from and to this specific spi
+    channel.
+    The SPI speed, clock polarity, clock phase, chip select and all other
+    attributes are all set to hardcoded values in this function.
+
+    \param[in]      ifName    -    points to the interface name/path. The
+                    interface name is an optional attributes that the simple
+                    link driver receives on opening the device. in systems that
+                    the spi channel is not implemented as part of the os device
+                    drivers, this parameter could be NULL.
+    \param[in]      flags     -    option flags
+
+    \return         upon successful completion, the function shall open the spi
+                    channel and return a non-negative integer representing the
+                    file descriptor. Otherwise, -1 shall be returned
+
+    \sa             spi_Close , spi_Read , spi_Write
+    \note
+    \warning
+*/
+int spi_Init(void);
 
 /*!
     \brief open spi communication port to be used for communicating with a
@@ -137,6 +164,19 @@ int spi_Read(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber);
     \warning
 */
 int spi_Write(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber);
+
+
+
+
+
+
+
+int spi_Device_Write(unsigned char *pBuff, int len, int deviceNumber);
+int spi_Device_Read(unsigned char *pBuff, int len, int deviceNumber);
+
+
+
+
 
 #ifdef  __cplusplus
 }

@@ -59,6 +59,7 @@ AlienWare Laptop
 
 #include "simplelink.h"
 #include "sl_common.h"
+#include "spi.h"
 
 #define APPLICATION_VERSION "1.1.0"
 
@@ -1063,6 +1064,11 @@ int main(int argc, char** argv)
     CLI_Configure();
     CLI_Write(" \f\r\n");
     displayBanner();
+
+    unsigned char id_Request[] = {0x03};
+    spi_Init();
+    spi_Device_Write(id_Request, 1, 1);
+
 /***********************************************Replaced by configureCC3x00();	startCC3x00(); connectCC3x00(); I think*********/
     /*
      * Following function configures the device to default state by cleaning

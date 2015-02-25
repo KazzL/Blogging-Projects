@@ -44,6 +44,14 @@
 #define ASSERT_CS()          (P2OUT &= ~BIT2)
 #define DEASSERT_CS()        (P2OUT |= BIT2)
 
+//Other SPI Devices (1 - 3)
+#define ASSERT_CS_1()          (P2OUT &= ~BIT3)
+#define DEASSERT_CS_1()        (P2OUT |= BIT3)
+#define ASSERT_CS_2()          (P2OUT &= ~BIT4)
+#define DEASSERT_CS_2()        (P2OUT |= BIT4)
+#define ASSERT_CS_3()          (P2OUT &= ~BIT5)
+#define DEASSERT_CS_3()        (P2OUT |= BIT5)
+
 int spi_Close(Fd_t fd)
 {
     /* Disable WLAN Interrupt ... */
@@ -89,6 +97,25 @@ Fd_t spi_Open(char *ifName, unsigned long flags)
     P2OUT |= BIT2;
     P2SEL &= ~BIT2;
     P2DIR |= BIT2;
+
+
+
+
+    /* Configure SPI Device 1 CS to be on P2.3 */
+    P2OUT |= BIT3;
+    P2SEL &= ~BIT3;
+    P2DIR |= BIT3;
+    /* Configure SPI Device 2 CS to be on P2.4 */
+    P2OUT |= BIT4;
+    P2SEL &= ~BIT4;
+    P2DIR |= BIT4;
+    /* Configure SPI Device 3 CS to be on P2.5 */
+    P2OUT |= BIT5;
+    P2SEL &= ~BIT5;
+    P2DIR |= BIT5;
+
+
+
 
     /* 50 ms delay */
     Delay(50);

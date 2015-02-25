@@ -1051,58 +1051,6 @@ int main(int argc, char** argv)
     CLI_Write(" \f\r\n");
     displayBanner();
 
-///***********************************************Replaced by configureCC3x00();	startCC3x00(); connectCC3x00(); I think*********/
-//    /*
-//     * Following function configures the device to default state by cleaning
-//     * the persistent settings stored in NVMEM (viz. connection profiles &
-//     * policies, power policy etc)
-//     *
-//     * Applications may choose to skip this step if the developer is sure
-//     * that the device is in its default state at start of application
-//     *
-//     * Note that all profiles and persistent settings that were done on the
-//     * device will be lost
-//     */
-//    retVal = configureSimpleLinkToDefaultState();
-//    if(retVal < 0)
-//    {
-//        if (DEVICE_NOT_IN_STATION_MODE == retVal)
-//        {
-//            CLI_Write(" Failed to configure the device in its default state \n\r");
-//        }
-//
-//        LOOP_FOREVER();
-//    }
-//
-//    CLI_Write(" Device is configured in default state \n\r");
-//
-//    /*
-//     * Assumption is that the device is configured in station mode already
-//     * and it is in its default state
-//     */
-//    /* Initializing the CC3100 device */
-//    retVal = sl_Start(0, 0, 0);
-//    if ((retVal < 0) ||
-//        (ROLE_STA != retVal) )
-//    {
-//        CLI_Write(" Failed to start the device \n\r");
-//        LOOP_FOREVER();
-//    }
-//
-//    CLI_Write(" Device started as STATION \n\r");
-//
-//    /* Connecting to WLAN AP - Set with static parameters defined at the top
-//    After this call we will be connected and have IP address */
-//    retVal = establishConnectionWithAP();
-//    if(retVal < 0)
-//       {
-//        CLI_Write(" Failed to establish connection w/ an AP \n\r");
-//           LOOP_FOREVER();
-//       }
-//
-//    CLI_Write(" Connection established w/ AP and IP is acquired \n\r");
-
-
 /*****************************************************TEST FUNCTIONS START*******************************/
 	configureCC3x00();
 	startCC3x00();

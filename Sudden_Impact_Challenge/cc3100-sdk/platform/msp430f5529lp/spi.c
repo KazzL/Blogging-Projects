@@ -127,11 +127,31 @@ Fd_t spi_Open(char *ifName, unsigned long flags)
 }
 
 
-int spi_Write(Fd_t fd, unsigned char *pBuff, int len)
+int spi_Write(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber)
 {
         int len_to_return = len;
 
-    ASSERT_CS();
+    switch(deviceNumber)
+    {
+        case 0:
+        ASSERT_CS();
+        break;
+
+        case 1:
+        ASSERT_CS_1();
+        break;
+
+        case 2:
+        ASSERT_CS_2();
+        break;
+
+        case 3:
+        ASSERT_CS_3();
+        break;
+
+        default:
+        len = 0;
+    }
     while (len)
     {
         while (!(UCB0IFG&UCTXIFG));
@@ -142,17 +162,57 @@ int spi_Write(Fd_t fd, unsigned char *pBuff, int len)
         pBuff++;
     }
 
-    DEASSERT_CS();
+    switch(deviceNumber)
+    {
+        case 0:
+        DEASSERT_CS();
+        break;
+        
+        case 1:
+        DEASSERT_CS_1();
+        break;
 
-    return len_to_return;
+        case 2:
+        DEASSERT_CS_2();
+        break;
+
+        case 3:
+        DEASSERT_CS_3();
+        break;
+
+        default:
+        len_to_return = -1;
+    }
+
+    return len_to_return; //TODO: Mention this as incorrect return, will not inform as API specifies.
 }
 
 
-int spi_Read(Fd_t fd, unsigned char *pBuff, int len)
+int spi_Read(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber)
 {
     int i = 0;
 
-    ASSERT_CS();
+    switch(deviceNumber)
+    {
+        case 0:
+        ASSERT_CS();
+        break;
+
+        case 1:
+        ASSERT_CS_1();
+        break;
+
+        case 2:
+        ASSERT_CS_2();
+        break;
+
+        case 3:
+        ASSERT_CS_3();
+        break;
+
+        default:
+        len = -1;
+    }
 
     for (i = 0; i < len; i ++)
     {
@@ -162,7 +222,28 @@ int spi_Read(Fd_t fd, unsigned char *pBuff, int len)
         pBuff[i] = UCB0RXBUF;
     }
 
-    DEASSERT_CS();
+    switch(deviceNumber)
+    {
+        case 0:
+        DEASSERT_CS();
+        break;
+        
+        case 1:
+        DEASSERT_CS_1();
+        break;
+
+        case 2:
+        DEASSERT_CS_2();
+        break;
+
+        case 3:
+        DEASSERT_CS_3();
+        break;
+
+        default:
+        len = -1;
+    }
+
 
     return len;
 }

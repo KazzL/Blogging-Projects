@@ -98,8 +98,81 @@ Fd_t spi_Open(char *ifName, unsigned long flags)
     P2SEL &= ~BIT2;
     P2DIR |= BIT2;
 
+    /* 50 ms delay */
+    Delay(50);
+
+    /* Enable WLAN interrupt */
+    CC3100_InterruptEnable();
+
+    return NONOS_RET_OK;
+}
 
 
+int spi_Write(Fd_t fd, unsigned char *pBuff, int len)
+{
+	int len_to_return = len;
+
+    ASSERT_CS();
+    while (len)
+    {
+        while (!(UCB0IFG&UCTXIFG));
+        UCB0TXBUF = *pBuff;
+        while (!(UCB0IFG&UCRXIFG));
+        UCB0RXBUF;
+        len --;
+        pBuff++;
+    }
+
+    DEASSERT_CS();
+
+    return len_to_return; //TODO: Mention this as incorrect return, will not inform as API specifies.
+}
+
+
+int spi_Read(Fd_t fd, unsigned char *pBuff, int len)
+{
+    int i = 0;
+
+    ASSERT_CS();
+    for (i = 0; i < len; i ++)
+    {
+        while (!(UCB0IFG&UCTXIFG));
+        UCB0TXBUF = 0xFF;
+        while (!(UCB0IFG&UCRXIFG));
+        pBuff[i] = UCB0RXBUF;
+    }
+
+    DEASSERT_CS();
+
+    return len;
+}
+
+
+
+
+
+
+
+
+int spi_Init(void)
+{
+    /* Select the SPI lines: MOSI/MISO on P3.3,4 CLK on P2.7 */
+    P3SEL |= (BIT3 + BIT4);
+
+    P3REN |= BIT4;
+    P3OUT |= BIT4;
+
+    P2SEL |= BIT7;
+
+    UCA0CTL1 |= UCSWRST; /* Put state machine in reset */
+    UCA0CTL0 = UCMSB + UCMST + UCSYNC + UCCKPH; /* 3-pin, 8-bit SPI master */
+
+    UCA0CTL1 = UCSWRST + UCSSEL_2; /* Use SMCLK, keep RESET */
+
+    /* Set SPI clock */
+    UCA0BR0 = 0x02; /* f_UCxCLK = 25MHz/2 */
+    UCA0BR1 = 0;
+    UCA0CTL1 &= ~UCSWRST;
 
     /* Configure SPI Device 1 CS to be on P2.3 */
     P2OUT |= BIT3;
@@ -114,44 +187,17 @@ Fd_t spi_Open(char *ifName, unsigned long flags)
     P2SEL &= ~BIT5;
     P2DIR |= BIT5;
 
-
-
-
     /* 50 ms delay */
     Delay(50);
 
-    /* Enable WLAN interrupt */
-    CC3100_InterruptEnable();
-
-    return NONOS_RET_OK;
+    return 1;
 }
 
-
-int spi_Write(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber)
+int spi_Device_Write(unsigned char *pBuff, int len, int deviceNumber)
 {
-        int len_to_return = len;
+	int len_to_return = len;
 
-    switch(deviceNumber)
-    {
-        case 0:
-        ASSERT_CS();
-        break;
-
-        case 1:
-        ASSERT_CS_1();
-        break;
-
-        case 2:
-        ASSERT_CS_2();
-        break;
-
-        case 3:
-        ASSERT_CS_3();
-        break;
-
-        default:
-        len = 0;
-    }
+    ASSERT_CS();
     while (len)
     {
         while (!(UCB0IFG&UCTXIFG));
@@ -162,56 +208,29 @@ int spi_Write(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber)
         pBuff++;
     }
 
-    switch(deviceNumber)
-    {
-        case 0:
-        DEASSERT_CS();
-        break;
-        
-        case 1:
-        DEASSERT_CS_1();
-        break;
-
-        case 2:
-        DEASSERT_CS_2();
-        break;
-
-        case 3:
-        DEASSERT_CS_3();
-        break;
-
-        default:
-        len_to_return = -1;
-    }
+    DEASSERT_CS();
 
     return len_to_return; //TODO: Mention this as incorrect return, will not inform as API specifies.
 }
 
 
-int spi_Read(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber)
+int spi_Device_Read(unsigned char *pBuff, int len, int deviceNumber)
 {
     int i = 0;
 
     switch(deviceNumber)
     {
-        case 0:
-        ASSERT_CS();
-        break;
-
-        case 1:
-        ASSERT_CS_1();
-        break;
-
-        case 2:
-        ASSERT_CS_2();
-        break;
-
-        case 3:
-        ASSERT_CS_3();
-        break;
-
-        default:
-        len = -1;
+    case 1:
+    	ASSERT_CS_1();
+    	break;
+    case 2:
+    	ASSERT_CS_2();
+    	break;
+    case 3:
+    	ASSERT_CS_3();
+    	break;
+    default:
+    	len = -1;
     }
 
     for (i = 0; i < len; i ++)
@@ -224,27 +243,21 @@ int spi_Read(Fd_t fd, unsigned char *pBuff, int len, int deviceNumber)
 
     switch(deviceNumber)
     {
-        case 0:
-        DEASSERT_CS();
-        break;
-        
-        case 1:
-        DEASSERT_CS_1();
-        break;
-
-        case 2:
-        DEASSERT_CS_2();
-        break;
-
-        case 3:
-        DEASSERT_CS_3();
-        break;
-
-        default:
-        len = -1;
+    case 1:
+    	DEASSERT_CS_1();
+    	break;
+    case 2:
+    	DEASSERT_CS_2();
+    	break;
+    case 3:
+    	DEASSERT_CS_3();
+    	break;
+    default:
+    	len = -1;
     }
-
 
     return len;
 }
+
+
 #endif /* SL_IF_TYPE_UART */

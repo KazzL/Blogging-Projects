@@ -139,6 +139,16 @@ int spi_Read(Fd_t fd, unsigned char *pBuff, int len);
 */
 int spi_Write(Fd_t fd, unsigned char *pBuff, int len);
 
+
+
+
+
+
+
+int spi_Init();
+int spi_Device_Write(unsigned char *pBuff, int len, int deviceNumber);
+int spi_Device_Read(unsigned char *pBuff, int len, int deviceNumber);
+
 #ifdef  __cplusplus
 }
 #endif // __cplusplus

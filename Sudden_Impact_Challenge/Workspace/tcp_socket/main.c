@@ -1069,10 +1069,13 @@ int main(int argc, char** argv)
 
  	int dataAvilable;
 
- 	CLI_Write(" Initilizing I2C");
- 	I2CInit();
+ 	CLI_Write(" Initilizing SPI");
+ 	int spi_Init();
  	Delay(700);
  	CLI_Write(" Complete \r\n");
+ 	unsigned char hello[] = {0x03};
+ 	spi_Device_Write(hello, 1, 0);
+
  	Delay(500);
  	CLI_Write(" Initilizing MPL3115A");
  	Delay(700);

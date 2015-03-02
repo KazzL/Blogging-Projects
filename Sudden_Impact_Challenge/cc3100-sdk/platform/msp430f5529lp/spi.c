@@ -162,15 +162,16 @@ int spi_Init(void)
     P3REN |= BIT4;
     P3OUT |= BIT4;
 
+    /* Select the SPI clock on P2.7*/
     P2SEL |= BIT7;
 
     UCA0CTL1 |= UCSWRST; /* Put state machine in reset */
-    UCA0CTL0 = UCMSB + UCMST + UCSYNC + UCCKPH; /* 3-pin, 8-bit SPI master */
+    UCA0CTL0 = UCMSB + UCMST + UCSYNC;// + UCCKPH; /* 3-pin, 8-bit SPI master */
 
     UCA0CTL1 = UCSWRST + UCSSEL_2; /* Use SMCLK, keep RESET */
 
     /* Set SPI clock */
-    UCA0BR0 = 0x02; /* f_UCxCLK = 25MHz/2 */
+    UCA0BR0 = 0x05; /* f_UCxCLK = 25MHz/5 */
     UCA0BR1 = 0;
     UCA0CTL1 &= ~UCSWRST;
 
@@ -195,9 +196,20 @@ int spi_Init(void)
 
 int spi_Device_Write(unsigned char *pBuff, int len, int deviceNumber)
 {
-	int len_to_return = len;
-
-    ASSERT_CS();
+    switch(deviceNumber)
+    {
+		case 1:
+			ASSERT_CS_1();
+			break;
+		case 2:
+			ASSERT_CS_2();
+			break;
+		case 3:
+			ASSERT_CS_3();
+			break;
+		default:
+			len = -1;
+    }
     while (len)
     {
         while (!(UCB0IFG&UCTXIFG));
@@ -208,9 +220,22 @@ int spi_Device_Write(unsigned char *pBuff, int len, int deviceNumber)
         pBuff++;
     }
 
-    DEASSERT_CS();
+    switch(deviceNumber)
+    {
+        case 1:
+        	DEASSERT_CS_1();
+        	break;
+        case 2:
+        	DEASSERT_CS_2();
+        	break;
+        case 3:
+        	DEASSERT_CS_3();
+        	break;
+        default:
+        	len = -1;
+    }
 
-    return len_to_return; //TODO: Mention this as incorrect return, will not inform as API specifies.
+    return len;
 }
 
 
@@ -220,17 +245,17 @@ int spi_Device_Read(unsigned char *pBuff, int len, int deviceNumber)
 
     switch(deviceNumber)
     {
-    case 1:
-    	ASSERT_CS_1();
-    	break;
-    case 2:
-    	ASSERT_CS_2();
-    	break;
-    case 3:
-    	ASSERT_CS_3();
-    	break;
-    default:
-    	len = -1;
+		case 1:
+			ASSERT_CS_1();
+			break;
+		case 2:
+			ASSERT_CS_2();
+			break;
+		case 3:
+			ASSERT_CS_3();
+			break;
+		default:
+			len = -1;
     }
 
     for (i = 0; i < len; i ++)
@@ -243,17 +268,17 @@ int spi_Device_Read(unsigned char *pBuff, int len, int deviceNumber)
 
     switch(deviceNumber)
     {
-    case 1:
-    	DEASSERT_CS_1();
-    	break;
-    case 2:
-    	DEASSERT_CS_2();
-    	break;
-    case 3:
-    	DEASSERT_CS_3();
-    	break;
-    default:
-    	len = -1;
+		case 1:
+			DEASSERT_CS_1();
+			break;
+		case 2:
+			DEASSERT_CS_2();
+			break;
+		case 3:
+			DEASSERT_CS_3();
+			break;
+		default:
+			len = -1;
     }
 
     return len;

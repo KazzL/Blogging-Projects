@@ -159,11 +159,12 @@ int spi_Init(void)
     /* Select the SPI lines: MOSI/MISO on P3.3,4 CLK on P2.7 */
     P3SEL |= (BIT3 + BIT4);
 
-    P3REN |= BIT4;
-    P3OUT |= BIT4;
+//    P3REN |= BIT4;
+//    P3OUT |= BIT4;
 
     /* Select the SPI clock on P2.7*/
     P2SEL |= BIT7;
+    P2DIR |= BIT7;
 
     UCA0CTL1 |= UCSWRST; /* Put state machine in reset */
     UCA0CTL0 = UCMSB + UCMST + UCSYNC;// + UCCKPH; /* 3-pin, 8-bit SPI master */
@@ -209,13 +210,14 @@ int spi_Device_Write(unsigned char *pBuff, int len, int deviceNumber)
 			break;
 		default:
 			len = -1;
+			break;
     }
     while (len)
     {
-        while (!(UCB0IFG&UCTXIFG));
-        UCB0TXBUF = *pBuff;
-        while (!(UCB0IFG&UCRXIFG));
-        UCB0RXBUF;
+        while (!(UCA0IFG & UCTXIFG));
+        UCA0TXBUF = *pBuff;
+        while (!(UCA0IFG & UCRXIFG));
+        UCA0RXBUF;
         len --;
         pBuff++;
     }
@@ -233,6 +235,7 @@ int spi_Device_Write(unsigned char *pBuff, int len, int deviceNumber)
         	break;
         default:
         	len = -1;
+        	break;
     }
 
     return len;
@@ -256,14 +259,15 @@ int spi_Device_Read(unsigned char *pBuff, int len, int deviceNumber)
 			break;
 		default:
 			len = -1;
+			break;
     }
 
     for (i = 0; i < len; i ++)
     {
-        while (!(UCB0IFG&UCTXIFG));
-        UCB0TXBUF = 0xFF;
-        while (!(UCB0IFG&UCRXIFG));
-        pBuff[i] = UCB0RXBUF;
+        while (!(UCA0IFG & UCTXIFG));
+        UCA0TXBUF = 0xFF;
+        while (!(UCA0IFG & UCRXIFG));
+        pBuff[i] = UCA0RXBUF;
     }
 
     switch(deviceNumber)
@@ -279,6 +283,7 @@ int spi_Device_Read(unsigned char *pBuff, int len, int deviceNumber)
 			break;
 		default:
 			len = -1;
+			break;
     }
 
     return len;

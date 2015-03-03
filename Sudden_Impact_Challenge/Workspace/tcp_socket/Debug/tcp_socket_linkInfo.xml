@@ -2,7 +2,7 @@
 <link_info>
    <banner>MSP430 Linker PC v4.3.3</banner>
    <copyright>Copyright (c) 2003-2014 Texas Instruments Incorporated</copyright>
-   <link_time>0x54f36c76</link_time>
+   <link_time>0x54f54d9a</link_time>
    <link_errors>0x0</link_errors>
    <output_file>tcp_socket.out</output_file>
    <entry_point>
@@ -91,8 +91,8 @@
       <input_file id="fl-54">
          <path>C:\Users\SAPL-025\AppData\Local\Temp\</path>
          <kind>object</kind>
-         <file>096362</file>
-         <name>096362</name>
+         <file>052682</file>
+         <name>052682</name>
       </input_file>
       <input_file id="fl-55">
          <path>c:\ti\ccsv6\tools\compiler\msp430_4.3.3\lib\</path>
@@ -1146,34 +1146,34 @@
          <name>.debug_info</name>
          <load_address>0x12ec</load_address>
          <run_address>0x12ec</run_address>
-         <size>0x10052</size>
+         <size>0x100a5</size>
          <input_file_ref idref="fl-54"/>
       </object_component>
       <object_component id="oc-d7">
          <name>.debug_info</name>
-         <load_address>0x1133e</load_address>
-         <run_address>0x1133e</run_address>
+         <load_address>0x11391</load_address>
+         <run_address>0x11391</run_address>
          <size>0x286</size>
          <input_file_ref idref="fl-55"/>
       </object_component>
       <object_component id="oc-dc">
          <name>.debug_info</name>
-         <load_address>0x115c4</load_address>
-         <run_address>0x115c4</run_address>
+         <load_address>0x11617</load_address>
+         <run_address>0x11617</run_address>
          <size>0x27b</size>
          <input_file_ref idref="fl-56"/>
       </object_component>
       <object_component id="oc-e1">
          <name>.debug_info</name>
-         <load_address>0x1183f</load_address>
-         <run_address>0x1183f</run_address>
+         <load_address>0x11892</load_address>
+         <run_address>0x11892</run_address>
          <size>0x284</size>
          <input_file_ref idref="fl-57"/>
       </object_component>
       <object_component id="oc-198">
          <name>.debug_info</name>
-         <load_address>0x11ac3</load_address>
-         <run_address>0x11ac3</run_address>
+         <load_address>0x11b16</load_address>
+         <run_address>0x11b16</run_address>
          <size>0xd8</size>
       </object_component>
       <object_component id="oc-84">
@@ -2335,7 +2335,7 @@
          <name>.debug_info</name>
          <load_address>0x0</load_address>
          <run_address>0x0</run_address>
-         <size>0x11b9b</size>
+         <size>0x11bee</size>
          <contents>
             <object_component_ref idref="oc-81"/>
             <object_component_ref idref="oc-88"/>

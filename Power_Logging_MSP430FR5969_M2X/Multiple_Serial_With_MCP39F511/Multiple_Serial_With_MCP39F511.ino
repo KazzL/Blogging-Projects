@@ -22,19 +22,19 @@
 #define debugState 1
 #define debugStateThree 0
 
-byte requestData[] = {0xA5, 0x08, 0x41, 0x00, 0x02, 0x4E, 0x02, 0x40};
+byte requestData[] = {0xA5, 0x08, 0x41, 0x00, 0x02, 0x4E, 0x0A, 0x48};
 int timeSlot = 300; //Lowest 200
 unsigned long time0 = 0;
 unsigned long time1 = 0;
 int receiveCounter = 0;
 int bytesToReceive = -1;
 
-char reveivedData[50]; //Input array 
+unsigned char reveivedData[50]; //Input array 
 boolean stringComplete = false; // whether the string is complete
 int outputCounter = 0;
 int i = 0;
 int state = 0;
-char inChar;
+unsigned char inChar;
 
 int availableBytes = 0;
 

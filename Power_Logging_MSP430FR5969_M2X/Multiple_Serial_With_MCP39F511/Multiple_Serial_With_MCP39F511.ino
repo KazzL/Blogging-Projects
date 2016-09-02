@@ -20,9 +20,12 @@
 #define CSFAIL 0x51
 #define debug 1
 #define debugState 1
+#define debugVerbose 0
 #define debugStateThree 0
+#define debugHEX 1
+#define debugDEC 0
 
-byte requestData[] = {0xA5, 0x08, 0x41, 0x00, 0x02, 0x4E, 0x20, 0x5E};
+byte requestData[] = {0xA5, 0x08, 0x41, 0x00, 0x02, 0x4E, 0x1C, 0x5A};
 int timeSlot = 300; //Lowest 200
 unsigned long time0 = 0;
 unsigned long time1 = 0;
@@ -30,11 +33,15 @@ int receiveCounter = 0;
 int bytesToReceive = -1;
 
 unsigned char reveivedData[50]; //Input array 
-boolean stringComplete = false; // whether the string is complete
 int outputCounter = 0;
 int i = 0;
 int state = 0;
 unsigned char inChar;
+unsigned char checksum;
+unsigned int tempUInt_16;
+signed int tempSInt_16;
+unsigned long tempULong_32;
+signed long tempSLong_32;
 
 int availableBytes = 0;
 
@@ -42,11 +49,9 @@ void setup() {
   // initialize both serial ports:
   Serial.begin(115200);
   Serial1.begin(115200);
-  // reserve 200 bytes for the inputString:
-  // inputString.reserve(200);
   
   // prints title with ending line break 
-  Serial.println("Read Data from MCP39F511"); 
+  Serial.println("\n\n\rRead Data from MCP39F511"); 
    
 }
 
@@ -74,6 +79,7 @@ void loop() {
 				inChar = (char)Serial1.read();
 				if(inChar == ACK){
 					reveivedData[receiveCounter] = inChar;
+					checksum = inChar;
 					receiveCounter++;
 					state++;
 					#if debug
@@ -91,10 +97,12 @@ void loop() {
 				else if(inChar == NACK){
 					//Output error message
 					Serial.println("Frame received with success command not understood or another error in command bytes");
+					state--;
 				}
 				else if(inChar == CSFAIL){
 					//Output error message
 					Serial.println("Frame received with success, however, checksum did not match bytes in frame");
+					state--;
 				}
 			}
 			#if debugState
@@ -108,6 +116,7 @@ void loop() {
 				inChar = (char)Serial1.read();
 				reveivedData[receiveCounter] = inChar;
 				bytesToReceive = inChar;
+				checksum += inChar;
 				receiveCounter++;
 				state++;
 				#if debug
@@ -135,6 +144,9 @@ void loop() {
 				inChar = (char)Serial1.read();
 				reveivedData[receiveCounter] = inChar;
 				receiveCounter++;
+				if(receiveCounter < bytesToReceive){
+					checksum += inChar;
+				}
 				if(receiveCounter == bytesToReceive){
 					state++;
 					#if debugState
@@ -161,6 +173,126 @@ void loop() {
 			break;
 			
 		case 4:
+			#if debugDEC
+			// Serial.print("\n\rNumber of Bytes - 0x");
+			// Serial.print(reveivedData[1], DEC);
+			
+			// Serial.print("\n\rSystem Status - 0x");
+			// Serial.print(reveivedData[3], HEX);
+			// Serial.print(reveivedData[2], HEX);
+			
+			// Serial.print("\n\rSystem Version - 0x");
+			// Serial.print(reveivedData[5], HEX);
+			// Serial.print(reveivedData[4], HEX);
+			
+			// Serial.print("\n\rVoltage RMS x 10 = 0x");
+			// Serial.print(reveivedData[7], HEX);
+			// Serial.print(reveivedData[6], HEX);
+						
+			// Serial.print("\n\rLine Frequency x 1000 = 0x");
+			// Serial.print(reveivedData[9], HEX);
+			// Serial.print(reveivedData[8], HEX);
+						
+			// Serial.print("\n\rAnalog Input Voltage = 0x");
+			// Serial.print(reveivedData[11], HEX);
+			// Serial.print(reveivedData[10], HEX);
+						
+			// Serial.print("\n\rPower Factor / 2^(-15) = 0x");
+			// Serial.print(reveivedData[13], HEX);
+			// Serial.print(reveivedData[12], HEX);
+			
+			// Serial.print("\n\rCurent RMS x 1000 = 0x");
+			// Serial.print(reveivedData[17], HEX);
+			// Serial.print(reveivedData[16], HEX);
+			// Serial.print(reveivedData[15], HEX);
+			// Serial.print(reveivedData[14], HEX);
+						
+			// Serial.print("\n\rActive Power x 100 = 0x");
+			// Serial.print(reveivedData[21], HEX);
+			// Serial.print(reveivedData[20], HEX);
+			// Serial.print(reveivedData[19], HEX);
+			// Serial.print(reveivedData[18], HEX);
+									
+			// Serial.print("\n\rReactive Power x 100 = 0x");
+			// Serial.print(reveivedData[25], HEX);
+			// Serial.print(reveivedData[24], HEX);
+			// Serial.print(reveivedData[23], HEX);
+			// Serial.print(reveivedData[22], HEX);
+									
+			// Serial.print("\n\rApparent Power x 100 = 0x");
+			// Serial.print(reveivedData[29], HEX);
+			// Serial.print(reveivedData[28], HEX);
+			// Serial.print(reveivedData[27], HEX);
+			// Serial.print(reveivedData[26], HEX);
+			
+			// Serial.print("\n\rChecksum Value Reveived = 0x");
+			// Serial.print(reveivedData[30], HEX);
+			// Serial.print("\n\rChecksum Value Calculated = 0x");
+			// Serial.print(checksum, HEX);
+			#endif
+		
+		
+			#if debugHEX
+			Serial.print("ACK - 0x");
+			Serial.print(reveivedData[0], HEX);
+			Serial.print("\n\rNumber of Bytes - 0x");
+			Serial.print(reveivedData[1], HEX);
+			
+			Serial.print("\n\rSystem Status - 0x");
+			Serial.print(reveivedData[3], HEX);
+			Serial.print(reveivedData[2], HEX);
+			
+			Serial.print("\n\rSystem Version - 0x");
+			Serial.print(reveivedData[5], HEX);
+			Serial.print(reveivedData[4], HEX);
+			
+			Serial.print("\n\rVoltage RMS x 10 = 0x");
+			Serial.print(reveivedData[7], HEX);
+			Serial.print(reveivedData[6], HEX);
+						
+			Serial.print("\n\rLine Frequency x 1000 = 0x");
+			Serial.print(reveivedData[9], HEX);
+			Serial.print(reveivedData[8], HEX);
+						
+			Serial.print("\n\rAnalog Input Voltage = 0x");
+			Serial.print(reveivedData[11], HEX);
+			Serial.print(reveivedData[10], HEX);
+						
+			Serial.print("\n\rPower Factor / 2^(-15) = 0x");
+			Serial.print(reveivedData[13], HEX);
+			Serial.print(reveivedData[12], HEX);
+			
+			Serial.print("\n\rCurent RMS x 1000 = 0x");
+			Serial.print(reveivedData[17], HEX);
+			Serial.print(reveivedData[16], HEX);
+			Serial.print(reveivedData[15], HEX);
+			Serial.print(reveivedData[14], HEX);
+						
+			Serial.print("\n\rActive Power x 100 = 0x");
+			Serial.print(reveivedData[21], HEX);
+			Serial.print(reveivedData[20], HEX);
+			Serial.print(reveivedData[19], HEX);
+			Serial.print(reveivedData[18], HEX);
+									
+			Serial.print("\n\rReactive Power x 100 = 0x");
+			Serial.print(reveivedData[25], HEX);
+			Serial.print(reveivedData[24], HEX);
+			Serial.print(reveivedData[23], HEX);
+			Serial.print(reveivedData[22], HEX);
+									
+			Serial.print("\n\rApparent Power x 100 = 0x");
+			Serial.print(reveivedData[29], HEX);
+			Serial.print(reveivedData[28], HEX);
+			Serial.print(reveivedData[27], HEX);
+			Serial.print(reveivedData[26], HEX);
+			
+			Serial.print("\n\rChecksum Value Reveived  =  0x");
+			Serial.print(reveivedData[30], HEX);
+			Serial.print("\n\rChecksum Value Calculated = 0x");
+			Serial.println(checksum, HEX);
+			#endif
+			
+			#if debugVerbose
 			for(outputCounter = 0; outputCounter < receiveCounter; outputCounter++){
 				Serial.print(reveivedData[outputCounter], HEX);
 				Serial.print(" - outputCounter ");
@@ -168,6 +300,7 @@ void loop() {
 				Serial.print(" - receiveCounter ");
 				Serial.println(receiveCounter, HEX);
 			}
+			#endif
 			receiveCounter = 0;
 			state = 0;
 			#if debugState
@@ -180,36 +313,6 @@ void loop() {
 	}
  
 }
-
- /*
-   SerialEvent occurs whenever a new data comes in the
-   hardware serial RX. This routine is run between each
-   time loop() runs, so using delay inside loop can delay
-   response. Multiple bytes of data may be available.
- */
- // void serialEvent() {
-   // while (Serial1.available()) {
-	   // Serial.println("9 Serial Data Avialable - SerialEvent");
-     // // get the new byte:
-     // char inChar = (char)Serial1.read(); 
-     // if(receiveCounter == 1){
-      // bytesToReceive = inChar;
-	  // Serial.println("A Number of Bytes to Receive - ");
-     // }
-     // // add it to the inputString:
-     // // inputString += inChar;	//TODO: Remove
-	 // reveivedData[receiveCounter] = inChar;
-	 // Serial.println("B Input Data Read - ");
-     // // if the incoming character is a newline, set a flag
-     // // so the main loop can do something about it:
-     // if ((bytesToReceive - 1) == receiveCounter) {
-     // stringComplete = true;
-	 // Serial.println("C Completed Input Data Read - ");
-     // } 
-	 // receiveCounter++;
-	 // Serial.println("D End of SerialEvent");
-   // }
- // }
 
 
 

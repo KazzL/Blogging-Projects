@@ -19,11 +19,11 @@
 #define NACK 0x15
 #define CSFAIL 0x51
 #define debug 0
-#define debugState 0
+#define debugState 1
 #define debugVerbose 0
 #define debugStateThree 0
 #define debugHEX 0
-#define debugDEC 1
+#define debugDEC 0
 
 byte requestData[] = {0xA5, 0x08, 0x41, 0x00, 0x02, 0x4E, 0x1C, 0x5A};
 int timeSlot = 300; //Lowest 200
@@ -42,6 +42,8 @@ unsigned int tempUInt_16;
 signed int tempInt_16;
 unsigned long tempUInt_32;
 signed long tempInt_32;
+double tempOutput;
+int diconnectCounter;
 
 int availableBytes = 0;
 
@@ -60,6 +62,7 @@ void loop() {
 	time1 = millis();
 	switch(state){
 		case 0:
+		Serial.flush();
 			if((time1 - time0) >= 1000){
 				for(i = 0; i < sizeof(requestData); i++){
 					Serial1.write(requestData[i]);
@@ -104,13 +107,25 @@ void loop() {
 					Serial.println("Frame received with success, however, checksum did not match bytes in frame");
 					state--;
 				}
+				else{
+					state--;
+				}
 			}
+			else{
+				if(diconnectCounter >= 10){
+					state = 0;
+					diconnectCounter = 0;
+					
+				}
+			}
+			diconnectCounter++;
 			#if debugState
 			Serial.println("State #1");
 			#endif
 			break;
 			
 		case 2:
+			diconnectCounter = 0;
 			availableBytes = Serial1.available();
 			if(availableBytes > 0){
 				inChar = (char)Serial1.read();
@@ -173,6 +188,61 @@ void loop() {
 			break;
 			
 		case 4:
+			if(checksum == reveivedData[30]){
+				Serial.println("\n\rCHECKSUM MATCH ---- SUCCESS");
+				
+				Serial.print("\n\rNumber of Bytes - ");
+				Serial.print(reveivedData[1], DEC);
+				
+				Serial.print("\n\rSystem Status - 0x");
+				Serial.print(reveivedData[3], HEX);
+				Serial.print(reveivedData[2], HEX);
+				
+				Serial.print("\n\rSystem Version - Year-20");
+				Serial.print(((reveivedData[5] & 0xF0) >> 4), DEC);
+				Serial.print(" Month-");
+				Serial.print((reveivedData[5] & 0x0F), DEC);
+				Serial.print(" Day-");
+				Serial.print(reveivedData[4], DEC);
+				
+				Serial.print("\n\rVoltage RMS = ");
+				tempOutput = (reveivedData[7] << 8) | reveivedData[6];
+				Serial.print((tempOutput / 10), 4);
+							
+				Serial.print("\n\rLine Frequency = ");
+				tempOutput = 0x0000FFFF & (reveivedData[9] << 8) | reveivedData[8];
+				Serial.print((tempOutput/ 1000), DEC);
+							
+				Serial.print("\n\rAnalog Input Voltage = ");
+				tempUInt_16 = (reveivedData[11] << 8) | reveivedData[10];
+				Serial.print(tempUInt_16, 4);
+							
+				Serial.print("\n\rPower Factor = ");//TODO: This is a signed number, this needs to betaken into account
+				tempOutput = 0x0000FFFF & ((reveivedData[13] << 8) | reveivedData[12]);
+				Serial.print((tempOutput * 3051757813) / 100000000000000, 4);
+				
+				Serial.print("\n\rCurent RMS = ");
+				tempOutput = (reveivedData[17] << 24) | (reveivedData[16] << 16) | (reveivedData[15] << 8) | reveivedData[14];
+				Serial.print((tempOutput / 10000), 4);
+							
+				Serial.print("\n\rActive Power = ");
+				tempOutput = (reveivedData[21] << 24) | (reveivedData[20] << 16) | (reveivedData[19] << 8) | reveivedData[18];
+				Serial.print((tempOutput / 100), 4);
+										
+				Serial.print("\n\rReactive Power = ");
+				tempOutput = (reveivedData[25] << 24) | (reveivedData[24] << 16) | (reveivedData[23] << 8) | reveivedData[22];
+				Serial.print((tempOutput / 100), DEC);
+										
+				Serial.print("\n\rApparent Power = ");
+				tempOutput = (reveivedData[29] << 24) | (reveivedData[28] << 16) | (reveivedData[27] << 8) | reveivedData[26];
+				Serial.print((tempOutput / 100), DEC);
+				
+				Serial.print("\n\rChecksum Value Reveived = 0x");
+				Serial.print(reveivedData[30], HEX);
+				Serial.print("\n\rChecksum Value Calculated = 0x");
+				Serial.println(checksum, HEX);
+				
+			}
 			#if debugDEC
 			Serial.print("\n\rNumber of Bytes - ");
 			Serial.print(reveivedData[1], DEC);

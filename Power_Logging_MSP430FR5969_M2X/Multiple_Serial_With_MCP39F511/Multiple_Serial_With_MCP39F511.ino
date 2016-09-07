@@ -28,7 +28,7 @@
 #define debug 0
 #define debugState 1
 #define debugVerbose 0
-#define debugStateThree 0
+#define debugStateThree 1
 #define debugHEX 0
 #define debugDEC 0
 #define debugDOUBLE 0
@@ -47,20 +47,18 @@ int state = 0;
 unsigned char inChar;
 unsigned char checksum;
 unsigned int tempUInt_16;
-signed int tempInt_16;
 unsigned long tempUInt_32;
-signed long tempInt_32;
 double tempOutput;
 double valuesToPush[7];
 int diconnectCounter;
 int response;
 int *timeStamp;
+int deviceReadFrequency = 10000;
 
 int availableBytes = 0;
 
 WiFiClient client;
 M2XStreamClient m2xClient(&client, m2xKey);
-TimeService timeService(&m2xClient);
 
 void setup() {
   // initialize both serial ports:
@@ -104,7 +102,7 @@ void loop() {
   switch(state){
     case 0:
       Serial.flush();
-      if((time1 - time0) >= 1000){
+      if((time1 - time0) >= deviceReadFrequency){
         for(i = 0; i < sizeof(requestData); i++){
           Serial1.write(requestData[i]);
           delayMicroseconds(timeSlot);
@@ -229,14 +227,13 @@ void loop() {
       break;
       
     case 4:
-      timeService.getTimestamp32(timeStamp);
+      // timeService.getTimestamp32(timeStamp);
       if(checksum == reveivedData[30]){
         tempOutput = (reveivedData[7] << 8) | reveivedData[6];
         valuesToPush[1] = tempOutput;
         response = m2xClient.updateStreamValue(deviceId, streamName1, (tempOutput / 10));
         Serial.print("\n\rVoltage RMS = ");
         Serial.println(response);
-              
         
         tempOutput = 0x0000FFFF & (reveivedData[9] << 8) | reveivedData[8];
         valuesToPush[3] = tempOutput;

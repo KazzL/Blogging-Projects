@@ -1,15 +1,18 @@
 /*
   Multple serial test
  
-  Receives from the main serial port, sends to the others. 
+  Receives from the MCP39F511 on Serial1 port, sends to the others. 
   Receives from serial port 1, sends to the main serial (Serial 0).
  
   The circuit: 
-  * Any serial device attached to Serial port 1
+  * MCP39F511 RX and TX connected to Serial1 
   * Serial monitor open on Serial port 0:
  
-  created 30 Dec. 2008
-  by Tom Igoe
+  created 7 September 2016
+  by Kasriel Lewis
+  adapted from code created by:
+  Tom Igoe - MultiSerial (Energia Demo)
+  Mark Easley - M2X-Button_Press (M2X Demo)
  
   This example code is in the public domain.
  
@@ -17,14 +20,14 @@
 #include <aJSON.h>
 #include "SPI.h"
 #include "WiFi.h"
-
 #include "M2XStreamClient.h"
 #include "WiFi_Credentials.h"
-
 
 #define ACK 0x06
 #define NACK 0x15
 #define CSFAIL 0x51
+
+//DEBUG DEFINES 
 #define debug 0
 #define debugState 1
 #define debugVerbose 0
@@ -39,23 +42,23 @@ unsigned long time0 = 0;
 unsigned long time1 = 0;
 int receiveCounter = 0;
 int bytesToReceive = -1;
-
 unsigned char reveivedData[50]; //Input array 
-int outputCounter = 0;
 int i = 0;
 int state = 0;
 unsigned char inChar;
 unsigned char checksum;
-unsigned int tempUInt_16;
-unsigned long tempUInt_32;
 double tempOutput;
-double valuesToPush[7];
 int diconnectCounter;
 int response;
-int *timeStamp;
 int deviceReadFrequency = 10000;
-
+double valuesToPush[7];
 int availableBytes = 0;
+
+//DEBUG VARIABLES
+int outputCounter = 0;
+unsigned int tempUInt_16;
+unsigned long tempUInt_32;
+
 
 WiFiClient client;
 M2XStreamClient m2xClient(&client, m2xKey);
@@ -477,7 +480,6 @@ void loop() {
   }
  
 }
-
 
 void printWifiStatus() {
   // print the SSID of the network you're attached to:

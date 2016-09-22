@@ -66,6 +66,9 @@ void setup() {
   Serial.begin(115200);
   Serial1.begin(115200);
   
+  pinMode(RED_LED, OUTPUT);
+  pinMode(GREEN_LED, OUTPUT);
+  
   // attempt to connect to Wifi network:
   Serial.print("Attempting to connect to Network named: ");
   // print the network name (SSID);
@@ -104,16 +107,18 @@ void loop() {
     case 0:
       Serial.flush();
       if((time1 - time0) >= deviceReadFrequency){
+        digitalWrite(GREEN_LED, HIGH);
         for(i = 0; i < sizeof(requestData); i++){
           Serial1.write(requestData[i]);
           delayMicroseconds(timeSlot);
-        }
+        }  
       time0 = millis();
       #if debugState
       Serial.println("0 Send Command");
       #endif
       state++;
       }
+      digitalWrite(GREEN_LED, LOW); 
       break;
       
     case 1:
@@ -230,11 +235,13 @@ void loop() {
     case 4:
       // timeService.getTimestamp32(timeStamp);
       if(checksum == reveivedData[30]){
+        digitalWrite(RED_LED, HIGH);
         tempOutput = (reveivedData[7] << 8) | reveivedData[6];
         valuesToPush[1] = tempOutput;
         response = m2xClient.updateStreamValue(deviceId, streamName1, (tempOutput / 10));
         Serial.print("\n\rVoltage RMS = ");
         Serial.println(response);
+        
         
         tempOutput = 0x0000FFFF & (reveivedData[9] << 8) | reveivedData[8];
         valuesToPush[3] = tempOutput;
@@ -253,25 +260,24 @@ void loop() {
         response = m2xClient.updateStreamValue(deviceId, streamName2, (tempOutput / 10000));
         Serial.print("\n\rCurent RMS = ");
         Serial.println(response);
-              
+        
         tempOutput = (reveivedData[21] << 24) | (reveivedData[20] << 16) | (reveivedData[19] << 8) | reveivedData[18];
         valuesToPush[4] = tempOutput;
         response = m2xClient.updateStreamValue(deviceId, streamName4, (tempOutput / 100));
         Serial.print("\n\rActive Power = ");
         Serial.println(response);
-                    
-        
+         
         tempOutput = (reveivedData[25] << 24) | (reveivedData[24] << 16) | (reveivedData[23] << 8) | reveivedData[22];
         valuesToPush[5] = tempOutput;
         response = m2xClient.updateStreamValue(deviceId, streamName5, (tempOutput / 100));
         Serial.print("\n\rReactive Power = ");
         Serial.println(response);
                     
-        
         tempOutput = (reveivedData[29] << 24) | (reveivedData[28] << 16) | (reveivedData[27] << 8) | reveivedData[26];
         valuesToPush[6] = tempOutput;
         response = m2xClient.updateStreamValue(deviceId, streamName6, (tempOutput / 100));
         Serial.print("\n\rApparent Power = ");
+        digitalWrite(RED_LED, LOW);
         Serial.println(response);
         
       }

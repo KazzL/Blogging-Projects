@@ -31,9 +31,7 @@
 #define debug 0
 #define debugState 1
 #define debugVerbose 0
-#define debugStateThree 1
 #define debugHEX 0
-#define debugDEC 0
 #define debugDOUBLE 0
 
 byte requestData[] = {0xA5, 0x08, 0x41, 0x00, 0x02, 0x4E, 0x1C, 0x5A};
@@ -80,7 +78,7 @@ void setup() {
     delay(300);
   }
 
-  Serial.println("\nYou're connected to the network");
+  Serial.println("\n\rYou're connected to the network");
   Serial.println("Waiting for an ip address");
 
   while (WiFi.localIP() == INADDR_NONE) {
@@ -224,7 +222,7 @@ void loop() {
         Serial.println(availableBytes, DEC);
         #endif
       }
-      #if debugStateThree
+      #if debugState
       Serial.println("State #3");
       #endif
       break;
@@ -277,74 +275,7 @@ void loop() {
         Serial.println(response);
         
       }
-      #if debugDEC
-      Serial.print("\n\rNumber of Bytes - ");
-      Serial.print(reveivedData[1], DEC);
-      
-      Serial.print("\n\rSystem Status - 0x");
-      Serial.print(reveivedData[3], HEX);
-      Serial.print(reveivedData[2], HEX);
-      
-      Serial.print("\n\rSystem Version - Year-20");
-      Serial.print(((reveivedData[5] & 0xF0) >> 4), DEC);
-      Serial.print(" Month-");
-      Serial.print((reveivedData[5] & 0x0F), DEC);
-      Serial.print(" Day-");
-      Serial.print(reveivedData[4], DEC);
-      
-      Serial.print("\n\rVoltage RMS = ");
-      tempUInt_16 = (reveivedData[7] << 8) | reveivedData[6];
-      Serial.print((tempUInt_16 / 10), DEC);
-      Serial.print(".");
-      Serial.print((tempUInt_16 % 10), DEC);
-            
-      Serial.print("\n\rLine Frequency = ");
-      tempUInt_16 = (reveivedData[9] << 8) | reveivedData[8];
-      Serial.print((tempUInt_16 / 1000), DEC);
-      Serial.print(".");
-      Serial.print((tempUInt_16 % 1000), DEC);
-            
-      Serial.print("\n\rAnalog Input Voltage = ");
-      tempUInt_16 = (reveivedData[11] << 8) | reveivedData[10];
-      Serial.print(tempUInt_16, DEC);
-            
-      Serial.print("\n\rPower Factor = ");
-      tempUInt_32 = 0x0000FFFF & ((reveivedData[13] << 8) | reveivedData[12]);
-      Serial.print("0.");
-      Serial.print(tempUInt_32 * 3051, DEC);
-      
-      Serial.print("\n\rCurent RMS = ");
-      tempUInt_32 = (reveivedData[17] << 24) | (reveivedData[16] << 16) | (reveivedData[15] << 8) | reveivedData[14];
-      Serial.print((tempUInt_32 / 1000), DEC);
-      Serial.print(".");
-      Serial.print((tempUInt_32 % 1000), DEC);
-
-            
-      Serial.print("\n\rActive Power = ");
-      tempUInt_32 = (reveivedData[21] << 24) | (reveivedData[20] << 16) | (reveivedData[19] << 8) | reveivedData[18];
-      Serial.print((tempUInt_32 / 100), DEC);
-      Serial.print(".");
-      Serial.print((tempUInt_32 % 100), DEC);
-                  
-      Serial.print("\n\rReactive Power = ");
-      tempUInt_32 = (reveivedData[25] << 24) | (reveivedData[24] << 16) | (reveivedData[23] << 8) | reveivedData[22];
-      Serial.print((tempUInt_32 / 100), DEC);
-      Serial.print(".");
-      Serial.print((tempUInt_32 % 100), DEC);
-                  
-      Serial.print("\n\rApparent Power = ");
-      tempUInt_32 = (reveivedData[29] << 24) | (reveivedData[28] << 16) | (reveivedData[27] << 8) | reveivedData[26];
-      Serial.print((tempUInt_32 / 100), DEC);
-      Serial.print(".");
-      Serial.print((tempUInt_32 % 100), DEC);
-      
-      Serial.print("\n\rChecksum Value Reveived = 0x");
-      Serial.print(reveivedData[30], HEX);
-      Serial.print("\n\rChecksum Value Calculated = 0x");
-      Serial.println(checksum, HEX);
-      #endif
-    
-    
+         
       #if debugHEX
       Serial.print("ACK - 0x");
       Serial.print(reveivedData[0], HEX);
@@ -404,7 +335,6 @@ void loop() {
       Serial.print("\n\rChecksum Value Calculated = 0x");
       Serial.println(checksum, HEX);
       #endif
-      
       
       #if  debugDOUBLE      
       Serial.print("\n\rNumber of Bytes - ");

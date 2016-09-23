@@ -242,6 +242,11 @@ void loop() {
         Serial.print("\n\rVoltage RMS = ");
         Serial.println(response);
         
+        if(response == -1 || response == -2){
+          state = 5;
+          break;
+        }
+        
         
         tempOutput = 0x0000FFFF & (reveivedData[9] << 8) | reveivedData[8];
         valuesToPush[3] = tempOutput;
@@ -249,11 +254,21 @@ void loop() {
         Serial.print("\n\rLine Frequency = ");
         Serial.println(response);
         
+        if(response == -1 || response == -2){
+          state = 5;
+          break;
+        }
+        
         tempOutput = 0x0000FFFF & ((reveivedData[13] << 8) | reveivedData[12]);
         valuesToPush[7] = tempOutput;
         response = m2xClient.updateStreamValue(deviceId, streamName7, (tempOutput * 3051757813) / 100000000000000);
         Serial.print("\n\rPower Factor = ");//TODO: This is a signed number, this needs to betaken into account
         Serial.println(response);
+        
+        if(response == -1 || response == -2){
+          state = 5;
+          break;
+        }
         
         tempOutput = (reveivedData[17] << 24) | (reveivedData[16] << 16) | (reveivedData[15] << 8) | reveivedData[14];
         valuesToPush[2] = tempOutput;
@@ -261,17 +276,32 @@ void loop() {
         Serial.print("\n\rCurent RMS = ");
         Serial.println(response);
         
+        if(response == -1 || response == -2){
+          state = 5;
+          break;
+        }
+        
         tempOutput = (reveivedData[21] << 24) | (reveivedData[20] << 16) | (reveivedData[19] << 8) | reveivedData[18];
         valuesToPush[4] = tempOutput;
         response = m2xClient.updateStreamValue(deviceId, streamName4, (tempOutput / 100));
         Serial.print("\n\rActive Power = ");
         Serial.println(response);
+        
+        if(response == -1 || response == -2){
+          state = 5;
+          break;
+        }
          
         tempOutput = (reveivedData[25] << 24) | (reveivedData[24] << 16) | (reveivedData[23] << 8) | reveivedData[22];
         valuesToPush[5] = tempOutput;
         response = m2xClient.updateStreamValue(deviceId, streamName5, (tempOutput / 100));
         Serial.print("\n\rReactive Power = ");
         Serial.println(response);
+        
+        if(response == -1 || response == -2){
+          state = 5;
+          break;
+        }
                     
         tempOutput = (reveivedData[29] << 24) | (reveivedData[28] << 16) | (reveivedData[27] << 8) | reveivedData[26];
         valuesToPush[6] = tempOutput;
@@ -279,6 +309,11 @@ void loop() {
         Serial.print("\n\rApparent Power = ");
         digitalWrite(RED_LED, LOW);
         Serial.println(response);
+        
+        if(response == -1 || response == -2){
+          state = 5;
+          break;
+        }
         
       }
          
@@ -409,6 +444,45 @@ void loop() {
       #if debugState
       Serial.println("State #4");
       #endif
+      break;
+      
+    case 5:  
+      // attempt to disconnect to Wifi network:
+      Serial.print("Attempting to disconnect from Network named: ");
+      WiFi.disconnect();
+      while(WiFi.status() == WL_CONNECTED){
+        // print dots while we wait to disconnect
+        Serial.print(".");
+        delay(300);
+      }
+      delay(3000);
+      
+      // attempt to connect to Wifi network:
+      Serial.print("Attempting to reconnect to Network named: ");
+      // print the network name (SSID);
+      Serial.println(ssid); 
+      // Connect to WPA/WPA2 network. Change this line if using open or WEP network:
+      WiFi.begin(ssid, pass);
+      while ( WiFi.status() != WL_CONNECTED) {
+        // print dots while we wait to connect
+        Serial.print(".");
+        delay(300);
+      }
+
+      Serial.println("\n\rYou're connected to the network");
+      Serial.println("Waiting for an ip address");
+
+      while (WiFi.localIP() == INADDR_NONE) {
+        // print dots while we wait for an ip addresss
+        Serial.print(".");
+        delay(300);
+      }
+
+      Serial.println("\nIP Address obtained");
+
+      // you're connected now, so print out the status  
+      printWifiStatus();
+      state = 0;
       break;
 
     // default :
